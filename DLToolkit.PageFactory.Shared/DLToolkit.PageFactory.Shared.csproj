@@ -32,13 +32,13 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IBasePage.cs" />
-    <Compile Include="BaseNotifyPropertyChanged.cs" />
-    <Compile Include="BaseModel.cs" />
-    <Compile Include="BaseViewModel.cs" />
     <Compile Include="PageFactory.cs" />
     <Compile Include="IPageFactory.cs" />
     <Compile Include="IBaseViewModel.cs" />
     <Compile Include="IPageFactoryNavigation.cs" />
+    <Compile Include="BaseModel.cs" />
+    <Compile Include="BaseNotifyPropertyChanged.cs" />
+    <Compile Include="BaseViewModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>

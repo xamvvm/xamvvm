@@ -3,9 +3,9 @@ using System.ComponentModel;
 
 namespace DLToolkit.PageFactory
 {
-	public class CarouselPage<TViewModel> : Xamarin.Forms.CarouselPage, IBasePage<TViewModel> where TViewModel : INotifyPropertyChanged
+	public class PFMasterDetailPage<TViewModel> : Xamarin.Forms.MasterDetailPage, IBasePage<TViewModel> where TViewModel : INotifyPropertyChanged
 	{
-		public CarouselPage()
+		public PFMasterDetailPage()
 		{ 
 			ResetViewModel();
 		}
@@ -32,7 +32,7 @@ namespace DLToolkit.PageFactory
 		{
 			if (!(newViewModel is TViewModel))
 				throw new ArgumentException(string.Format("Wrong ViewModel type. Expected {0}", typeof(TViewModel).ToString()));
-			
+
 			BindingContext = newViewModel;
 		}
 
@@ -87,6 +87,6 @@ namespace DLToolkit.PageFactory
 		public virtual void PageFactoryRemovingFromCache()
 		{
 		}
-	}
+	}		
 }
 

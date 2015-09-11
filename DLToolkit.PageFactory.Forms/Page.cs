@@ -3,9 +3,9 @@ using System.ComponentModel;
 
 namespace DLToolkit.PageFactory
 {
-	public class Page<TViewModel> : Xamarin.Forms.Page, IBasePage<TViewModel> where TViewModel : INotifyPropertyChanged
+	public class PFPage<TViewModel> : Xamarin.Forms.Page, IBasePage<TViewModel> where TViewModel : INotifyPropertyChanged
 	{
-		public Page()
+		public PFPage()
 		{ 
 			ResetViewModel();
 		}

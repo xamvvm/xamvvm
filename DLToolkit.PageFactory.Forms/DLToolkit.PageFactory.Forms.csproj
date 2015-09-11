@@ -32,12 +32,13 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XamarinFormsPageFactory.cs" />
-    <Compile Include="CarouselPage.cs" />
-    <Compile Include="ContentPage.cs" />
-    <Compile Include="MasterDetailPage.cs" />
-    <Compile Include="NavigationPage.cs" />
     <Compile Include="Page.cs" />
     <Compile Include="TabbedPage.cs" />
+    <Compile Include="PageFactoryCommand.cs" />
+    <Compile Include="PFCarouselPage.cs" />
+    <Compile Include="PFContentPage.cs" />
+    <Compile Include="PFMasterDetailPage.cs" />
+    <Compile Include="PFNavigationPage.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.1.3.5.6335\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.3.5.6335\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />

@@ -3,33 +3,11 @@ using System.ComponentModel;
 
 namespace DLToolkit.PageFactory
 {
-	public class NavigationPage : NavigationPage<NavigationPage.NavigationPageViewModel>
+	public class PFContentPage<TViewModel> : Xamarin.Forms.ContentPage, IBasePage<TViewModel> where TViewModel : INotifyPropertyChanged
 	{
-		public NavigationPage() : base()
-		{
-			ResetViewModel();
-		}
-
-		public NavigationPage(Xamarin.Forms.Page root) : base(root)
-		{
-			ResetViewModel();
-		}
-
-		public class NavigationPageViewModel : BaseViewModel
-		{
-		}
-	}
-
-	public class NavigationPage<TViewModel> : Xamarin.Forms.NavigationPage, IBasePage<TViewModel> where TViewModel : INotifyPropertyChanged
-	{
-		public NavigationPage() : base()
-		{
-			ResetViewModel();
-		}
-
-		public NavigationPage(Xamarin.Forms.Page root) : base(root)
-		{
-			ResetViewModel();
+		public PFContentPage()
+		{ 
+			ResetViewModel();	
 		}
 
 		public TViewModel ViewModel
@@ -103,14 +81,6 @@ namespace DLToolkit.PageFactory
 		}
 
 		public virtual void PageFactoryRemoved()
-		{
-		}
-
-		public virtual void PageFactoryRemovedFromNavigation()
-		{
-		}
-
-		public virtual void PageFactoryAddedToNavigation()
 		{
 		}
 

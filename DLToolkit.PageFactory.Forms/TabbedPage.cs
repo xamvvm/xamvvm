@@ -84,14 +84,6 @@ namespace DLToolkit.PageFactory
 		{
 		}
 
-		public virtual void PageFactoryRemovedFromNavigation()
-		{
-		}
-
-		public virtual void PageFactoryAddedToNavigation()
-		{
-		}
-
 		public virtual void PageFactoryRemovingFromCache()
 		{
 		}

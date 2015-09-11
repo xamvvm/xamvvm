@@ -35,10 +35,6 @@ namespace DLToolkit.PageFactory
 		void PageFactoryRemoved();
 
 		void PageFactoryInserted();
-		// TODO
-		//			void PageFactoryRemovedFromNavigation();
-		//
-		//			void PageFactoryAddedToNavigation();
 	}
 }
 

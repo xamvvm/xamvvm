@@ -23,7 +23,7 @@ The main reason for creation of PageFactory was that I needed very simple librar
 public App()
 {
 	var pageFactory = new XamarinFormsPageFactory();
-	var navigationPage = pageFactory.Init<HomeViewModel, DLToolkit.PageFactory.NavigationPage>();
+	var navigationPage = pageFactory.Init<HomeViewModel, PFNavigationPage>();
 	MainPage = navigationPage;
 }
 ```

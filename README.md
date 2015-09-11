@@ -1,6 +1,6 @@
 # DLToolkit.PageFactory *(alpha)*
 
-####Simple Model / ViewModel / Page / Navigation toolkit. *Currently only implemented PageFactory is* ***Xamarin.Forms*** *PageFactory*
+####Simple Model / ViewModel / Page / Navigation toolkit (MVVM). *Currently only implemented PageFactory is* ***Xamarin.Forms*** *PageFactory*
 
 The main reason for creation of PageFactory was that I needed very simple library which would free me from implementing the same things for any Xamarin.Forms project I created all over again. Those things were eg. Page Caching, ViewModel oriented Navigation, INotifyPropertyChanged implementation, ViewModel->Page messaging, etc. I also wanted my ViewModels to be as clean as possible (Xamarin.Forms dependency free).
 

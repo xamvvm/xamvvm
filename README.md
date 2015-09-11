@@ -91,6 +91,27 @@ public class HomePage : PFContentPage<HomeViewModel>
 }
 ```
 
+## Page Caching
+- Cache can hold only one instance of Page with ViewModel of the same type - they wouldn't be put into cache or they would replace existsting cache entry (by using methods parameters)
+- You can bypass cache ("AsNew" methods) and force new instances.
+
+## Messaging
+
+#### ViewModel
+```C#
+PageFactory.SendMessageToPage(this, "ExampleMessage", new TestObject());
+```
+
+#### Page
+```C#
+public override void PageFactoryMessageReceived(string message, object arg)
+{
+	Console.WriteLine("Message received: {0} with arg of {1} type", message, arg.GetType().ToString());
+}
+```
+
+You can also send messages to other pages by using its ViewModel signature, etc
+
 ## Cheatsheet
 More documentation coming soon...
 

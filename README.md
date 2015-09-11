@@ -15,6 +15,7 @@ The main reason for creation of PageFactory was that I needed very simple librar
 - Dependency free Command replacement for use with ViewModels
 - Page / ViewModel caching
 - Simple ViewModel -> Page messaging
+- Just two PCL dll's (or one when it comes to ViewModels which is dependency free).
 
 ## Basic example
 

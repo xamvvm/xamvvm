@@ -31,7 +31,6 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XamarinFormsPageFactory.cs" />
-    <Compile Include="PageFactoryCommand.cs" />
     <Compile Include="PFCarouselPage.cs" />
     <Compile Include="PFContentPage.cs" />
     <Compile Include="PFMasterDetailPage.cs" />

@@ -22,8 +22,8 @@ The main reason for creation of PageFactory was that I needed very simple to use
 - PCL compatible with dependency free DLToolkit.PageFactory.Shared.dll
 
 ## NuGet
-- [https://www.nuget.org/packages/DLToolkit.PageFactory.Shared/]()
-- [https://www.nuget.org/packages/DLToolkit.PageFactory.Forms/]()
+- [https://www.nuget.org/packages/DLToolkit.PageFactory.Shared/](https://www.nuget.org/packages/DLToolkit.PageFactory.Shared/)
+- [https://www.nuget.org/packages/DLToolkit.PageFactory.Forms/](https://www.nuget.org/packages/DLToolkit.PageFactory.Forms/)
 
 ## Basic example
 

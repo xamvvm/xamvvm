@@ -22,12 +22,12 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>full</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
+    <DocumentationFile>bin\Release\DLToolkit.PageFactory.Shared.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -35,10 +35,15 @@
     <Compile Include="PageFactory.cs" />
     <Compile Include="IPageFactory.cs" />
     <Compile Include="IBaseViewModel.cs" />
-    <Compile Include="IPageFactoryNavigation.cs" />
     <Compile Include="BaseModel.cs" />
     <Compile Include="BaseNotifyPropertyChanged.cs" />
     <Compile Include="BaseViewModel.cs" />
+    <Compile Include="IBaseNavigationEvents.cs" />
+    <Compile Include="IPageFactoryNavigation.cs" />
+    <Compile Include="IPageFactoryMessaging.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="MessageConsumer.cs" />
+    <Compile Include="IBaseMessagable.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>

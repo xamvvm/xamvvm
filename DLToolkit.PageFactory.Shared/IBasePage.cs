@@ -3,38 +3,39 @@ using System.ComponentModel;
 
 namespace DLToolkit.PageFactory
 {
-	public interface IBasePage<out TViewModel> : IBasePage where TViewModel: INotifyPropertyChanged
+	/// <summary>
+	/// I base page.
+	/// </summary>
+	public interface IBasePage<out TViewModel> : IBasePage, IBaseMessagable, IBaseNavigationEvents where TViewModel: INotifyPropertyChanged
 	{
+		/// <summary>
+		/// Gets the view model.
+		/// </summary>
+		/// <value>The view model.</value>
 		TViewModel ViewModel { get; }
 
-		void ResetViewModel();
+		/// <summary>
+		/// Resets the view model.
+		/// </summary>
+		void PageFactoryResetViewModel();
 
-		void ReplaceViewModel(object newViewModel);
+		/// <summary>
+		/// Replaces the view model.
+		/// </summary>
+		/// <param name="newViewModel">New view model.</param>
+		void PageFactoryReplaceViewModel(object newViewModel);
 	}	
 
-	public interface IBasePage
+	/// <summary>
+	/// I base page.
+	/// </summary>
+	public interface IBasePage : IBaseMessagable, IBaseNavigationEvents
 	{
+		/// <summary>
+		/// Gets the PageFactory.Factory.
+		/// </summary>
+		/// <value>The page factory.</value>
 		IPageFactory PageFactory { get; }
-
-		void PageFactoryMessageReceived(string message, object arg);
-
-		void PageFactoryRemovingFromCache();
-
-		bool PageFactoryPushing();
-
-		bool PageFactoryPopping();
-
-		bool PageFactoryRemoving();
-
-		bool PageFactoryInserting();
-
-		void PageFactoryPushed();
-
-		void PageFactoryPopped();
-
-		void PageFactoryRemoved();
-
-		void PageFactoryInserted();
 	}
 }
 

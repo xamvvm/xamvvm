@@ -7,7 +7,7 @@ namespace DLToolkit.PageFactory
 	{
 		public PFContentPage()
 		{ 
-			ResetViewModel();	
+			PageFactoryResetViewModel();	
 		}
 
 		public TViewModel ViewModel
@@ -22,13 +22,13 @@ namespace DLToolkit.PageFactory
 			}
 		}
 
-		public void ResetViewModel()
+		public void PageFactoryResetViewModel()
 		{
 			TViewModel viewModel = (TViewModel)Activator.CreateInstance(typeof(TViewModel));
 			BindingContext = viewModel;	
 		}
 
-		public void ReplaceViewModel(object newViewModel)
+		public void PageFactoryReplaceViewModel(object newViewModel)
 		{
 			if (!(newViewModel is TViewModel))
 				throw new ArgumentException(string.Format("Wrong ViewModel type. Expected {0}", typeof(TViewModel).ToString()));
@@ -44,7 +44,7 @@ namespace DLToolkit.PageFactory
 			}
 		}
 
-		public virtual void PageFactoryMessageReceived(string message, object arg)
+		public virtual void PageFactoryMessageReceived(string message, object sender, object arg)
 		{
 		}
 

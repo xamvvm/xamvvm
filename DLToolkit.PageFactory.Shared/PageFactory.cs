@@ -6,10 +6,17 @@ using System.ComponentModel;
 
 namespace DLToolkit.PageFactory
 {
+	/// <summary>
+	/// Page factory.
+	/// </summary>
 	public static class PageFactory
 	{ 
 		static IPageFactory instance;
 
+		/// <summary>
+		/// Gets the factory.
+		/// </summary>
+		/// <value>The factory.</value>
 		public static IPageFactory Factory
 		{
 			get 
@@ -23,6 +30,10 @@ namespace DLToolkit.PageFactory
 			}
 		}
 
+		/// <summary>
+		/// Sets the page factory.
+		/// </summary>
+		/// <param name="factory">Factory.</param>
 		public static void SetPageFactory(IPageFactory factory)
 		{
 			instance = factory;

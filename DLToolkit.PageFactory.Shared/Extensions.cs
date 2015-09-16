@@ -107,7 +107,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="sender">Sender.</param>
 		public static IBasePage<IBaseMessagable> SendMessageToPageAndViewModel(this IBasePage<IBaseMessagable> page, string message, object sender = null, object arg = null)
 		{
-			PageFactory.Factory.SendMessageByPage(MessageConsumer.PageAndViewModel, page, message, arg, sender);
+			PageFactory.Factory.SendMessageByPage(MessageConsumer.PageAndViewModel, page, message, sender, arg);
 			return page;
 		}
 
@@ -120,7 +120,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="arg">Argument.</param>
 		public static IBasePage<IBaseMessagable> SendMessageToViewModel(this IBasePage<IBaseMessagable> page, string message, object sender = null, object arg = null)
 		{
-			PageFactory.Factory.SendMessageByPage(MessageConsumer.ViewModel, page, message, arg, sender);
+			PageFactory.Factory.SendMessageByPage(MessageConsumer.ViewModel, page, message, sender, arg);
 			return page;
 		}
 
@@ -133,7 +133,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="arg">Argument.</param>
 		public static IBasePage<IBasePage> SendMessageToPage(this IBasePage<IBasePage> page, string message, object sender = null, object arg = null)
 		{
-			PageFactory.Factory.SendMessageByPage(page, message, arg, sender);
+			PageFactory.Factory.SendMessageByPage(page, message, sender, arg);
 			return page;
 		}
 
@@ -146,7 +146,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="arg">Argument.</param>
 		public static IBasePage<IBaseMessagable> SendMessageToPage(this IBasePage<IBaseMessagable> page, string message, object sender = null, object arg = null)
 		{
-			PageFactory.Factory.SendMessageByPage(page, message, arg, sender);
+			PageFactory.Factory.SendMessageByPage(page, message, sender, arg);
 			return page;
 		}
 

@@ -1,4 +1,4 @@
-# DLToolkit.PageFactory *(alpha)* [<img style="float: right; padding-left:5px;" src="http://img.shields.io/bitcoin/donate.png?color=green"/>](bitcoin://16CvewT3QyAc5ATTVNHQ2EomxLQPXxyKQ7?label=Github%20PageFactory%20Donation "Donate once-off to this project using Bitcoin") [<img style="float: right; padding-left:5px;" src="http://img.shields.io/paypal/donate.png?color=green"/>](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PNL8H3JQ7XLP4 "Donate once-off to this project using Paypal")
+# DLToolkit.PageFactory *(alpha)* [<img style="float: right; padding-left:5px;" src="http://img.shields.io/bitcoin/donate.png?color=green"/>](https://blockchain.info/address/16CvewT3QyAc5ATTVNHQ2EomxLQPXxyKQ7 "Donate once-off to this project using Bitcoin") [<img style="float: right; padding-left:5px;" src="http://img.shields.io/paypal/donate.png?color=green"/>](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PNL8H3JQ7XLP4 "Donate once-off to this project using Paypal")
 
 ###Simple MVVM (Model, ViewModel, View) Framework for .Net - Xamarin.Forms compatible
 *Currently only implemented Factory is* ***Xamarin.Forms*** *PageFactory*

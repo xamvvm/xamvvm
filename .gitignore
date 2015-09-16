@@ -23,6 +23,7 @@ aclocal.m4
 install-sh
 autom4te.cache/
 *.user
+*.nupkg
 *.tar.gz
 tarballs/
 test-results/

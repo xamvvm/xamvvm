@@ -1,6 +1,6 @@
 # DLToolkit.PageFactory *(alpha)*
 
-###Simple MVVM (Model, ViewModel, View) Framework for .Net - Xamarin.Forms compatibile
+###Simple MVVM (Model, ViewModel, View) Framework for .Net - Xamarin.Forms compatible
 *Currently only implemented Factory is* ***Xamarin.Forms*** *PageFactory*
 
 The main reason for creation of PageFactory was that I needed very simple to use library which would free me from implementing the same things for any Xamarin.Forms project I created all over again. Those things were eg. Page Caching, ViewModel oriented Navigation, INotifyPropertyChanged implementation, ViewModel and Page messaging, etc. I also wanted my ViewModels to be as clean as possible (dependency free).
@@ -12,14 +12,18 @@ The main reason for creation of PageFactory was that I needed very simple to use
 - ViewModel oriented Navigation
 - Simple ViewModel and Page messaging
 - Page caching
-- Helper classes with `INotifyPropertyChanged` implementation *(Fody `INotifyPropertyChanged` compatibile)*:
+- Helper classes with `INotifyPropertyChanged` implementation *(Fody `INotifyPropertyChanged` compatible)*:
   - BaseModel for models (implements `INotifyPropertyChanged`)
   - BaseViewModel for view models (implements `INotifyPropertyChanged`, `IBaseViewModel` (PageFactory helpers), `IBaseMessagable` (needed for PageFactory view model messaging support)
 - Fluent style extensions to write even less code when using PageFactory
 - Every page has access to typed ViewModel instance which is automatically instantiated
 - Pages have override methods to respond / intercept navigation (eg. PageFactoryPushing, PageFactoryPushed, etc.) 
 - Dependency free ICommand implementation for use with ViewModels
-- PCL compatibile with dependency free DLToolkit.PageFactory.Shared.dll
+- PCL compatible with dependency free DLToolkit.PageFactory.Shared.dll
+
+## NuGet
+- [https://www.nuget.org/packages/DLToolkit.PageFactory.Shared/]()
+- [https://www.nuget.org/packages/DLToolkit.PageFactory.Forms/]()
 
 ## Basic example
 
@@ -191,6 +195,10 @@ public override void PageFactoryMessageReceived(string message, object sender, o
 ```
 
 - To send messages just use PageFactory static Factory methods or use fluent extensions.
+
+## PageFactoryCommand
+- Generic PCL ICommand implementation
+- Currently it does not support Command parameters
 
 ## Cheatsheet
 More documentation coming soon...

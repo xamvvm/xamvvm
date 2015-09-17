@@ -1,25 +1,25 @@
-# DLToolkit.PageFactory *(alpha)* [<img style="float: right; padding-left:5px;" src="http://img.shields.io/bitcoin/donate.png?color=green"/>](https://blockchain.info/address/16CvewT3QyAc5ATTVNHQ2EomxLQPXxyKQ7 "Donate once-off to this project using Bitcoin") [<img style="float: right; padding-left:5px;" src="http://img.shields.io/paypal/donate.png?color=green"/>](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PNL8H3JQ7XLP4 "Donate once-off to this project using Paypal")
+# DLToolkit.PageFactory [<img style="float: right; padding-left:5px;" src="http://img.shields.io/bitcoin/donate.png?color=green"/>](https://blockchain.info/address/16CvewT3QyAc5ATTVNHQ2EomxLQPXxyKQ7 "Donate once-off to this project using Bitcoin") [<img style="float: right; padding-left:5px;" src="http://img.shields.io/paypal/donate.png?color=green"/>](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PNL8H3JQ7XLP4 "Donate once-off to this project using Paypal")
 
 ###Simple MVVM (Model, ViewModel, View) Framework for .Net - Xamarin.Forms compatible
-*Currently only implemented Factory is* ***Xamarin.Forms*** *PageFactory*
+*Currently only implemented Factory is* ***Xamarin.Forms*** *PageFactory (alpha)*
 
-The main reason for creation of PageFactory was that I needed very simple to use library which would free me from implementing the same things for any Xamarin.Forms project I created all over again. Those things were eg. Page Caching, ViewModel oriented Navigation, INotifyPropertyChanged implementation, ViewModel and Page messaging, etc. I also wanted my ViewModels to be as clean as possible (dependency free).
+The main reason for creation of PageFactory was that I needed very simple to use library which would free me from implementing the same things for any Xamarin.Forms project all over again. Those things were eg. Page Caching, ViewModel oriented Navigation, INotifyPropertyChanged implementation, ViewModel and Page messaging, etc. I also wanted my ViewModels to be dependency free.
 
 ## Features
 
-- Easy to use. Just declare your views as PF[PageType] classes and have access to all features
-- Pure ViewModels (only requirement is `INotifyPropertyChanged` implementation)
-- ViewModel oriented Navigation
-- Simple ViewModel and Page messaging
-- Page caching
+- **Easy to use. Just declare your views as PF[PageType] classes and have access to all features**
+- **ViewModel oriented Navigation**
+- **Simple ViewModel and Page messaging**
+- **Page caching**
+- **Pure ViewModels (only requirement is `INotifyPropertyChanged` implementation or `IBaseMessagable` when view model has to receive messages)**
+- **Fluent style extensions methods to write even less code**
 - Helper classes with `INotifyPropertyChanged` implementation *(Fody `INotifyPropertyChanged` compatible)*:
   - BaseModel for models (implements `INotifyPropertyChanged`)
   - BaseViewModel for view models (implements `INotifyPropertyChanged`, `IBaseViewModel` (PageFactory helpers), `IBaseMessagable` (needed for PageFactory view model messaging support)
-- Fluent style extensions to write even less code when using PageFactory
 - Every page has access to typed ViewModel instance which is automatically instantiated
 - Pages have override methods to respond / intercept navigation (eg. PageFactoryPushing, PageFactoryPushed, etc.) 
 - Dependency free ICommand implementation for use with ViewModels
-- PCL compatible with dependency free DLToolkit.PageFactory.Shared.dll
+- PCL compatible with dependency free DLToolkit.PageFactory.Shared.dll for ViewModels
 
 ## NuGet
 - [https://www.nuget.org/packages/DLToolkit.PageFactory.Shared/](https://www.nuget.org/packages/DLToolkit.PageFactory.Shared/)
@@ -162,15 +162,29 @@ public class DetailsPage : PFContentPage<DetailsViewModel>
 ```
 
 ## Page Caching
-- **All instances of pages must be created by using PageFactory methods.** (without it Messaging won't work)
-- Cache can hold only one instance of ViewModel of the same type with its Page
+- **All instances of pages must be created by using PageFactory methods.** (without it some features won't work)
+- Cache can hold only one instance of ViewModel of the same type (with its Page)
 - You can create additional Page instances but they wouldn't be cached or they would replace existsting cache entry (PageFactory [AsNew] methods with appropriate parameters)
+- `GetPageFromCache`, `GetMessagablePageFromCache`, `GetPageAsNewInstance`, `GetMessagablePageAsNewInstance`, `GetPageByViewModel`, `GetMessagablePageByViewModel` - those methods return platform independed pages (`IBasePage<INotifyPropertyChanged>` or `IBasePage<IBaseMessagable>` instances) and are used as a base entry for fluid extension methods (you can also get Page from ViewModel with `.GetPage()` and `.GetMessagablePage()` extension methods).
+
+##### Examples:
+```C#
+var page1 = PageFactory.GetPageAsNewInstance(saveOrReplaceInCache: true).PushPage();
+var page2 = PageFactory.GetMessagablePageFromCache<HomeViewModel>().PopPage();
+```
+##View Models
+- ViewModel must implement INotifyPropertyChanged (it's the only requirement)
+- If you want to receive messages on ViewModel it must also implement IBaseMessagable interface
+- BaseViewModel class implements both interfaces
+- You can get the Page from ViewModel:
+  -  Static methods: `GetPageByViewModel` or `GetMessagablePageByViewModel`
+  -  Extension methods `.GetPage()` and `.GetMessagablePage()`
 
 ## Messaging
 
 #### Page
 
-- All PageFactory PF[PageType] pages have messaging enabled. If you want to create custom pages just inherit from PF[PageType]. Just override PageFactoryMessageReceived method:
+- All PageFactory Pages have messaging enabled. If you want to create custom pages just inherit from PF[PageType]. Just override PageFactoryMessageReceived method:
 
 ```C#
 public override void PageFactoryMessageReceived(string message, object sender, object arg)
@@ -179,11 +193,10 @@ public override void PageFactoryMessageReceived(string message, object sender, o
 		message, sender.GetType(), arg.GetType());
 }
 ```
-- To send messages just use PageFactory static Factory methods or use fluent extensions. 
 
 #### ViewModel
 
-- For messaging support ViewModel need to implement `IBaseMessagable` interface. `BaseViewModel` has it. 
+- For messaging support ViewModel need to implement `IBaseMessagable` interface. In `BaseViewModel` it's already implemented. 
 - You can use it by overriding PageFactoryMessageReceived method:
 
 ```C#
@@ -194,11 +207,23 @@ public override void PageFactoryMessageReceived(string message, object sender, o
 }
 ```
 
-- To send messages just use PageFactory static Factory methods or use fluent extensions.
+#### Sending messages
+
+- To send messages just use PageFactory static Factory methods or use fluent extensions on Page (you can also get Page from ViewModel with `.GetMessagablePage()` extension method):
+  - Static methods: `SendMessageByPage`, `SendMessageByViewModel`, `SendMessageToCached`
+  - Page extension methods: `SendMessageToPageAndViewModel`, `SendMessageToViewModel`, `SendMessageToPage`
+
+##### Examples:
+```C#
+PageFactory.GetMessagablePageFromCache<DetailsViewModel>()
+	.ResetViewModel()
+	.SendMessageToViewModel("ViewModelTestMessage", sender: this, arg: new object())
+	.SendMessageToPage("PageTestMessage", sender: this, arg: new object());
+```
 
 ## PageFactoryCommand
 - Generic PCL ICommand implementation
-- Currently it does not support Command parameters
+- *Currently it does not support Command parameters*
 
 ## Cheatsheet
 More documentation coming soon...

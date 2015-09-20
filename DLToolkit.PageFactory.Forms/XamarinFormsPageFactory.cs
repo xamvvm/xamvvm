@@ -42,7 +42,7 @@ namespace DLToolkit.PageFactory
 				weakPageCache.Remove(page.ViewModel);
 			}
 		}
-
+			
 		public NavigationPage Init<TMainPageViewModel, TNavigationPage>(params Assembly[] additionalPagesAssemblies) where TMainPageViewModel : class, INotifyPropertyChanged where TNavigationPage : PFNavigationPage
 		{
 			PageFactory.SetPageFactory(this);
@@ -351,7 +351,7 @@ namespace DLToolkit.PageFactory
 		{
 			if (pageCache.ContainsKey(typeof(TViewModel)) || createPageIfNotExists)
 			{
-				var page = GetPageFromCache<TViewModel>(false);
+				var page = GetMessagablePageFromCache<TViewModel>(false);
 
 				if (consumer == MessageConsumer.Page || consumer == MessageConsumer.PageAndViewModel)
 				{
@@ -359,7 +359,7 @@ namespace DLToolkit.PageFactory
 				}
 				if (consumer == MessageConsumer.ViewModel || consumer == MessageConsumer.PageAndViewModel)
 				{
-					((IBaseMessagable)page.ViewModel).PageFactoryMessageReceived(message, sender, arg);
+					page.ViewModel.PageFactoryMessageReceived(message, sender, arg);
 				}
 
 				return true;

@@ -17,12 +17,29 @@ namespace DLToolkit.PageFactory
 
 		readonly ConditionalWeakTable<INotifyPropertyChanged, IBasePage<INotifyPropertyChanged>> weakPageCache = new ConditionalWeakTable<INotifyPropertyChanged, IBasePage<INotifyPropertyChanged>>();
 
-		void AddToWeakCacheIfNotExists(IBasePage<INotifyPropertyChanged> page)
+		public void AddToWeakCacheIfNotExists(IBasePage<INotifyPropertyChanged> page)
 		{
+			if (page.ViewModel == null)
+				return;
+
 			IBasePage<INotifyPropertyChanged> weakExists;
+
 			if (!weakPageCache.TryGetValue(page.ViewModel, out weakExists))
 			{
 				weakPageCache.Add(page.ViewModel, page);
+			}
+		}
+
+		public void RemoveFromWeakCacheIfExists(IBasePage<INotifyPropertyChanged> page)
+		{
+			if (page.ViewModel == null)
+				return;
+			
+			IBasePage<INotifyPropertyChanged> weakExists;
+
+			if (weakPageCache.TryGetValue(page.ViewModel, out weakExists))
+			{
+				weakPageCache.Remove(page.ViewModel);
 			}
 		}
 
@@ -50,6 +67,14 @@ namespace DLToolkit.PageFactory
 
 						if(!viewModelsTypes.ContainsKey(viewModelType))
 						{
+							var parameterlessCtors =
+								(viewModelType.GetTypeInfo().DeclaredConstructors.Where(c => c.IsPublic && c.GetParameters().Length == 0));
+
+							if (!parameterlessCtors.Any())
+							{
+								throw new ArgumentException(string.Format("ViewModel '{0}' has no public parameterless constructor", viewModelType));
+							}
+
 							viewModelsTypes.Add(viewModelType, pageType);
 						}
 						else
@@ -62,8 +87,7 @@ namespace DLToolkit.PageFactory
 			}
 
 			var page = GetPageFromCache(typeof(TMainPageViewModel));
-			navigationPage = (PFNavigationPage)Activator.CreateInstance(typeof(TNavigationPage), page);
-			weakPageCache.Add(navigationPage.ViewModel, navigationPage);
+			navigationPage = (PFNavigationPage)Activator.CreateInstance(typeof(TNavigationPage), page, true);
 
 			return NavigationPage;
 		}
@@ -92,10 +116,56 @@ namespace DLToolkit.PageFactory
 			throw new KeyNotFoundException(
 				string.Format("Page definition for {0} ViewModel could not be found", viewModelType.ToString()));
 		}
+
+//		void CheckViewModelType(Type viewModelType, bool messagable = false)
+//		{
+//			if (!viewModelType.GetTypeInfo().ImplementedInterfaces.Contains(typeof(INotifyPropertyChanged)))
+//			{
+//				throw new InvalidCastException("ViewModel must implement INotifyPropertyChanged interface");
+//			}
+//		}
+//
+//		void CheckMessagableViewModelType(Type viewModelType)
+//		{
+//			if (!viewModelType.GetTypeInfo().ImplementedInterfaces.Contains(typeof(IBaseMessagable)))
+//			{
+//				throw new InvalidCastException("Messagable ViewModel must implement IBaseMessagable interface");
+//			}
+//		}
 			
 		#region IPageFactory implementation
 
-		public IBasePage<INotifyPropertyChanged> GetPageFromCache<TViewModel>(bool resetViewModel = false) where TViewModel : class, INotifyPropertyChanged
+		public IBasePage<INotifyPropertyChanged> GetPageByViewModel<TViewModel>(TViewModel viewModelInstance) where TViewModel : class, INotifyPropertyChanged, new()
+		{
+			IBasePage<INotifyPropertyChanged> page;
+
+			if (weakPageCache.TryGetValue(viewModelInstance, out page))
+			{
+				return page;
+			}
+
+			return null;
+		}
+
+		public void ReplacePageViewModel<TViewModel>(IBasePage<INotifyPropertyChanged> page, TViewModel newViewModel) where TViewModel : class, INotifyPropertyChanged
+		{
+			RemoveFromWeakCacheIfExists(page);	
+			((Page)page).BindingContext = newViewModel;
+			AddToWeakCacheIfNotExists(page);
+		}
+
+		public void ResetPageViewModel(IBasePage<INotifyPropertyChanged> page)
+		{
+			var viewModelType = page.ViewModel.GetType();
+			INotifyPropertyChanged newViewModel = (INotifyPropertyChanged)Activator.CreateInstance(viewModelType);
+			ReplacePageViewModel(page, newViewModel);
+		}
+
+		#endregion
+
+		#region IPageFactoryCaching implementation
+
+		public IBasePage<INotifyPropertyChanged> GetPageFromCache<TViewModel>(bool resetViewModel = false) where TViewModel : class, INotifyPropertyChanged, new()
 		{
 			return GetPageFromCache(typeof(TViewModel), resetViewModel);
 		}
@@ -108,18 +178,17 @@ namespace DLToolkit.PageFactory
 			{
 				IBasePage<INotifyPropertyChanged> page = Activator.CreateInstance(pageType) as IBasePage<INotifyPropertyChanged>;
 				pageCache.Add(viewModelType, page);
-				weakPageCache.Add(page.ViewModel, page);
 			}
 
 			if (resetViewModel)
 			{
-				pageCache[viewModelType].PageFactoryResetViewModel();
+				ResetPageViewModel(pageCache[viewModelType]);
 			}
 
 			return pageCache[viewModelType];
 		}
 
-		public IBasePage<INotifyPropertyChanged> GetPageAsNewInstance<TViewModel>(bool saveOrReplaceInCache = false) where TViewModel : class, INotifyPropertyChanged
+		public IBasePage<INotifyPropertyChanged> GetPageAsNewInstance<TViewModel>(bool saveOrReplaceInCache = false) where TViewModel : class, INotifyPropertyChanged, new()
 		{
 			return GetPageAsNewInstance(typeof(TViewModel), saveOrReplaceInCache);
 		}
@@ -129,7 +198,6 @@ namespace DLToolkit.PageFactory
 			var pageType = GetPageType(viewModelType);
 
 			IBasePage<INotifyPropertyChanged> page = (IBasePage<INotifyPropertyChanged>)Activator.CreateInstance(pageType);
-			weakPageCache.Add(page.ViewModel, page);
 
 			if (saveOrReplaceInCache && pageCache.ContainsKey(viewModelType))
 			{
@@ -140,19 +208,70 @@ namespace DLToolkit.PageFactory
 			return page;
 		}
 
-		public IBasePage<INotifyPropertyChanged> GetPageByViewModel<TViewModel>(TViewModel viewModelInstance) where TViewModel : class, INotifyPropertyChanged
+		public bool ReplaceCachedPageViewModel<TViewModel>(TViewModel newViewModel) where TViewModel : class, INotifyPropertyChanged, new()
 		{
-			IBasePage<INotifyPropertyChanged> page;
-
-			if (weakPageCache.TryGetValue(viewModelInstance, out page))
+			if (pageCache.ContainsKey(typeof(TViewModel)))
 			{
-				return page;
+				var page = GetPageFromCache<TViewModel>();
+				ReplacePageViewModel(page, newViewModel);
+				return true;
 			}
 
-			return null;
+			return false;
 		}
 
-		public IBasePage<IBaseMessagable> GetMessagablePageFromCache<TViewModel>(bool resetViewModel = false) where TViewModel : class, IBaseMessagable, INotifyPropertyChanged
+		public bool ResetCachedPageViewModel<TViewModel>() where TViewModel : class, INotifyPropertyChanged, new()
+		{
+			if (pageCache.ContainsKey(typeof(TViewModel)))
+			{
+				var page = GetPageFromCache<TViewModel>();
+				ResetPageViewModel(page);
+				return true;
+			}
+
+			return false;
+		}
+
+		public bool RemovePageTypeFromCache(Type viewModelType)
+		{
+			if (pageCache.ContainsKey(viewModelType))
+			{
+				pageCache.Remove(viewModelType);
+				return true;
+			}
+
+			return false;
+		}
+
+		public bool RemovePageTypeFromCache<TViewModel>() where TViewModel : class, INotifyPropertyChanged, new()
+		{
+			return RemovePageTypeFromCache(typeof(TViewModel));
+		}
+
+		public bool RemovePageInstanceFromCache(IBasePage<INotifyPropertyChanged> page)
+		{
+			IBasePage<INotifyPropertyChanged> pageExists;
+
+			if (pageCache.TryGetValue(page.ViewModel.GetType(), out pageExists))
+			{
+				if (pageExists == page)
+					pageCache.Remove(page.ViewModel.GetType());
+				return true;
+			}
+
+			return false;
+		}
+
+		public void ClearCache()
+		{
+			pageCache.Clear();
+		}
+
+		#endregion
+
+		#region IPageFactoryMessaging implementation
+
+		public IBasePage<IBaseMessagable> GetMessagablePageFromCache<TViewModel>(bool resetViewModel = false) where TViewModel : class, IBaseMessagable, INotifyPropertyChanged, new()
 		{
 			return (IBasePage<IBaseMessagable>)GetPageFromCache<TViewModel>(resetViewModel);
 		}
@@ -162,7 +281,7 @@ namespace DLToolkit.PageFactory
 			return (IBasePage<IBaseMessagable>)GetPageFromCache(viewModelType, resetViewModel);
 		}
 
-		public IBasePage<IBaseMessagable> GetMessagablePageAsNewInstance<TViewModel>(bool saveOrReplaceInCache = false) where TViewModel : class, IBaseMessagable, INotifyPropertyChanged
+		public IBasePage<IBaseMessagable> GetMessagablePageAsNewInstance<TViewModel>(bool saveOrReplaceInCache = false) where TViewModel : class, IBaseMessagable, INotifyPropertyChanged, new()
 		{
 			return (IBasePage<IBaseMessagable>)GetPageAsNewInstance<TViewModel>(saveOrReplaceInCache);
 		}
@@ -172,17 +291,16 @@ namespace DLToolkit.PageFactory
 			return (IBasePage<IBaseMessagable>)GetPageAsNewInstance(viewModelType, saveOrReplaceInCache);
 		}
 
-		public IBasePage<IBaseMessagable> GetMessagablePageByViewModel<TViewModel>(TViewModel viewModelInstance) where TViewModel : class, IBaseMessagable, INotifyPropertyChanged
+		public IBasePage<IBaseMessagable> GetMessagablePageByViewModel<TViewModel>(TViewModel viewModelInstance) where TViewModel : class, IBaseMessagable, INotifyPropertyChanged, new()
 		{
 			return (IBasePage<IBaseMessagable>)GetPageByViewModel<TViewModel>(viewModelInstance);
 		}
 
-		public bool SendMessageByPage<TPage>(TPage page, string message, object sender = null, object arg = null) where TPage : class, IBasePage<INotifyPropertyChanged>
+		public bool SendMessageToPage<TPage>(TPage page, string message, object sender = null, object arg = null) where TPage : class, IBasePage<INotifyPropertyChanged>
 		{
 			if (page != null)
 			{
 				page.PageFactoryMessageReceived(message, sender, arg);
-
 				return true;
 			}
 
@@ -208,9 +326,9 @@ namespace DLToolkit.PageFactory
 			return false;
 		}
 
-		public bool SendMessageByViewModel<TViewModel>(MessageConsumer consumer, TViewModel viewModelInstance, string message, object sender = null, object arg = null) where TViewModel : class, IBaseMessagable, INotifyPropertyChanged
+		public bool SendMessageByViewModel<TViewModel>(MessageConsumer consumer, TViewModel viewModelInstance, string message, object sender = null, object arg = null) where TViewModel : class, INotifyPropertyChanged, IBaseMessagable, new()
 		{
-			var page = GetPageByViewModel(viewModelInstance);
+			var page = GetMessagablePageByViewModel(viewModelInstance);
 
 			if (page != null)
 			{
@@ -220,7 +338,7 @@ namespace DLToolkit.PageFactory
 				}
 				if (consumer == MessageConsumer.ViewModel || consumer == MessageConsumer.PageAndViewModel)
 				{
-					((IBaseMessagable)page.ViewModel).PageFactoryMessageReceived(message, sender, arg);
+					page.ViewModel.PageFactoryMessageReceived(message, sender, arg);
 				}
 
 				return true;
@@ -229,7 +347,7 @@ namespace DLToolkit.PageFactory
 			return false;
 		}
 
-		public bool SendMessageToCached<TViewModel>(MessageConsumer consumer, string message, object sender = null, object arg = null,  bool createPageIfNotExists = true) where TViewModel : class, IBaseMessagable, INotifyPropertyChanged
+		public bool SendMessageToCached<TViewModel>(MessageConsumer consumer, string message, object sender = null, object arg = null, bool createPageIfNotExists = true) where TViewModel : class, INotifyPropertyChanged, IBaseMessagable, new()
 		{
 			if (pageCache.ContainsKey(typeof(TViewModel)) || createPageIfNotExists)
 			{
@@ -250,55 +368,12 @@ namespace DLToolkit.PageFactory
 			return false;
 		}
 
-		public bool ReplaceCachedPageViewModel<TViewModel>(TViewModel newViewModel) where TViewModel : class, INotifyPropertyChanged
-		{
-			if (pageCache.ContainsKey(typeof(TViewModel)))
-			{
-				var page = GetPageFromCache<TViewModel>();
-				page.PageFactoryReplaceViewModel(newViewModel);
-				return true;
-			}
+		#endregion
 
-			return false;
-		}
-
-		public bool ResetCachedPageViewModel<TViewModel>() where TViewModel : class, INotifyPropertyChanged
-		{
-			if (pageCache.ContainsKey(typeof(TViewModel)))
-			{
-				var page = GetPageFromCache<TViewModel>();
-				page.PageFactoryResetViewModel();
-				return true;
-			}
-
-			return false;
-		}
-
-		public bool RemovePageFromCache(Type viewModelType)
-		{
-			if (pageCache.ContainsKey(viewModelType))
-			{
-				pageCache.Remove(viewModelType);
-				return true;
-			}
-
-			return false;
-		}
-
-		public bool RemovePageFromCache<TViewModel>() where TViewModel : class, INotifyPropertyChanged
-		{
-			return RemovePageFromCache(typeof(TViewModel));
-		}
-
-		public void ClearCache()
-		{
-			pageCache.Clear();
-		}
+		#region IPageFactoryNavigation implementation
 
 		public async Task<bool> PushPageAsync(IBasePage<INotifyPropertyChanged> page, bool animated = true)
 		{
-			AddToWeakCacheIfNotExists(page);
-
 			if (!page.PageFactoryPushing())
 				return false;
 
@@ -311,8 +386,6 @@ namespace DLToolkit.PageFactory
 
 		public async Task<bool> PushModalPageAsync(IBasePage<INotifyPropertyChanged> page, bool animated = true)
 		{
-			AddToWeakCacheIfNotExists(page);
-
 			if (!page.PageFactoryPushing())
 				return false;
 
@@ -323,53 +396,25 @@ namespace DLToolkit.PageFactory
 			return true;
 		}
 
-		public async Task<bool> PushPageFromCacheAsync<TViewModel>(bool resetViewModel = false, bool animated = true) where TViewModel : class, INotifyPropertyChanged
+		public async Task<bool> PushPageFromCacheAsync<TViewModel>(bool resetViewModel = false, bool animated = true) where TViewModel : class, INotifyPropertyChanged, new()
 		{
 			var page = GetPageFromCache<TViewModel>(resetViewModel);
 			return await PushPageAsync(page, animated);
 		}
 
-		public async Task<bool> PushPageFromCacheAsync<TViewModel>(TViewModel replaceViewModel, bool animated = true) where TViewModel : class, INotifyPropertyChanged
-		{
-			var page = GetPageFromCache<TViewModel>(false);
-			page.PageFactoryReplaceViewModel(replaceViewModel);
-			return await PushPageAsync(page, animated);
-		}
-
-		public async Task<bool> PushModalPageFromCacheAsync<TViewModel>(bool resetViewModel = false, bool animated = true) where TViewModel : class, INotifyPropertyChanged
+		public async Task<bool> PushModalPageFromCacheAsync<TViewModel>(bool resetViewModel = false, bool animated = true) where TViewModel : class, INotifyPropertyChanged, new()
 		{
 			var page = GetPageFromCache<TViewModel>(resetViewModel);
 			return await PushModalPageAsync(page, animated);
 		}
-
-		public async Task<bool> PushModalPageFromCacheAsync<TViewModel>(TViewModel replaceViewModel, bool animated = true) where TViewModel : class, INotifyPropertyChanged
-		{
-			var page = GetPageFromCache<TViewModel>(false);
-			page.PageFactoryReplaceViewModel(replaceViewModel);
-			return await PushModalPageAsync(page, animated);
-		}
-
-		public async Task<bool> PushPageAsNewAsync<TViewModel>(TViewModel replaceViewModel, bool saveOrReplaceInCache = false, bool animated = true) where TViewModel : class, INotifyPropertyChanged
-		{
-			var page = GetPageAsNewInstance<TViewModel>(saveOrReplaceInCache);
-			page.PageFactoryReplaceViewModel(replaceViewModel);
-			return await PushPageAsync(page, animated);
-		}
-
-		public async Task<bool> PushPageAsNewAsync<TViewModel>(bool saveOrReplaceInCache = false, bool animated = true) where TViewModel : class, INotifyPropertyChanged
+			
+		public async Task<bool> PushPageAsNewAsync<TViewModel>(bool saveOrReplaceInCache = false, bool animated = true) where TViewModel : class, INotifyPropertyChanged, new()
 		{
 			var page = GetPageAsNewInstance<TViewModel>(saveOrReplaceInCache);
 			return await PushPageAsync(page, animated);
 		}
 
-		public async Task<bool> PushModalPageAsNewAsync<TViewModel>(TViewModel replaceViewModel, bool saveOrReplaceInCache = false, bool animated = true) where TViewModel : class, INotifyPropertyChanged
-		{
-			var page = GetPageAsNewInstance<TViewModel>(saveOrReplaceInCache);
-			page.PageFactoryReplaceViewModel(replaceViewModel);
-			return await PushModalPageAsync(page, animated);
-		}
-
-		public async Task<bool> PushModalPageAsNewAsync<TViewModel>(bool saveOrReplaceInCache = false, bool animated = true) where TViewModel : class, INotifyPropertyChanged
+		public async Task<bool> PushModalPageAsNewAsync<TViewModel>(bool saveOrReplaceInCache = false, bool animated = true) where TViewModel : class, INotifyPropertyChanged, new()
 		{
 			var page = GetPageAsNewInstance<TViewModel>(saveOrReplaceInCache);
 			return await PushModalPageAsync(page, animated);
@@ -377,18 +422,16 @@ namespace DLToolkit.PageFactory
 
 		public bool InsertPageBefore(IBasePage<INotifyPropertyChanged> page, IBasePage<INotifyPropertyChanged> before)
 		{
-			AddToWeakCacheIfNotExists(page);
-
 			if (!page.PageFactoryInserting())
 				return false;
-			
+
 			NavigationPage.Navigation.InsertPageBefore((Page)page, (Page)before);
 			page.PageFactoryInserted();
 
 			return true;
 		}
 
-		public bool InsertPageBeforeFromCache<TViewModel, TBeforeViewModel>(bool resetViewModel = false) where TViewModel : class, INotifyPropertyChanged where TBeforeViewModel : class, INotifyPropertyChanged
+		public bool InsertPageBeforeFromCache<TViewModel, TBeforeViewModel>(bool resetViewModel = false) where TViewModel : class, INotifyPropertyChanged, new() where TBeforeViewModel : class, INotifyPropertyChanged, new()
 		{
 			var page = GetPageFromCache<TViewModel>(resetViewModel);
 			var before = GetPageFromCache<TBeforeViewModel>(false);
@@ -396,28 +439,10 @@ namespace DLToolkit.PageFactory
 			return InsertPageBefore(page, before);
 		}
 
-		public bool InsertPageBeforeFromCache<TViewModel, TBeforeViewModel>(TViewModel replaceViewModel) where TViewModel : class, INotifyPropertyChanged where TBeforeViewModel : class, INotifyPropertyChanged
-		{
-			var page = GetPageFromCache<TViewModel>(false);
-			var before = GetPageFromCache<TBeforeViewModel>(false);
-			page.PageFactoryReplaceViewModel(replaceViewModel);
-
-			return InsertPageBefore(page, before);
-		}
-
-		public bool InsertPageBeforeAsNew<TViewModel, TBeforeViewModel>(bool saveOrReplaceInCache = false) where TViewModel : class, INotifyPropertyChanged where TBeforeViewModel : class, INotifyPropertyChanged
+		public bool InsertPageBeforeAsNew<TViewModel, TBeforeViewModel>(bool saveOrReplaceInCache = false) where TViewModel : class, INotifyPropertyChanged, new() where TBeforeViewModel : class, INotifyPropertyChanged, new()
 		{
 			var page = GetPageAsNewInstance<TViewModel>(saveOrReplaceInCache);
 			var before = GetPageFromCache<TBeforeViewModel>(false);
-
-			return InsertPageBefore(page, before);
-		}
-
-		public bool InsertPageBeforeAsNew<TViewModel, TBeforeViewModel>(TViewModel replaceViewModel, bool saveOrReplaceInCache = false) where TViewModel : class, INotifyPropertyChanged where TBeforeViewModel : class, INotifyPropertyChanged
-		{
-			var page = GetPageAsNewInstance<TViewModel>(saveOrReplaceInCache);
-			var before = GetPageFromCache<TBeforeViewModel>(false);
-			page.PageFactoryReplaceViewModel(replaceViewModel);
 
 			return InsertPageBefore(page, before);
 		}
@@ -429,7 +454,7 @@ namespace DLToolkit.PageFactory
 			if (page != null && page.PageFactoryPopping())
 			{
 				if (resetViewModel)
-					page.PageFactoryResetViewModel();
+					ResetPageViewModel(page);
 
 				await NavigationPage.Navigation.PopAsync(animated);	
 				page.PageFactoryPopped();
@@ -447,7 +472,7 @@ namespace DLToolkit.PageFactory
 			if (page != null && page.PageFactoryPopping())
 			{
 				if (resetViewModel)
-					page.PageFactoryResetViewModel();
+					ResetPageViewModel(page);
 
 				await NavigationPage.Navigation.PopModalAsync(animated);	
 				page.PageFactoryPopped();
@@ -460,8 +485,6 @@ namespace DLToolkit.PageFactory
 
 		public bool RemovePage(IBasePage<INotifyPropertyChanged> pageToRemove)
 		{
-			AddToWeakCacheIfNotExists(pageToRemove);
-
 			var exists = NavigationPage.Navigation.NavigationStack.Contains((Page)pageToRemove);
 
 			if (exists && pageToRemove.PageFactoryRemoving())
@@ -473,21 +496,20 @@ namespace DLToolkit.PageFactory
 			return false;
 		}
 
-		public bool RemoveCachedPage<TViewModel>(bool removeFromCache = false, bool resetViewModel = false) where TViewModel : class, INotifyPropertyChanged
+		public bool RemoveCachedPage<TViewModel>(bool removeFromCache = false, bool resetViewModel = false) where TViewModel : class, INotifyPropertyChanged, new()
 		{
 			if (pageCache.ContainsKey(typeof(TViewModel)))
 			{
 				var page = GetPageFromCache<TViewModel>(resetViewModel);
 
 				if (removeFromCache)
-					RemovePageFromCache<TViewModel>();
-					
+					RemovePageTypeFromCache<TViewModel>();
+
 				return RemovePage(page);
 			}
 
 			return false;
 		}
-
 
 		public async Task PopPagesToRootAsync(bool clearCache = false, bool animated = true)
 		{
@@ -498,15 +520,13 @@ namespace DLToolkit.PageFactory
 				ClearCache();
 			}
 		}
-			
-		public void SetNewRootAndReset<TViewModel>() where TViewModel : class, INotifyPropertyChanged
+
+		public void SetNewRootAndReset<TViewModel>() where TViewModel : class, INotifyPropertyChanged, new()
 		{
 			ClearCache();
 			var page = GetPageAsNewInstance<TViewModel>(true);
 			var navPageType = NavigationPage.GetType();
-			navigationPage = (PFNavigationPage)Activator.CreateInstance(navPageType, page);
-
-			weakPageCache.Add(navigationPage.ViewModel, navigationPage);
+			navigationPage = (PFNavigationPage)Activator.CreateInstance(navPageType, page, true);
 
 			Application.Current.MainPage = NavigationPage;	
 		}

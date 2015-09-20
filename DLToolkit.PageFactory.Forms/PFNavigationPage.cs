@@ -5,14 +5,12 @@ namespace DLToolkit.PageFactory
 {
 	public class PFNavigationPage : NavigationPage<PFNavigationPage.NavigationPageViewModel>
 	{
-		public PFNavigationPage() : base()
+		public PFNavigationPage() : base(true)
 		{
-			PageFactoryResetViewModel();
 		}
 
-		public PFNavigationPage(Xamarin.Forms.Page root) : base(root)
+		public PFNavigationPage(Xamarin.Forms.Page root, bool forcedConstructor = true) : base(root, forcedConstructor)
 		{
-			PageFactoryResetViewModel();
 		}
 
 		public class NavigationPageViewModel : BaseViewModel
@@ -20,16 +18,16 @@ namespace DLToolkit.PageFactory
 		}
 	}
 
-	public class NavigationPage<TViewModel> : Xamarin.Forms.NavigationPage, IBasePage<TViewModel> where TViewModel : INotifyPropertyChanged
+	public class NavigationPage<TViewModel> : Xamarin.Forms.NavigationPage, IBasePage<TViewModel> where TViewModel : class, INotifyPropertyChanged, new()
 	{
-		public NavigationPage() : base()
-		{
-			PageFactoryResetViewModel();
+		public NavigationPage(bool forcedConstructor = true) : base()
+		{ 
+			PageFactory.ReplacePageViewModel(this, new TViewModel());
 		}
 
-		public NavigationPage(Xamarin.Forms.Page root) : base(root)
+		public NavigationPage(Xamarin.Forms.Page root, bool forcedConstructor = true) : base(root)
 		{
-			PageFactoryResetViewModel();
+			PageFactory.ReplacePageViewModel(this, new TViewModel());
 		}
 
 		public TViewModel ViewModel
@@ -38,24 +36,6 @@ namespace DLToolkit.PageFactory
 			{
 				return BindingContext == null ? default(TViewModel) : (TViewModel)BindingContext;
 			}
-			set
-			{
-				BindingContext = value;
-			}
-		}
-
-		public void PageFactoryResetViewModel()
-		{
-			TViewModel viewModel = (TViewModel)Activator.CreateInstance(typeof(TViewModel));
-			BindingContext = viewModel;	
-		}
-
-		public void PageFactoryReplaceViewModel(object newViewModel)
-		{
-			if (!(newViewModel is TViewModel))
-				throw new ArgumentException(string.Format("Wrong ViewModel type. Expected {0}", typeof(TViewModel).ToString()));
-
-			BindingContext = newViewModel;
 		}
 
 		public IPageFactory PageFactory

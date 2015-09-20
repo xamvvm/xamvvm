@@ -98,6 +98,74 @@ namespace DLToolkit.PageFactory
 		}
 
 		/// <summary>
+		/// Pops the pages to root.
+		/// </summary>
+		/// <returns>Page.</returns>
+		/// <param name="page">Page.</param>
+		/// <param name="animated">If set to <c>true</c> animation enabled.</param>
+		public static IBasePage<INotifyPropertyChanged> PopPagesToRoot(this  IBasePage<INotifyPropertyChanged> page, bool animated = true)
+		{
+			PageFactory.Factory.PopPagesToRootAsync(false, animated);
+			return page;
+		}
+
+		/// <summary>
+		/// Pops the pages to root.
+		/// </summary>
+		/// <returns>Page.</returns>
+		/// <param name="page">Page.</param>
+		/// <param name="animated">If set to <c>true</c> animation enabled.</param>
+		public static IBasePage<IBaseMessagable> PopPagesToRoot(this  IBasePage<IBaseMessagable> page, bool animated = true)
+		{
+			PageFactory.Factory.PopPagesToRootAsync(false, animated);
+			return page;
+		}
+
+		/// <summary>
+		/// Removes the messagable page instance from cache if instance exists in cache.
+		/// </summary>
+		/// <returns>Page.</returns>
+		/// <param name="page">Page.</param>
+		public static IBasePage<IBaseMessagable> RemovePageInstanceFromCache(this IBasePage<IBaseMessagable> page)
+		{
+			PageFactory.Factory.RemovePageInstanceFromCache(page);
+			return page;
+		}
+
+		/// <summary>
+		/// Removes the page instance from cache if instance exists in cache.
+		/// </summary>
+		/// <returns>Page.</returns>
+		/// <param name="page">Page.</param>
+		public static IBasePage<INotifyPropertyChanged> RemovePageInstanceFromCache(this IBasePage<INotifyPropertyChanged> page)
+		{
+			PageFactory.Factory.RemovePageInstanceFromCache(page);
+			return page;
+		}
+
+		/// <summary>
+		/// Removes the messagable page type from cache if type exists in cache.
+		/// </summary>
+		/// <returns>Page.</returns>
+		/// <param name="page">Page.</param>
+		public static IBasePage<IBaseMessagable> RemovePageTypeFromCache(this IBasePage<IBaseMessagable> page)
+		{
+			PageFactory.Factory.RemovePageTypeFromCache(page.GetType());
+			return page;
+		}
+
+		/// <summary>
+		/// Removes the page type from cache if type exists in cache.
+		/// </summary>
+		/// <returns>Page.</returns>
+		/// <param name="page">Page.</param>
+		public static IBasePage<INotifyPropertyChanged> RemovePageTypeFromCache(this IBasePage<INotifyPropertyChanged> page)
+		{
+			PageFactory.Factory.RemovePageTypeFromCache(page.GetType());
+			return page;
+		}
+
+		/// <summary>
 		/// Sends the message to page and view model.
 		/// </summary>
 		/// <returns>The message.</returns>
@@ -133,7 +201,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="arg">Argument.</param>
 		public static IBasePage<IBasePage> SendMessageToPage(this IBasePage<IBasePage> page, string message, object sender = null, object arg = null)
 		{
-			PageFactory.Factory.SendMessageByPage(page, message, sender, arg);
+			PageFactory.Factory.SendMessageToPage(page, message, sender, arg);
 			return page;
 		}
 
@@ -146,7 +214,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="arg">Argument.</param>
 		public static IBasePage<IBaseMessagable> SendMessageToPage(this IBasePage<IBaseMessagable> page, string message, object sender = null, object arg = null)
 		{
-			PageFactory.Factory.SendMessageByPage(page, message, sender, arg);
+			PageFactory.Factory.SendMessageToPage(page, message, sender, arg);
 			return page;
 		}
 
@@ -155,9 +223,9 @@ namespace DLToolkit.PageFactory
 		/// </summary>
 		/// <param name = "page">Page.</param>
 		/// <param name="newViewModel">New view model.</param>
-		public static IBasePage<INotifyPropertyChanged> ReplaceViewModel<TViewModel>(this IBasePage<INotifyPropertyChanged> page, TViewModel newViewModel) where TViewModel : class, INotifyPropertyChanged
+		public static IBasePage<INotifyPropertyChanged> ReplaceViewModel<TViewModel>(this IBasePage<INotifyPropertyChanged> page, TViewModel newViewModel) where TViewModel : class, INotifyPropertyChanged, new()
 		{
-			page.ReplaceViewModel(newViewModel);
+			PageFactory.Factory.ReplacePageViewModel(page, newViewModel);
 			return page;
 		}
 
@@ -166,9 +234,9 @@ namespace DLToolkit.PageFactory
 		/// </summary>
 		/// <param name = "page">Page.</param>
 		/// <param name="newViewModel">New view model.</param>
-		public static IBasePage<IBaseMessagable> ReplaceViewModel<TViewModel>(this IBasePage<IBaseMessagable> page, TViewModel newViewModel) where TViewModel : class, IBaseMessagable
+		public static IBasePage<IBaseMessagable> ReplaceViewModel<TViewModel>(this IBasePage<IBaseMessagable> page, TViewModel newViewModel) where TViewModel : class, IBaseMessagable, new()
 		{
-			page.ReplaceViewModel(newViewModel);
+			PageFactory.Factory.ReplacePageViewModel(page, newViewModel);
 			return page;
 		}
 
@@ -178,7 +246,7 @@ namespace DLToolkit.PageFactory
 		/// <param name = "page">Page.</param>
 		public static IBasePage<INotifyPropertyChanged> ResetViewModel(this IBasePage<INotifyPropertyChanged> page)
 		{
-			page.PageFactoryResetViewModel();
+			PageFactory.Factory.ResetPageViewModel(page);
 			return page;
 		}
 
@@ -188,7 +256,7 @@ namespace DLToolkit.PageFactory
 		/// <param name = "page">Page.</param>
 		public static IBasePage<IBaseMessagable> ResetViewModel(this IBasePage<IBaseMessagable> page)
 		{
-			page.PageFactoryResetViewModel();
+			PageFactory.Factory.ResetPageViewModel(page);
 			return page;
 		}
 
@@ -198,7 +266,7 @@ namespace DLToolkit.PageFactory
 		/// <returns>The page.</returns>
 		/// <param name="viewModel">View model.</param>
 		/// <typeparam name="TViewModel">View model type.</typeparam>
-		public static IBasePage<INotifyPropertyChanged> GetPage<TViewModel>(this TViewModel viewModel) where TViewModel : class, INotifyPropertyChanged
+		public static IBasePage<INotifyPropertyChanged> GetPage<TViewModel>(this TViewModel viewModel) where TViewModel : class, INotifyPropertyChanged, new()
 		{
 			return PageFactory.Factory.GetPageByViewModel(viewModel);
 		}
@@ -209,7 +277,7 @@ namespace DLToolkit.PageFactory
 		/// <returns>The page.</returns>
 		/// <param name="viewModel">View model.</param>
 		/// <typeparam name="TViewModel">View model type.</typeparam>
-		public static IBasePage<IBaseMessagable> GetMessagablePage<TViewModel>(this TViewModel viewModel) where TViewModel : class, IBaseMessagable
+		public static IBasePage<IBaseMessagable> GetMessagablePage<TViewModel>(this TViewModel viewModel) where TViewModel : class, IBaseMessagable, new()
 		{
 			return PageFactory.Factory.GetMessagablePageByViewModel(viewModel);
 		}

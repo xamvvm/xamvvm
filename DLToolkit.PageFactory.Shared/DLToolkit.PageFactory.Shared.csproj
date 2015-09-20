@@ -45,6 +45,7 @@
     <Compile Include="MessageConsumer.cs" />
     <Compile Include="IBaseMessagable.cs" />
     <Compile Include="PageFactoryCommand.cs" />
+    <Compile Include="IPageFactoryCaching.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>

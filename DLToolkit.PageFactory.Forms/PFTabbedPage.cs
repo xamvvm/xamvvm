@@ -3,11 +3,11 @@ using System.ComponentModel;
 
 namespace DLToolkit.PageFactory
 {
-	public class PFTabbedPage<TViewModel> : Xamarin.Forms.TabbedPage, IBasePage<TViewModel> where TViewModel : INotifyPropertyChanged
+	public class PFTabbedPage<TViewModel> : Xamarin.Forms.TabbedPage, IBasePage<TViewModel> where TViewModel : class, INotifyPropertyChanged, new()
 	{
-		public PFTabbedPage()
+		public PFTabbedPage(bool forcedConstructor = true)
 		{ 
-			PageFactoryResetViewModel();
+			PageFactory.ReplacePageViewModel(this, new TViewModel());
 		}
 
 		public TViewModel ViewModel
@@ -16,24 +16,6 @@ namespace DLToolkit.PageFactory
 			{
 				return BindingContext == null ? default(TViewModel) : (TViewModel)BindingContext;
 			}
-			set
-			{
-				BindingContext = value;
-			}
-		}
-
-		public void PageFactoryResetViewModel()
-		{
-			TViewModel viewModel = (TViewModel)Activator.CreateInstance(typeof(TViewModel));
-			BindingContext = viewModel;	
-		}
-
-		public void PageFactoryReplaceViewModel(object newViewModel)
-		{
-			if (!(newViewModel is TViewModel))
-				throw new ArgumentException(string.Format("Wrong ViewModel type. Expected {0}", typeof(TViewModel).ToString()));
-
-			BindingContext = newViewModel;
 		}
 
 		public IPageFactory PageFactory

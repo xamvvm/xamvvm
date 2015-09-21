@@ -323,7 +323,7 @@ namespace DLToolkit.PageFactory
 		/// <param name = "sender">Sender.</param>
 		/// <param name="message">Message.</param>
 		/// <param name="arg">Argument.</param>
-		public static IBasePage<IBasePage> SendMessageToPage(this IBasePage<IBasePage> page, string message, object sender = null, object arg = null)
+		public static IBasePage<INotifyPropertyChanged> SendMessageToPage(this IBasePage<INotifyPropertyChanged> page, string message, object sender = null, object arg = null)
 		{
 			PageFactory.Factory.SendMessageToPage(page, message, sender, arg);
 			return page;

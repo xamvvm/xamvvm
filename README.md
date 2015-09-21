@@ -1,13 +1,11 @@
-<div style="float: right">
-	<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PNL8H3JQ7XLP4">
-		<img src="http://img.shields.io/paypal/donate.png?color=green" alt="PayPal donate button" title="Donate to this project using Paypal"/>
-	</a>
-	<a href="https://blockchain.info/address/16CvewT3QyAc5ATTVNHQ2EomxLQPXxyKQ7" style="padding-left:2px">
-		<img src="http://img.shields.io/bitcoin/donate.png?color=green" alt="Bitcoin donate button" title="Donate to this project using Bitcoin"/>
-	</a>    
-</div>
-
-#<img style="vertical-align:middle" src="http://res.cloudinary.com/dqeaiomo8/image/upload/v1442721091/PageFactory-logo-128_mlrygy.png" width="128"> DLToolkit.PageFactory
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PNL8H3JQ7XLP4" style="float: right">
+	<img src="http://img.shields.io/paypal/donate.png?color=green" alt="PayPal donate button" title="Donate to this project using Paypal"/>
+</a>
+<a href="https://blockchain.info/address/16CvewT3QyAc5ATTVNHQ2EomxLQPXxyKQ7" style="float: right; padding-right:2px">
+	<img src="http://img.shields.io/bitcoin/donate.png?color=green" alt="Bitcoin donate button" title="Donate to this project using Bitcoin"/>
+</a>    
+	
+#<img style="vertical-align:middle" src="http://res.cloudinary.com/dqeaiomo8/image/upload/v1442721091/PageFactory-logo-128_mlrygy.png" width="64"/> DLToolkit.PageFactory
 
 ###Simple MVVM (Model, View, ViewModel) Framework for .Net - Xamarin.Forms compatible
 *Currently only implemented Factory is* ***Xamarin.Forms*** *PageFactory*

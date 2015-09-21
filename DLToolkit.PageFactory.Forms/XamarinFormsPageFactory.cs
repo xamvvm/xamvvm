@@ -234,8 +234,11 @@ namespace DLToolkit.PageFactory
 
 		public bool RemovePageTypeFromCache(Type viewModelType)
 		{
-			if (pageCache.ContainsKey(viewModelType))
+			IBasePage<INotifyPropertyChanged> page;
+
+			if (pageCache.TryGetValue(viewModelType, out page))
 			{
+				page.PageFactoryRemovingFromCache();
 				pageCache.Remove(viewModelType);
 				return true;
 			}
@@ -255,7 +258,11 @@ namespace DLToolkit.PageFactory
 			if (pageCache.TryGetValue(page.ViewModel.GetType(), out pageExists))
 			{
 				if (pageExists == page)
+				{
+					page.PageFactoryRemovingFromCache();
 					pageCache.Remove(page.ViewModel.GetType());
+				}
+					
 				return true;
 			}
 

@@ -75,7 +75,7 @@ public class HomeViewModel : BaseViewModel, INotifyPropertyChanged
 	public ICommand OpenPageCommand { get; private set; }
 }
 ```
-`BaseViewModel` inheritance is optional - `PageFactory.Factory` static methods could be used instead.
+**`BaseViewModel` inheritance is optional - `PF.Factory` static class methods could be used instead.**
 
 #### HomePage:
 ```C#

@@ -5,6 +5,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DLToolkit.PageFactory.Share
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DLToolkit.PageFactory.Forms", "DLToolkit.PageFactory.Forms\DLToolkit.PageFactory.Forms.csproj", "{A02E864B-6EA9-4D75-8B69-45D6D12FC2DF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6F14E403-8875-436E-9A30-EE03D9F4BE8B}"
+	ProjectSection(SolutionItems) = preProject
+		DLToolkit.PageFactory.Forms.nuspec = DLToolkit.PageFactory.Forms.nuspec
+		DLToolkit.PageFactory.Shared.nuspec = DLToolkit.PageFactory.Shared.nuspec
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,5 +25,7 @@ Global
 		{A02E864B-6EA9-4D75-8B69-45D6D12FC2DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A02E864B-6EA9-4D75-8B69-45D6D12FC2DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A02E864B-6EA9-4D75-8B69-45D6D12FC2DF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection
 EndGlobal

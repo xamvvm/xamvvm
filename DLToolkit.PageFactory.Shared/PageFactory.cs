@@ -9,7 +9,7 @@ namespace DLToolkit.PageFactory
 	/// <summary>
 	/// Page factory.
 	/// </summary>
-	public static class PageFactory
+	public static class PF
 	{ 
 		static IPageFactory instance;
 

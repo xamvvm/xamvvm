@@ -22,7 +22,7 @@ namespace DLToolkit.PageFactory
 		{
 			get
 			{
-				return DLToolkit.PageFactory.PageFactory.Factory;
+				return PF.Factory;
 			}
 		}
 

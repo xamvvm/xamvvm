@@ -19,7 +19,7 @@ namespace DLToolkit.PageFactory
 		/// <typeparam name="TViewModel">View model type.</typeparam>
 		public static IBasePage<INotifyPropertyChanged> GetPage<TViewModel>(this TViewModel viewModel) where TViewModel : class, INotifyPropertyChanged, new()
 		{
-			return PageFactory.Factory.GetPageByViewModel(viewModel);
+			return PF.Factory.GetPageByViewModel(viewModel);
 		}
 
 		/// <summary>
@@ -30,7 +30,7 @@ namespace DLToolkit.PageFactory
 		/// <typeparam name="TViewModel">View model type.</typeparam>
 		public static IBasePage<IBaseMessagable> GetMessagablePage<TViewModel>(this TViewModel viewModel) where TViewModel : class, IBaseMessagable, new()
 		{
-			return PageFactory.Factory.GetMessagablePageByViewModel(viewModel);
+			return PF.Factory.GetMessagablePageByViewModel(viewModel);
 		}
 
 		/// <summary>
@@ -39,7 +39,7 @@ namespace DLToolkit.PageFactory
 		/// <param name = "page">Page.</param>
 		public static IBasePage<INotifyPropertyChanged> ResetViewModel(this IBasePage<INotifyPropertyChanged> page)
 		{
-			PageFactory.Factory.ResetPageViewModel(page);
+			PF.Factory.ResetPageViewModel(page);
 			return page;
 		}
 
@@ -49,7 +49,7 @@ namespace DLToolkit.PageFactory
 		/// <param name = "page">Page.</param>
 		public static IBasePage<IBaseMessagable> ResetViewModel(this IBasePage<IBaseMessagable> page)
 		{
-			PageFactory.Factory.ResetPageViewModel(page);
+			PF.Factory.ResetPageViewModel(page);
 			return page;
 		}
 
@@ -60,7 +60,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="newViewModel">New view model.</param>
 		public static IBasePage<INotifyPropertyChanged> ReplaceViewModel<TViewModel>(this IBasePage<INotifyPropertyChanged> page, TViewModel newViewModel) where TViewModel : class, INotifyPropertyChanged, new()
 		{
-			PageFactory.Factory.ReplacePageViewModel(page, newViewModel);
+			PF.Factory.ReplacePageViewModel(page, newViewModel);
 			return page;
 		}
 
@@ -71,7 +71,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="newViewModel">New view model.</param>
 		public static IBasePage<IBaseMessagable> ReplaceViewModel<TViewModel>(this IBasePage<IBaseMessagable> page, TViewModel newViewModel) where TViewModel : class, IBaseMessagable, new()
 		{
-			PageFactory.Factory.ReplacePageViewModel(page, newViewModel);
+			PF.Factory.ReplacePageViewModel(page, newViewModel);
 			return page;
 		}
 
@@ -86,7 +86,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="animated">If set to <c>true</c> animation enabled.</param>
 		public static IBasePage<INotifyPropertyChanged> PushPage(this IBasePage<INotifyPropertyChanged> page, bool animated = true)
 		{
-			PageFactory.Factory.PushPageAsync(page, animated);
+			PF.Factory.PushPageAsync(page, animated);
 			return page;
 		}
 
@@ -97,7 +97,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="animated">If set to <c>true</c> animation enabled.</param>
 		public static IBasePage<IBaseMessagable> PushPage(this IBasePage<IBaseMessagable> page, bool animated = true)
 		{
-			PageFactory.Factory.PushPageAsync(page, animated);
+			PF.Factory.PushPageAsync(page, animated);
 			return page;
 		}
 
@@ -108,7 +108,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="animated">If set to <c>true</c> animation enabled.</param>
 		public static IBasePage<INotifyPropertyChanged> PushModalPage(this  IBasePage<INotifyPropertyChanged> page, bool animated = true)
 		{
-			PageFactory.Factory.PushModalPageAsync(page, animated);
+			PF.Factory.PushModalPageAsync(page, animated);
 			return page;
 		}
 
@@ -119,7 +119,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="animated">If set to <c>true</c> animation enabled.</param>
 		public static IBasePage<IBaseMessagable> PushModalPage(this  IBasePage<IBaseMessagable> page, bool animated = true)
 		{
-			PageFactory.Factory.PushModalPageAsync(page, animated);
+			PF.Factory.PushModalPageAsync(page, animated);
 			return page;
 		}
 
@@ -130,7 +130,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="animated">If set to <c>true</c> animation enabled.</param>
 		public static IBasePage<INotifyPropertyChanged> PopPage(this  IBasePage<INotifyPropertyChanged> page, bool animated = true)
 		{
-			PageFactory.Factory.PopPageAsync(false, animated);
+			PF.Factory.PopPageAsync(false, animated);
 			return page;
 		}
 
@@ -141,7 +141,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="animated">If set to <c>true</c> animation enabled.</param>
 		public static IBasePage<IBaseMessagable> PopPage(this  IBasePage<IBaseMessagable> page, bool animated = true)
 		{
-			PageFactory.Factory.PopPageAsync(false, animated);
+			PF.Factory.PopPageAsync(false, animated);
 			return page;
 		}
 
@@ -152,7 +152,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="animated">If set to <c>true</c> animation enabled.</param>
 		public static IBasePage<INotifyPropertyChanged> PopModalPage(this  IBasePage<INotifyPropertyChanged> page, bool animated = true)
 		{
-			PageFactory.Factory.PopModalPageAsync(false, animated);
+			PF.Factory.PopModalPageAsync(false, animated);
 			return page;
 		}
 
@@ -163,7 +163,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="animated">If set to <c>true</c> animation enabled.</param>
 		public static IBasePage<IBaseMessagable> PopModalPage(this  IBasePage<IBaseMessagable> page, bool animated = true)
 		{
-			PageFactory.Factory.PopModalPageAsync(false, animated);
+			PF.Factory.PopModalPageAsync(false, animated);
 			return page;
 		}
 
@@ -174,7 +174,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="page">Page.</param>
 		public static IBasePage<INotifyPropertyChanged> RemovePage(this  IBasePage<INotifyPropertyChanged> page)
 		{
-			PageFactory.Factory.RemovePage(page);
+			PF.Factory.RemovePage(page);
 			return page;
 		}
 
@@ -185,7 +185,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="page">Page.</param>
 		public static IBasePage<IBaseMessagable> RemovePage(this  IBasePage<IBaseMessagable> page)
 		{
-			PageFactory.Factory.RemovePage(page);
+			PF.Factory.RemovePage(page);
 			return page;
 		}
 
@@ -197,7 +197,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="before">Before.</param>
 		public static IBasePage<INotifyPropertyChanged> InsertPageBefore(this  IBasePage<INotifyPropertyChanged> page, IBasePage<INotifyPropertyChanged> before)
 		{
-			PageFactory.Factory.InsertPageBefore(page, before);
+			PF.Factory.InsertPageBefore(page, before);
 			return page;
 		}
 
@@ -209,7 +209,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="before">Before.</param>
 		public static IBasePage<IBaseMessagable> InsertPageBefore(this  IBasePage<IBaseMessagable> page, IBasePage<INotifyPropertyChanged> before)
 		{
-			PageFactory.Factory.InsertPageBefore(page, before);
+			PF.Factory.InsertPageBefore(page, before);
 			return page;
 		}
 
@@ -221,7 +221,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="animated">If set to <c>true</c> animation enabled.</param>
 		public static IBasePage<INotifyPropertyChanged> PopPagesToRoot(this  IBasePage<INotifyPropertyChanged> page, bool animated = true)
 		{
-			PageFactory.Factory.PopPagesToRootAsync(false, animated);
+			PF.Factory.PopPagesToRootAsync(false, animated);
 			return page;
 		}
 
@@ -233,7 +233,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="animated">If set to <c>true</c> animation enabled.</param>
 		public static IBasePage<IBaseMessagable> PopPagesToRoot(this  IBasePage<IBaseMessagable> page, bool animated = true)
 		{
-			PageFactory.Factory.PopPagesToRootAsync(false, animated);
+			PF.Factory.PopPagesToRootAsync(false, animated);
 			return page;
 		}
 
@@ -248,7 +248,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="page">Page.</param>
 		public static IBasePage<INotifyPropertyChanged> RemovePageInstanceFromCache(this IBasePage<INotifyPropertyChanged> page)
 		{
-			PageFactory.Factory.RemovePageInstanceFromCache(page);
+			PF.Factory.RemovePageInstanceFromCache(page);
 			return page;
 		}
 
@@ -259,7 +259,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="page">Page.</param>
 		public static IBasePage<IBaseMessagable> RemovePageInstanceFromCache(this IBasePage<IBaseMessagable> page)
 		{
-			PageFactory.Factory.RemovePageInstanceFromCache(page);
+			PF.Factory.RemovePageInstanceFromCache(page);
 			return page;
 		}
 			
@@ -270,7 +270,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="page">Page.</param>
 		public static IBasePage<INotifyPropertyChanged> RemovePageTypeFromCache(this IBasePage<INotifyPropertyChanged> page)
 		{
-			PageFactory.Factory.RemovePageTypeFromCache(page.GetType());
+			PF.Factory.RemovePageTypeFromCache(page.GetType());
 			return page;
 		}
 
@@ -281,7 +281,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="page">Page.</param>
 		public static IBasePage<IBaseMessagable> RemovePageTypeFromCache(this IBasePage<IBaseMessagable> page)
 		{
-			PageFactory.Factory.RemovePageTypeFromCache(page.GetType());
+			PF.Factory.RemovePageTypeFromCache(page.GetType());
 			return page;
 		}
 
@@ -299,7 +299,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="sender">Sender.</param>
 		public static IBasePage<IBaseMessagable> SendMessageToPageAndViewModel(this IBasePage<IBaseMessagable> page, string message, object sender = null, object arg = null)
 		{
-			PageFactory.Factory.SendMessageByPage(MessageConsumer.PageAndViewModel, page, message, sender, arg);
+			PF.Factory.SendMessageByPage(MessageConsumer.PageAndViewModel, page, message, sender, arg);
 			return page;
 		}
 
@@ -312,7 +312,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="arg">Argument.</param>
 		public static IBasePage<IBaseMessagable> SendMessageToViewModel(this IBasePage<IBaseMessagable> page, string message, object sender = null, object arg = null)
 		{
-			PageFactory.Factory.SendMessageByPage(MessageConsumer.ViewModel, page, message, sender, arg);
+			PF.Factory.SendMessageByPage(MessageConsumer.ViewModel, page, message, sender, arg);
 			return page;
 		}
 
@@ -325,7 +325,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="arg">Argument.</param>
 		public static IBasePage<INotifyPropertyChanged> SendMessageToPage(this IBasePage<INotifyPropertyChanged> page, string message, object sender = null, object arg = null)
 		{
-			PageFactory.Factory.SendMessageToPage(page, message, sender, arg);
+			PF.Factory.SendMessageToPage(page, message, sender, arg);
 			return page;
 		}
 
@@ -338,7 +338,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="arg">Argument.</param>
 		public static IBasePage<IBaseMessagable> SendMessageToPage(this IBasePage<IBaseMessagable> page, string message, object sender = null, object arg = null)
 		{
-			PageFactory.Factory.SendMessageToPage(page, message, sender, arg);
+			PF.Factory.SendMessageToPage(page, message, sender, arg);
 			return page;
 		}
 

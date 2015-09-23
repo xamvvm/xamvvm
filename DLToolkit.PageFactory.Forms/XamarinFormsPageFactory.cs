@@ -45,7 +45,7 @@ namespace DLToolkit.PageFactory
 			
 		public NavigationPage Init<TMainPageViewModel, TNavigationPage>(params Assembly[] additionalPagesAssemblies) where TMainPageViewModel : class, INotifyPropertyChanged where TNavigationPage : PFNavigationPage
 		{
-			PageFactory.SetPageFactory(this);
+			PF.SetPageFactory(this);
 
 			viewModelsTypes.Clear();
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 using System.Diagnostics;
+using System.Linq.Expressions;
 
 namespace DLToolkit.PageFactory
 {
@@ -10,7 +11,7 @@ namespace DLToolkit.PageFactory
 	public class PageFactoryCommand<T> : ICommand
 	{
 		readonly Action<T> execute;
-		readonly Func<bool> canExecute;
+		readonly Func<T, bool> canExecute;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="DLToolkit.PageFactory.PageFactoryCommand"/> class.
@@ -25,7 +26,7 @@ namespace DLToolkit.PageFactory
 		/// </summary>
 		/// <param name="execute">Execute.</param>
 		/// <param name="canExecute">Can execute.</param>
-		public PageFactoryCommand(Action<T> execute, Func<bool> canExecute)
+		public PageFactoryCommand(Action<T> execute, Func<T, bool> canExecute)
 		{
 			if (execute == null)
 			{
@@ -61,7 +62,7 @@ namespace DLToolkit.PageFactory
 		[DebuggerStepThrough]
 		public bool CanExecute(object parameter)
 		{
-			return canExecute == null || canExecute();
+			return canExecute == null || canExecute((T)parameter);
 		}
 
 		/// <summary>

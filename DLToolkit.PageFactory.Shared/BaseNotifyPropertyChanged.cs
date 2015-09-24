@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace DLToolkit.PageFactory
 {
@@ -28,42 +29,65 @@ namespace DLToolkit.PageFactory
 		}
 
 		/// <summary>
-		/// Sets the field.
+		/// Sets the field and calls OnPropertyChanged when field value was changed. 
 		/// </summary>
-		/// <returns><c>true</c>, if field was set, <c>false</c> otherwise.</returns>
+		/// <returns><c>true</c>, if field was changed, <c>false</c> otherwise.</returns>
 		/// <param name="field">Field.</param>
 		/// <param name="value">Value.</param>
-		/// <param name="selectorExpression">Property name selector expression.</param>
-		/// <param name="additonalPropertiesNotify">Additonal properties names to notify when changed.</param>
+		/// <param name="propertyNameSelector">Property name selector expression.</param>
+		/// <param name="additonalPropertiesToNotify">Additonal properties names to notify when changed.</param>
 		/// <typeparam name="T">Property type.</typeparam>
-		protected bool SetField<T>(ref T field, T value, Expression<Func<T>> selectorExpression, params Expression<Func<object>>[] additonalPropertiesNotify)
+		protected bool SetField<T>(ref T field, T value, Expression<Func<T>> propertyNameSelector, params Expression<Func<object>>[] additonalPropertiesToNotify)
 		{
 			if (EqualityComparer<T>.Default.Equals(field, value)) 
 				return false;
 
 			field = value;
-			NotifyPropertyChanged(selectorExpression);
+			NotifyPropertyChanged(propertyNameSelector);
 
-			foreach (var item in additonalPropertiesNotify)
+			foreach (var item in additonalPropertiesToNotify)
 				NotifyPropertyChanged(item);
 
 			return true;
 		}
 
 		/// <summary>
-		/// Sets the field.
+		/// Sets the field and calls OnPropertyChanged when field value was changed. 
 		/// </summary>
-		/// <returns><c>true</c>, if field was set, <c>false</c> otherwise.</returns>
+		/// <returns><c>true</c>, if field was changed, <c>false</c> otherwise.</returns>
 		/// <param name="field">Field.</param>
 		/// <param name="value">Value.</param>
-		/// <param name="selectorExpression">Property name selector expression.</param>
-		/// <param name="propertyChanged">Action if property was changed.</param>
-		/// <param name="additonalPropertiesNotify">Additonal properties names to notify when changed.</param>
+		/// <param name="propertyName">Property name.</param>
 		/// <typeparam name="T">Property type.</typeparam>
-		protected bool SetField<T>(ref T field, T value, Expression<Func<T>> selectorExpression, 
-			Action propertyChanged, params Expression<Func<object>>[] additonalPropertiesNotify)
+		protected bool SetField<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
 		{
-			bool changed = SetField(ref field, value, selectorExpression, additonalPropertiesNotify);
+			if (string.IsNullOrEmpty(propertyName))
+				throw new ArgumentNullException("propertyName cannot be null");
+			
+			if (EqualityComparer<T>.Default.Equals(field, value)) 
+				return false;
+
+			field = value;
+			OnPropertyChanged(propertyName);
+
+			return true;
+		}
+
+		/// <summary>
+		/// Sets the field and calls OnPropertyChanged when field value was changed. 
+		/// Executes specified Action if field value was changed
+		/// </summary>
+		/// <returns><c>true</c>, if field was changed, <c>false</c> otherwise.</returns>
+		/// <param name="field">Field.</param>
+		/// <param name="value">Value.</param>
+		/// <param name="propertyNameSelector">Property name selector expression.</param>
+		/// <param name="propertyChanged">Action if property was changed.</param>
+		/// <param name="additonalPropertiesToNotify">Additonal properties names to notify when changed.</param>
+		/// <typeparam name="T">Property type.</typeparam>
+		protected bool SetField<T>(ref T field, T value, Expression<Func<T>> propertyNameSelector, 
+			Action propertyChanged, params Expression<Func<object>>[] additonalPropertiesToNotify)
+		{
+			bool changed = SetField(ref field, value, propertyNameSelector, additonalPropertiesToNotify);
 
 			if (changed)
 			{
@@ -74,20 +98,31 @@ namespace DLToolkit.PageFactory
 		}
 
 		/// <summary>
-		/// Notifies the property changed.
+		/// Notifies the property has changed.
 		/// </summary>
-		/// <param name="selectorExpression">Property name selector expression.</param>
+		/// <param name="propertyNameSelector">Property name selector expression.</param>
 		/// <typeparam name="T">Property type.</typeparam>
-		protected void NotifyPropertyChanged<T>(Expression<Func<T>> selectorExpression)
+		protected void NotifyPropertyChanged<T>(Expression<Func<T>> propertyNameSelector)
 		{
-			if (selectorExpression == null)
+			OnPropertyChanged(GetPropertyNameFromExpression(propertyNameSelector));
+		}
+
+		/// <summary>
+		/// Gets the property name from expression.
+		/// </summary>
+		/// <returns>The property name from expression.</returns>
+		/// <param name="propertyNameSelector">Property name selector.</param>
+		/// <typeparam name="T">Property type type parameter.</typeparam>
+		protected string GetPropertyNameFromExpression<T>(Expression<Func<T>> propertyNameSelector)
+		{
+			if (propertyNameSelector == null)
 				throw new ArgumentNullException("NotifyPropertyChanged Selector Expression");
-			var me = selectorExpression.Body as MemberExpression;
+			var me = propertyNameSelector.Body as MemberExpression;
 
 			// Nullable properties can be nested inside of a convert function
 			if (me == null)
 			{
-				var ue = selectorExpression.Body as UnaryExpression;
+				var ue = propertyNameSelector.Body as UnaryExpression;
 				if (ue != null)
 					me = ue.Operand as MemberExpression;
 			}
@@ -95,11 +130,11 @@ namespace DLToolkit.PageFactory
 			if (me == null)
 				throw new ArgumentException("The body must be a member expression");
 
-			OnPropertyChanged(me.Member.Name);
+			return me.Member.Name;
 		}
 
 		/// <summary>
-		/// Notifies all properties changed.
+		/// Notifies that all properties have changed.
 		/// </summary>
 		public void NotifyAllPropertiesChanged()
 		{

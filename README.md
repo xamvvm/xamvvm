@@ -3,7 +3,9 @@
 ###Simple MVVM (Model, View, ViewModel) Framework for .Net - Xamarin.Forms compatible
 *Currently only implemented Factory is* ***Xamarin.Forms*** *PageFactory*
 
-The main reason for making PageFactory was that I needed a very simple to use MVVM library which would free me from implementing the same things for any Xamarin.Forms project I created all over again. Those things were eg. Page Caching, ViewModel oriented Navigation, INotifyPropertyChanged and ICommand implementations, ViewModel and Page Messaging, etc. I also wanted my ViewModels to be dependency free.
+The main reason for making PageFactory was that I needed a very simple to use MVVM library which would free me from implementing the same things for any Xamarin.Forms project I created all over again. Those things were Page Caching, ViewModel oriented Navigation, INotifyPropertyChanged and ICommand implementations, Messaging between Pages and ViewModels. I also wanted my ViewModels to be dependency free (not forcing any concrete class inheritance).
+
+That’s it. It’s very simple, no dependency injections, no platform specific code - just plain PCL. What comes with it, it’s very very lightweight.
 
 ## Features
 
@@ -14,11 +16,11 @@ The main reason for making PageFactory was that I needed a very simple to use MV
 - **Pure ViewModels - only requirement is parameterless constructor and `INotifyPropertyChanged` or `IBaseMessagable` implementation (when view model has to receive messages)**
 - **Fluent style extensions methods to write less code**
 - Helper classes with `INotifyPropertyChanged` implementation *(Fody `INotifyPropertyChanged` compatible)*:
-  - BaseModel for models (implements `INotifyPropertyChanged`)
-  - BaseViewModel for view models (implements `INotifyPropertyChanged`, `IBaseViewModel` (PageFactory helpers), `IBaseMessagable` (needed for PageFactory view model messaging support)
+  - `BaseViewModel` for ViewModels. It implements `INotifyPropertyChanged`, `IBaseMessagable`) and has PageFactory property which returns `PF.Factory` instance.
+  - `BaseModel` for Models.  It implements `INotifyPropertyChanged`.
 - Every page has access to typed ViewModel instance which is automatically instantiated
 - Pages have override methods to respond / intercept navigation (eg. PageFactoryPushing, PageFactoryPushed, etc.) 
-- Dependency free ICommand implementation for use with ViewModels
+- Dependency free ICommand implementation
 - PCL compatible with dependency free DLToolkit.PageFactory.Shared.dll for ViewModels
 
 ## NuGet
@@ -26,8 +28,10 @@ The main reason for making PageFactory was that I needed a very simple to use MV
 - Dependency Free: [https://www.nuget.org/packages/DLToolkit.PageFactory.Shared/](https://www.nuget.org/packages/DLToolkit.PageFactory.Shared/)
 - Xamarin.Forms: [https://www.nuget.org/packages/DLToolkit.PageFactory.Forms/](https://www.nuget.org/packages/DLToolkit.PageFactory.Forms/)
 
+## Blog post
+[http://daniel-luberda.github.io/20150922/Page-Factory-MVVM-library-for-Xamarin-Forms/](http://daniel-luberda.github.io/20150922/Page-Factory-MVVM-library-for-Xamarin-Forms/)
+
 ## Basic example
-*(Instead of using SetField method you could use Fody INotifyPropertyChanged)*
 
 #### Initialization
 ```C#
@@ -41,7 +45,7 @@ public App()
 
 #### HomeViewModel:
 ```C#
-public class HomeViewModel : BaseViewModel, INotifyPropertyChanged
+public class HomeViewModel : BaseViewModel
 {
 	public HomeViewModel()
 	{
@@ -57,25 +61,23 @@ public class HomeViewModel : BaseViewModel, INotifyPropertyChanged
 				.PushPage();
 		});	
 	}
+	
+	public IPageFactoryCommand OpenPageCommand { get; private set; }
 
-	string labelText;
 	public string LabelText
 	{
-		get { return labelText; }
-		set { SetField(ref labelText, value, () => LabelText); }
+		get { return GetField<string>(); }
+		set { SetField(value); }
 	}
 
-	string pageTitle;
 	public string PageTitle
 	{
-		get { return pageTitle; }
-		set { SetField(ref pageTitle, value, () => PageTitle); }
+		get { return GetField<string>(); }
+		set { SetField(value); }
 	}
-
-	public ICommand OpenPageCommand { get; private set; }
 }
 ```
-**`BaseViewModel` inheritance is optional - `PF.Factory` static class methods could be used instead.**
+***`BaseViewModel` inheritance is optional - `PF.Factory` static class methods could be used instead.***
 
 #### HomePage:
 ```C#
@@ -109,7 +111,7 @@ public class HomePage : PFContentPage<HomeViewModel>
 
 #### DetailsViewModel:
 ```C#
-public class DetailsViewModel : BaseViewModel, , INotifyPropertyChanged
+public class DetailsViewModel : BaseViewModel
 {
 	public DetailsViewModel()
 	{
@@ -119,20 +121,19 @@ public class DetailsViewModel : BaseViewModel, , INotifyPropertyChanged
 			this.GetPage().PopPage();
 		});	
 	}
-
-	string pageTitle;
-	public string PageTitle
-	{
-		get { return pageTitle; }
-		set { SetField(ref pageTitle, value, () => PageTitle); }
-	}
-
-	public ICommand PopPageCommand { get; private set; }
-
+	
 	public override void PageFactoryMessageReceived(string message, object sender, object arg)
 	{
 		Console.WriteLine("DetailsViewModel received {0} message from {1} with arg of {2} type",  
 			message, sender.GetType(), arg.GetType());
+	}	
+	
+	public IPageFactoryCommand PopPageCommand { get; private set; }
+	
+	public string PageTitle
+	{
+		get { return GetField<string>(); }
+		set { SetField(value); }
 	}
 }
 ```
@@ -161,78 +162,135 @@ public class DetailsPage : PFContentPage<DetailsViewModel>
 	}
 }
 ```
+**That's all! You'll have access to all PageFactory features!**
 
-## Page Caching
-- Cache can hold only one instance of ViewModel of the same type (with its Page)
-- You can create additional Page instances but they wouldn't be cached or they would replace existsting cache entry (PageFactory [AsNew] methods with appropriate parameters)
-- `GetPageFromCache`, `GetMessagablePageFromCache`, `GetPageAsNewInstance`, `GetMessagablePageAsNewInstance`, `GetPageByViewModel`, `GetMessagablePageByViewModel` - those methods return platform independed pages (`IBasePage<INotifyPropertyChanged>` or `IBasePage<IBaseMessagable>` instances) and are used as a base entry for fluid extension methods (you can also get Page from ViewModel with `.GetPage()` and `.GetMessagablePage()` extension methods).
+## PageFactory Basics
 
-##### Examples:
+### Pages and ViewModels
+
+`PageFactory` uses `Pages` and `ViewModels`. 
+
+- Every `Page` implements `IBasePage<INotifyPropertyChanged>`, the generic argument is a `ViewModel` type
+- Every `ViewModel` must have a parameterless constructor and implement `INotifyPropertyChanged` (if only `Page` has to receive messages) or `IBaseMessagable` (if both `Page` and `ViewModel` have to receive messages). There are no other requirements.
+
+### PageFactory Factory instance
+
+You can get PageFactory instance:
+
+- using **`PageFactory`** property in `Page` or `ViewModel` (if it inherits from `BaseViewModel`)
+- using static class property: **`PF.Factory`**
+
+Some basic `PageFactory` methods you should know: 
+
+- **`GetPageFromCache<TViewModel>()`** - Gets (or creates) cached Page instance.
+- **`GetMessagablePageFromCache<TViewModel>()`** - Gets (or creates) cached Page instance with ViewModel messaging support.
+- **`GetPageAsNewInstance<TViewModel>()`** - Creates new Page Instance. New instance can replace existing cached Page instance (`bool saveOrReplaceInCache` argument).
+- **`GetMessagablePageAsNewInstance<TViewModel>()`** - Creates new Page Instance with ViewModel messaging support. New instance can replace existing cached Page instance (`bool saveOrReplaceInCache = false` method parameter).
+
+Cache can hold only one instance of ViewModel of the same type (with its Page). You can remove cache for a ViewModel type or replace it with another instance.
+
+#### Example:
 ```C#
-var page1 = PageFactory.GetPageAsNewInstance(saveOrReplaceInCache: true).PushPage();
-var page2 = PageFactory.GetMessagablePageFromCache<HomeViewModel>().PopPage();
+var page = PageFactory.GetPageAsNewInstance<HomeViewModel>(saveOrReplaceInCache: true);
+var theSamePageFromCache = PageFactory.GetMessagablePageFromCache<HomeViewModel>();
 ```
-##View Models
-- ViewModel must have a parameterless constructor and implement INotifyPropertyChanged or IBaseMessagable
-- If you want to receive messages also on ViewModel it must also implement IBaseMessagable interface (wuthout it, only Page can receive messages)
-- BaseViewModel class implements both interfaces
+### ViewModels
+- ViewModel must have a parameterless constructor and implement `INotifyPropertyChanged` or `IBaseMessagable`
+- If you want to receive messages also on ViewModel it must also implement `IBaseMessagable` interface (without it, only Page can receive messages)
+- `BaseViewModel` class implements both interfaces
 - You can get the Page from ViewModel:
   -  Static methods: `GetPageByViewModel` or `GetMessagablePageByViewModel`
   -  Extension methods `.GetPage()` and `.GetMessagablePage()`
 - All pages have access to their ViewModels through `ViewModel` property 
 
-## Messaging
+### Messaging
 
-#### Page
+All PageFactory `Pages` have messaging enabled. If you also want `ViewModel` to receive messages it must implement `IBaseMessagable` interface (`BaseViewModel` does it). 
 
-- All PageFactory Pages have messaging enabled. Just override PageFactoryMessageReceived method.
-- If you want to create custom pages just inherit from `PF[PageType]`.
+#### Receiving messages
 
-```C#
-public override void PageFactoryMessageReceived(string message, object sender, object arg)
-{
-	Console.WriteLine("Message received {0} message from {1} with arg of {2} type",  
-		message, sender.GetType(), arg.GetType());
-}
-```
-
-#### ViewModel
-
-- For messaging support ViewModel needs to implement `IBaseMessagable` interface. When using `BaseViewModel` it's already implemented. 
-- You can use it by overriding PageFactoryMessageReceived method:
+To receive messages just override `PageFactoryMessageReceived` method (either on Page or ViewModel):
 
 ```C#
 public override void PageFactoryMessageReceived(string message, object sender, object arg)
 {
-	Console.WriteLine("Message received {0} message from {1} with arg of {2} type",  
-		message, sender.GetType(), arg.GetType());
+  Console.WriteLine("HomeViewModel received {0} message from {1} with arg = {2}",  
+	  message, sender == null ? "null" : sender.GetType().ToString(), arg ?? "null");
 }
 ```
 
 #### Sending messages
 
-- To send messages just use PageFactory static Factory methods or use fluent extensions on Page (you can also get Page from ViewModel with `.GetMessagablePage()` extension method):
-  - Static methods: `SendMessageByPage` (Can be used for page only messaging when ViewModel doesn't implement `IBaseMessagable`), `SendMessageByViewModel`, `SendMessageToCached`
-  - Page extension methods: `SendMessageToPageAndViewModel`, `SendMessageToViewModel`, `SendMessageToPage`
+To send messages use:
 
-##### Examples:
+- PageFactory static methods: `SendMessageByPage`, `SendMessageByViewModel`, `SendMessageToCached`
+- Page extension methods: `SendMessageToPageAndViewModel`, `SendMessageToViewModel`, `SendMessageToPage`
+
 ```C#
-PageFactory.GetMessagablePageFromCache<DetailsViewModel>()
-	.ResetViewModel()
-	.SendMessageToViewModel("ViewModelTestMessage", sender: this, arg: new object())
-	.SendMessageToPage("PageTestMessage", sender: this, arg: new object());
+PageFactory.GetMessagablePageAsNewInstance<HomeViewModel>()
+  .SendMessageToPageAndViewModel("Message", this, "arg")
+  
+PageFactory.GetPageFromCache<DetailsViewModel>()
+	.SendMessageToPage("Message", this, "arg");
 ```
 
-## Navigation
+```C#
+PageFactory.SendMessageToCached<HomeViewModel>(
+	MessageConsumer.PageAndViewModel, "Message", this, "arg");
 
-- `PushPage`, `PopPage`, `InsertPageBefore`, `RemovePage`, `PopPagesToRoot`, `SetNewRootAndReset` through static and extension methods
-- Pages have overridable methods which are called when navigating:
-  - `PageFactoryPushed`, `PageFactoryPopped`, `PageFactoryRemoved`, `PageFactoryInserted` - called after successful navigation
-  - `PageFactoryPushing`, `PageFactoryPopping`, `PageFactoryRemoving`, `PageFactoryInserting` - called before navigation and can cancel navigation when `false` is returned
-  - `PageFactoryRemovingFromCache` - called when the page is being removed from cache
+var page = PageFactory.GetPageFromCache<DetailsViewModel>();
+PageFactory.SendMessageToPage(Pages, "Message", this, "arg");
+```
 
-## PageFactoryCommand
+### Navigation
+
+#### Navigating
+
+To navigate use this methods:
+
+- PageFactory static methods: `PushPageAsync`, `PopPageAsync`, `InsertPageBefore`, `RemovePage`, `PopPagesToRootAsync`, `SetNewRootAndReset`
+- Page extension methods: `PushPage`, `PopPage`, `InsertPageBefore`, `RemovePage`, `PopPagesToRoot`, `SetNewRootAndReset`
+
+```C#
+var page = PageFactory.GetPageAsNewInstance<DetailsPage>().PushPage();
+await Task.Delay(5000);
+page.PopPage();
+```
+
+```C#
+var page = PageFactory.GetPageAsNewInstance<DetailsPage>();
+await PageFactory.PushPageAsync(page);
+await Task.Delay(5000);
+await PageFactory.PopPageAsync();
+```
+
+#### Navigation interception
+
+You can intercept navigation. Just override one of this `Page` methods:
+
+- `PageFactoryPushed`, `PageFactoryPopped`, `PageFactoryRemoved`, `PageFactoryInserted` - called after successful navigation
+- `PageFactoryPushing`, `PageFactoryPopping`, `PageFactoryRemoving`, `PageFactoryInserting` - called before navigation. If `false` is returned, navigation will be cancelled
+- `PageFactoryRemovingFromCache` - called when the page is being removed from cache
+
+```C#
+public override void PageFactoryPopped()
+{
+	// Removes Page instance from PageFactory cache (it will be no longer needed)
+	this.RemovePageInstanceFromCache();
+}
+```
+
+```C#
+public override bool PageFactoryPushing()
+{
+	// Page cannot be pushed if SomeCheckIsValid condition isn't met!!!
+	if (!SomeCheckIsValid)
+		return false;
+
+	return true;
+}
+```
+
+### PageFactoryCommand, IPageFactoryCommand
 - Generic PCL ICommand implementation
-- Supports generic CommandParameters
-
-*More documentation coming soon...*
+- Supports generic command parameters

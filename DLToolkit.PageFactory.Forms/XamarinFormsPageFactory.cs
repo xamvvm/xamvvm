@@ -43,7 +43,7 @@ namespace DLToolkit.PageFactory
 			}
 		}
 			
-		public NavigationPage Init<TMainPageViewModel, TNavigationPage>(params Assembly[] additionalPagesAssemblies) where TMainPageViewModel : class, INotifyPropertyChanged where TNavigationPage : PFNavigationPage
+		public NavigationPage Init<TMainPageViewModel, TNavigationPage>(params Assembly[] additionalPagesAssemblies) where TMainPageViewModel : class, INotifyPropertyChanged where TNavigationPage : NavigationPage, IBasePage<INotifyPropertyChanged>
 		{
 			PF.SetPageFactory(this);
 
@@ -87,13 +87,13 @@ namespace DLToolkit.PageFactory
 			}
 
 			var page = GetPageFromCache(typeof(TMainPageViewModel));
-			navigationPage = (PFNavigationPage)Activator.CreateInstance(typeof(TNavigationPage), page, true);
+			navigationPage = (NavigationPage)Activator.CreateInstance(typeof(TNavigationPage), page, true);
 
 			return NavigationPage;
 		}
 
-		PFNavigationPage navigationPage = null;
-		public PFNavigationPage NavigationPage
+		NavigationPage navigationPage = null;
+		public NavigationPage NavigationPage
 		{
 			get
 			{
@@ -201,7 +201,7 @@ namespace DLToolkit.PageFactory
 
 			if (saveOrReplaceInCache && pageCache.ContainsKey(viewModelType))
 			{
-				pageCache.Remove(viewModelType);
+				RemovePageTypeFromCache(viewModelType);
 				pageCache.Add(viewModelType, page);
 			}
 
@@ -271,6 +271,11 @@ namespace DLToolkit.PageFactory
 
 		public void ClearCache()
 		{
+			foreach (var page in pageCache.Values)
+			{
+				page.PageFactoryRemovingFromCache();	
+			}
+
 			pageCache.Clear();
 		}
 
@@ -533,7 +538,7 @@ namespace DLToolkit.PageFactory
 			ClearCache();
 			var page = GetPageAsNewInstance<TViewModel>(true);
 			var navPageType = NavigationPage.GetType();
-			navigationPage = (PFNavigationPage)Activator.CreateInstance(navPageType, page, true);
+			navigationPage = (NavigationPage)Activator.CreateInstance(navPageType, page, true);
 
 			Application.Current.MainPage = NavigationPage;	
 		}

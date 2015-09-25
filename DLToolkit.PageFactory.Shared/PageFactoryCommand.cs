@@ -8,7 +8,7 @@ namespace DLToolkit.PageFactory
 	/// <summary>
 	/// PageFactory ICommand implementation.
 	/// </summary>
-	public class PageFactoryCommand<T> : ICommand
+	public class PageFactoryCommand<T> : IPageFactoryCommand
 	{
 		readonly Action<T> execute;
 		readonly Func<T, bool> canExecute;
@@ -78,7 +78,7 @@ namespace DLToolkit.PageFactory
 	/// <summary>
 	/// PageFactory ICommand implementation.
 	/// </summary>
-	public class PageFactoryCommand : ICommand
+	public class PageFactoryCommand : IPageFactoryCommand
 	{
 		readonly Action execute;
 		readonly Func<bool> canExecute;

@@ -31,7 +31,101 @@ That’s it. It’s very simple, no dependency injections, no platform specific 
 ## Blog post
 [http://daniel-luberda.github.io/20150922/Page-Factory-MVVM-library-for-Xamarin-Forms/](http://daniel-luberda.github.io/20150922/Page-Factory-MVVM-library-for-Xamarin-Forms/)
 
-## Basic example
+## Basic XAML example
+
+![](http://res.cloudinary.com/dqeaiomo8/image/upload/c_scale,w_250/v1444343288/PageFactory/Examples/xaml_simple1.png) ![](http://res.cloudinary.com/dqeaiomo8/image/upload/c_scale,w_250/v1444343288/PageFactory/Examples/xaml_simple2.png)
+
+#### App.cs:
+
+    public class App : Application
+    {
+    	public App()
+    	{
+    		MainPage = new XamarinFormsPageFactory().Init<XamlFirstViewModel, PFNavigationPage>();
+    	}	
+    }
+
+#### XamlFirstPage.cs:
+
+    public partial class XamlFirstPage : PFContentPage<XamlFirstViewModel>
+    {
+    	public XamlFirstPage()
+    	{
+    		InitializeComponent();
+    	}
+    }
+
+#### XamlFirstPage.xaml:
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <local:PFContentPage 
+    	xmlns="http://xamarin.com/schemas/2014/forms" 
+    	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    	x:Class="PageFactoryTest.Pages.XamlFirstPage"
+    	xmlns:local="clr-namespace:DLToolkit.PageFactory"
+    	x:TypeArguments="PageFactoryTest.ViewModels.XamlFirstViewModel">
+    	<ContentPage.Content>
+    		<Button Text="Open Second Page (and send message)" Command="{Binding OpenSecondPageCommand}"/>
+    	</ContentPage.Content>
+    </local:PFContentPage>
+
+#### XamlFirstViewModel.cs:
+
+    public class XamlFirstViewModel : BaseViewModel
+    {
+    	public XamlFirstViewModel()
+    	{
+    		OpenSecondPageCommand = new PageFactoryCommand(() => 
+    			PageFactory.GetMessagablePageFromCache<XamlSecondViewModel>()
+    				.SendMessageToViewModel("Hello", this, Guid.NewGuid())
+    				.PushPage());
+    	}
+    
+    	public IPageFactoryCommand OpenSecondPageCommand { get; private set; }
+    }
+
+#### XamlSecondPage.cs:
+
+    public partial class XamlSecondPage : PFContentPage<XamlSecondViewModel>
+    {
+    	public XamlSecondPage()
+    	{
+    		InitializeComponent();
+    	}
+    }
+
+#### XamlSecondPage.xaml:
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <local:PFContentPage 
+    	xmlns="http://xamarin.com/schemas/2014/forms" 
+    	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    	x:Class="PageFactoryTest.Pages.XamlSecondPage"
+    	xmlns:local="clr-namespace:DLToolkit.PageFactory"
+    	x:TypeArguments="PageFactoryTest.ViewModels.XamlSecondViewModel">
+    	<ContentPage.Content>
+    		<Label Text="{Binding ReceivedMessage}" VerticalOptions="CenterAndExpand"/>
+    	</ContentPage.Content>
+    </local:PFContentPage>
+
+#### XamlSecondViewModel.cs:
+
+    public class XamlSecondViewModel : BaseViewModel
+    {
+    	public override void PageFactoryMessageReceived(string message, object sender, object arg)
+    	{
+    		ReceivedMessage = string.Format(
+    			"Received message: {0} with arg: {1} from: {2}",
+    			message, arg, sender.GetType());
+    	}
+    
+    	public string ReceivedMessage {
+    		get { return GetField<string>(); }
+    		set { SetField(value); }
+    	}
+    }
+
+## Basic C# only example
 
 #### Initialization
 ```C#
@@ -184,8 +278,8 @@ Some basic `PageFactory` methods you should know:
 
 - **`GetPageFromCache<TViewModel>()`** - Gets (or creates) cached Page instance.
 - **`GetMessagablePageFromCache<TViewModel>()`** - Gets (or creates) cached Page instance with ViewModel messaging support.
-- **`GetPageAsNewInstance<TViewModel>()`** - Creates new Page Instance. New instance can replace existing cached Page instance (`bool saveOrReplaceInCache` argument).
-- **`GetMessagablePageAsNewInstance<TViewModel>()`** - Creates new Page Instance with ViewModel messaging support. New instance can replace existing cached Page instance (`bool saveOrReplaceInCache = false` method parameter).
+- **`GetPageAsNewInstance<TViewModel>()`** - Creates a new Page Instance. New instance can replace existing cached Page instance (`bool saveOrReplaceInCache` argument).
+- **`GetMessagablePageAsNewInstance<TViewModel>()`** - Creates a new Page Instance with ViewModel messaging support. New instance can replace existing cached Page instance (`bool saveOrReplaceInCache = false` method parameter).
 
 Cache can hold only one instance of ViewModel of the same type (with its Page). You can remove cache for a ViewModel type or replace it with another instance.
 

@@ -12,6 +12,8 @@ namespace DLToolkit.PageFactory
 	/// </summary>
 	public class BaseViewModel : BaseNotifyPropertyChanged, INotifyPropertyChanged, IBaseViewModel, IBaseMessagable
 	{
+		private readonly object syncRoot = new object();
+
 		/// <summary>
 		/// Gets the PageFactory.Factory.
 		/// </summary>
@@ -33,7 +35,7 @@ namespace DLToolkit.PageFactory
 		public virtual void PageFactoryMessageReceived(string message, object sender, object arg)
 		{
 		}
-
+			
 		readonly Dictionary<string, object> fieldValuesDictionary = new Dictionary<string, object>();
 
 		/// <summary>
@@ -51,7 +53,11 @@ namespace DLToolkit.PageFactory
 			if (fieldValuesDictionary.ContainsKey(propertyName) && EqualityComparer<T>.Default.Equals(field, value)) 
 				return false;
 
-			fieldValuesDictionary[propertyName] = value;
+			lock(syncRoot)
+			{
+				fieldValuesDictionary[propertyName] = value;
+			}
+
 			OnPropertyChanged(propertyName);
 
 			return true;
@@ -74,7 +80,11 @@ namespace DLToolkit.PageFactory
 			if (fieldValuesDictionary.ContainsKey(propertyName) && EqualityComparer<T>.Default.Equals(field, value)) 
 				return false;
 
-			fieldValuesDictionary[propertyName] = value;
+			lock(fieldValuesDictionary)
+			{
+				fieldValuesDictionary[propertyName] = value;
+			}
+				
 			OnPropertyChanged(propertyName);
 
 			foreach (var item in additonalPropertiesToNotify)

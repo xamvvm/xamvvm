@@ -3,9 +3,9 @@ using System.ComponentModel;
 
 namespace DLToolkit.PageFactory
 {
-	public class PFCarouselPage<TViewModel> : Xamarin.Forms.CarouselPage, IBasePage<TViewModel> where TViewModel : class, INotifyPropertyChanged, new()
+	public abstract class PFCarouselPage<TViewModel> : Xamarin.Forms.CarouselPage, IBasePage<TViewModel> where TViewModel : class, INotifyPropertyChanged, new()
 	{
-		public PFCarouselPage(bool forcedConstructor = true)
+		protected PFCarouselPage(bool forcedConstructor = true)
 		{ 
 			PageFactory.ReplacePageViewModel(this, new TViewModel());
 		}

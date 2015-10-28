@@ -18,14 +18,14 @@ namespace DLToolkit.PageFactory
 		}
 	}
 
-	public class NavigationPage<TViewModel> : Xamarin.Forms.NavigationPage, IBasePage<TViewModel> where TViewModel : class, INotifyPropertyChanged, new()
+	public abstract class NavigationPage<TViewModel> : Xamarin.Forms.NavigationPage, IBasePage<TViewModel> where TViewModel : class, INotifyPropertyChanged, new()
 	{
-		public NavigationPage(bool forcedConstructor = true) : base()
+		protected NavigationPage(bool forcedConstructor = true) : base()
 		{ 
 			PageFactory.ReplacePageViewModel(this, new TViewModel());
 		}
 
-		public NavigationPage(Xamarin.Forms.Page root, bool forcedConstructor = true) : base(root)
+		protected NavigationPage(Xamarin.Forms.Page root, bool forcedConstructor = true) : base(root)
 		{
 			PageFactory.ReplacePageViewModel(this, new TViewModel());
 		}

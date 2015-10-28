@@ -67,8 +67,8 @@ namespace DLToolkit.PageFactory
 
 						if(!viewModelsTypes.ContainsKey(viewModelType))
 						{
-							var parameterlessCtors =
-								(viewModelType.GetTypeInfo().DeclaredConstructors.Where(c => c.IsPublic && c.GetParameters().Length == 0));
+							var parameterlessCtors = (viewModelType.GetTypeInfo().DeclaredConstructors
+								.Where(c => c.IsPublic && c.GetParameters().Length == 0));
 
 							if (!parameterlessCtors.Any())
 							{

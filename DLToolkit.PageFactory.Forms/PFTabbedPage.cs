@@ -3,9 +3,9 @@ using System.ComponentModel;
 
 namespace DLToolkit.PageFactory
 {
-	public class PFTabbedPage<TViewModel> : Xamarin.Forms.TabbedPage, IBasePage<TViewModel> where TViewModel : class, INotifyPropertyChanged, new()
+	public abstract class PFTabbedPage<TViewModel> : Xamarin.Forms.TabbedPage, IBasePage<TViewModel> where TViewModel : class, INotifyPropertyChanged, new()
 	{
-		public PFTabbedPage(bool forcedConstructor = true)
+		protected PFTabbedPage(bool forcedConstructor = true)
 		{ 
 			PageFactory.ReplacePageViewModel(this, new TViewModel());
 		}

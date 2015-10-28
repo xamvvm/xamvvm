@@ -3,9 +3,9 @@ using System.ComponentModel;
 
 namespace DLToolkit.PageFactory
 {
-	public class PFMasterDetailPage<TViewModel> : Xamarin.Forms.MasterDetailPage, IBasePage<TViewModel> where TViewModel : class, INotifyPropertyChanged, new()
+	public abstract  class PFMasterDetailPage<TViewModel> : Xamarin.Forms.MasterDetailPage, IBasePage<TViewModel> where TViewModel : class, INotifyPropertyChanged, new()
 	{
-		public PFMasterDetailPage(bool forcedConstructor = true)
+		protected PFMasterDetailPage(bool forcedConstructor = true)
 		{ 
 			PageFactory.ReplacePageViewModel(this, new TViewModel());
 		}

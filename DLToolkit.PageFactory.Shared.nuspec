@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>DLToolkit.PageFactory.Shared</id>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
     <authors>Daniel Luberda</authors>
     <owners>Daniel Luberda</owners>
     <licenseUrl>https://github.com/daniel-luberda/DLToolkit.PageFactory/blob/master/LICENSEE</licenseUrl>
@@ -29,10 +29,6 @@ Simple MVVM (Model, ViewModel, View) Framework for .Net
 	<summary>Simple MVVM (Model, ViewModel, View) Framework for .Net</summary>
     <tags>xamarin, forms, xamarin.forms, android, ios, mvvm, pagefactory, inotifypropertychanged, notifypropertychanged, caching, viewmodel</tags>
     <releaseNotes>
-- Some INotifyPropertyChanged implementation enhacements
-- Added parameter to CanExecute Action
-- Added IPageFactoryCommand interface, enabled compilation optimizations
-- XamarinFormsPageFactory fixes
     </releaseNotes>
   </metadata>
   <files>

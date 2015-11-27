@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<pf:PFContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="PageFactory.Examples.Pages.SimpleXamlSecondPage"
+	xmlns:pf="clr-namespace:DLToolkit.PageFactory"
+    xmlns:local="clr-namespace:PageFactory.Examples"
+    x:TypeArguments="local:ViewModels.SimpleXamlSecondViewModel">
+	<ContentPage.Content>
+		<Label Text="{Binding ReceivedMessage}" VerticalOptions="CenterAndExpand" XAlign="Center"/>
+	</ContentPage.Content>
+</pf:PFContentPage>

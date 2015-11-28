@@ -55,48 +55,52 @@ namespace DLToolkit.PageFactory
 
 			foreach (var assembly in pagesAssemblies.Distinct())
 			{
-				foreach(var typeInfo in assembly.DefinedTypes.Where(t => t.IsClass && !t.IsAbstract && t.ImplementedInterfaces != null))
+				foreach(var pageTypeInfo in assembly.DefinedTypes.Where(t => t.IsClass && !t.IsAbstract && t.ImplementedInterfaces != null))
 				{
-					var found = typeInfo.ImplementedInterfaces.FirstOrDefault(t => t.IsConstructedGenericType && 
+					var found = pageTypeInfo.ImplementedInterfaces.FirstOrDefault(t => t.IsConstructedGenericType && 
 						t.GetGenericTypeDefinition() == typeof(IBasePage<>));
 
 					if (found != default(Type))
 					{
 						var viewModelType = found.GenericTypeArguments.First();
-						var pageType = typeInfo.AsType();
+						var viewModelTypeInfo = viewModelType.GetTypeInfo();
+						var pageType = pageTypeInfo.AsType();
+
+						var pageParameterlessCtors = (pageTypeInfo.DeclaredConstructors
+							.Where(c => c.IsPublic && c.GetParameters().Length == 0));
+
+						if (!pageParameterlessCtors.Any())
+							throw new Exception(string.Format("Page {0} must have a public parameterless constructor", pageType));
+
+						var parameterlessCtors = (viewModelTypeInfo.DeclaredConstructors
+							.Where(c => c.IsPublic && c.GetParameters().Length == 0));
+
+						if (!parameterlessCtors.Any())
+						{
+							var ovViewModelInitializer = pageType.GetRuntimeMethods()
+								.FirstOrDefault(v => v.Name.Equals("ViewModelInitializer", StringComparison.OrdinalIgnoreCase));
+
+							var overridesViewModelInitializer = ovViewModelInitializer != null &&
+								ovViewModelInitializer.DeclaringType != ovViewModelInitializer.GetRuntimeBaseDefinition().DeclaringType;
+
+							if (!overridesViewModelInitializer)
+								throw new Exception(string.Format("ViewModel {0} must have a public parameterless constructor OR Page {1} must override ViewModelInitializer method", 
+									viewModelType, pageType));
+						}
 
 						if(!viewModelsTypes.ContainsKey(viewModelType))
 						{
-							var pageParameterlessCtors = (typeInfo.DeclaredConstructors
-								.Where(c => c.IsPublic && c.GetParameters().Length == 0));
-
-							if (!pageParameterlessCtors.Any())
-								throw new ArgumentException(string.Format("Page {0} must have a public parameterless constructor", pageType));
-
-							var viewModelTypeInfo = viewModelType.GetTypeInfo();
-
-							var parameterlessCtors = (viewModelTypeInfo.DeclaredConstructors
-								.Where(c => c.IsPublic && c.GetParameters().Length == 0));
-
-							if (!parameterlessCtors.Any())
-							{
-								var ovViewModelInitializer = pageType.GetRuntimeMethods()
-									.FirstOrDefault(v => v.Name.Equals("ViewModelInitializer", StringComparison.OrdinalIgnoreCase));
-
-								var overridesViewModelInitializer = ovViewModelInitializer != null &&
-									ovViewModelInitializer.DeclaringType != ovViewModelInitializer.GetRuntimeBaseDefinition().DeclaringType;
-
-								if (!overridesViewModelInitializer)
-									throw new ArgumentException(string.Format("ViewModel '{0}' must have a public parameterless constructor OR Page {1} must override ViewModelInitializer method", 
-										viewModelType, pageType));
-							}
-
 							viewModelsTypes.Add(viewModelType, pageType);
 						}
 						else
 						{
-							throw new ArgumentOutOfRangeException(
-								string.Format("ViewModel {0} has multiple Page definitions", viewModelType.ToString()));
+							var oldPageType = viewModelsTypes[viewModelType];
+
+							if (pageTypeInfo.IsSubclassOf(oldPageType))
+							{
+								viewModelsTypes.Remove(viewModelType);
+								viewModelsTypes.Add(viewModelType, pageType);
+							}
 						}
 					}
 				}	

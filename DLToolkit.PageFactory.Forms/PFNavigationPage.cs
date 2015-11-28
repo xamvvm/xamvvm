@@ -22,10 +22,12 @@ namespace DLToolkit.PageFactory
 	{
 		protected NavigationPage(bool forcedConstructor = true) : base()
 		{ 
+			PageFactory.ResetPageViewModel(this);
 		}
 
 		protected NavigationPage(Xamarin.Forms.Page root, bool forcedConstructor = true) : base(root)
 		{
+			PageFactory.ResetPageViewModel(this);
 		}
 
 		public TViewModel ViewModel

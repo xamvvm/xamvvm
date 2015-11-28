@@ -109,12 +109,6 @@ namespace DLToolkit.PageFactory
 			var page = GetPageFromCache(typeof(TMainPageViewModel));
 			navigationPage = (NavigationPage)Activator.CreateInstance(typeof(TNavigationPage), page, true);
 
-			var baseNavPage = navigationPage as IBasePage<INotifyPropertyChanged>;
-			if (baseNavPage != null)
-			{
-				ReplacePageViewModel(baseNavPage, baseNavPage.ViewModelInitializer());
-			}
-
 			return NavigationPage;
 		}
 
@@ -201,7 +195,6 @@ namespace DLToolkit.PageFactory
 			if (!pageCache.ContainsKey(viewModelType))
 			{
 				IBasePage<INotifyPropertyChanged> page = Activator.CreateInstance(pageType) as IBasePage<INotifyPropertyChanged>;
-				ReplacePageViewModel(page, page.ViewModelInitializer());
 				pageCache.Add(viewModelType, page);
 			}
 
@@ -223,7 +216,6 @@ namespace DLToolkit.PageFactory
 			var pageType = GetPageType(viewModelType);
 
 			IBasePage<INotifyPropertyChanged> page = (IBasePage<INotifyPropertyChanged>)Activator.CreateInstance(pageType);
-			ReplacePageViewModel(page, page.ViewModelInitializer());
 
 			if (saveOrReplaceInCache && pageCache.ContainsKey(viewModelType))
 			{
@@ -565,12 +557,6 @@ namespace DLToolkit.PageFactory
 			var page = GetPageAsNewInstance<TViewModel>(true);
 			var navPageType = NavigationPage.GetType();
 			navigationPage = (NavigationPage)Activator.CreateInstance(navPageType, page, true);
-
-			var baseNavPage = navigationPage as IBasePage<INotifyPropertyChanged>;
-			if (baseNavPage != null)
-			{
-				ReplacePageViewModel(baseNavPage, baseNavPage.ViewModelInitializer());
-			}
 
 			Application.Current.MainPage = NavigationPage;	
 		}

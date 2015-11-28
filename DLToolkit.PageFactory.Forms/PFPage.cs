@@ -7,6 +7,7 @@ namespace DLToolkit.PageFactory
 	{
 		protected PFPage(bool forcedConstructor = true)
 		{ 
+			PageFactory.ResetPageViewModel(this);
 		}
 
 		public TViewModel ViewModel

@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>DLToolkit.PageFactory.Forms</id>
-    <version>1.0.4</version>
+    <version>1.0.5</version>
     <authors>Daniel Luberda</authors>
     <owners>Daniel Luberda</owners>
     <licenseUrl>https://github.com/daniel-luberda/DLToolkit.PageFactory/blob/master/LICENSEE</licenseUrl>
@@ -30,11 +30,11 @@ Simple MVVM (Model, ViewModel, View) Framework for .Net
     <tags>xamarin, forms, xamarin.forms, android, ios, mvvm, pagefactory, inotifypropertychanged, notifypropertychanged, caching, viewmodel</tags>
     <dependencies>
 		<dependency id="Xamarin.Forms" version="1.3.5.6335" />
-		<dependency id="DLToolkit.PageFactory.Shared" version="1.0.4" />
+		<dependency id="DLToolkit.PageFactory.Shared" version="1.0.5" />
     </dependencies>
     <releaseNotes>
-- Fixed WindowsPhone exception after Init
-- Dictionary properties now thread safe 
+- Added ViewModels with non-parameterless constructors support
+- Added better pages inheritance support. Now, ViewModels use most inherited in hierarchy Page classes. 
     </releaseNotes>
   </metadata>
   <files>

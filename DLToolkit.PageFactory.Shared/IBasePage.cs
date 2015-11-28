@@ -14,6 +14,10 @@ namespace DLToolkit.PageFactory
 		/// <value>The view model.</value>
 		TViewModel ViewModel { get; }
 
+		/// <summary>
+		/// ViewModel initializer.
+		/// </summary>
+		/// <returns>ViewModel.</returns>
 		TViewModel ViewModelInitializer();
 	}	
 

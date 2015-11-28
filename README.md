@@ -13,7 +13,7 @@ That’s it. It’s very simple, no dependency injections, no platform specific 
 - **ViewModel oriented Navigation**
 - **Simple ViewModel and Page messaging**
 - **Page caching**
-- **Pure ViewModels - only requirement is parameterless constructor and `INotifyPropertyChanged` or `IBaseMessagable` implementation (when view model has to receive messages)**
+- **Pure ViewModels - only requirement is `INotifyPropertyChanged` or `IBaseMessagable` implementation (when view model has to receive messages)**
 - **Fluent style extensions methods to write less code**
 - Helper classes with `INotifyPropertyChanged` implementation *(Fody `INotifyPropertyChanged` compatible)*:
   - `BaseViewModel` for ViewModels. It implements `INotifyPropertyChanged`, `IBaseMessagable`) and has PageFactory property which returns `PF.Factory` instance.
@@ -28,8 +28,10 @@ That’s it. It’s very simple, no dependency injections, no platform specific 
 - Dependency Free: [https://www.nuget.org/packages/DLToolkit.PageFactory.Shared/](https://www.nuget.org/packages/DLToolkit.PageFactory.Shared/)
 - Xamarin.Forms: [https://www.nuget.org/packages/DLToolkit.PageFactory.Forms/](https://www.nuget.org/packages/DLToolkit.PageFactory.Forms/)
 
-## Blog post
-[http://daniel-luberda.github.io/20150922/Page-Factory-MVVM-library-for-Xamarin-Forms/](http://daniel-luberda.github.io/20150922/Page-Factory-MVVM-library-for-Xamarin-Forms/)
+
+## Example project
+
+https://github.com/daniel-luberda/DLToolkit.PageFactory/tree/master/Examples
 
 ## Basic XAML example
 
@@ -41,6 +43,9 @@ https://github.com/daniel-luberda/DLToolkit.PageFactory/wiki/Simple-C%23-Example
 
 **That's all! You'll have access to all PageFactory features!**
 
+## Blog post
+[http://daniel-luberda.github.io/20150922/Page-Factory-MVVM-library-for-Xamarin-Forms/](http://daniel-luberda.github.io/20150922/Page-Factory-MVVM-library-for-Xamarin-Forms/)
+
 ## PageFactory Basics
 
 ### Pages and ViewModels
@@ -48,7 +53,10 @@ https://github.com/daniel-luberda/DLToolkit.PageFactory/wiki/Simple-C%23-Example
 `PageFactory` uses `Pages` and `ViewModels`. 
 
 - Every `Page` implements `IBasePage<INotifyPropertyChanged>`, the generic argument is a `ViewModel` type
-- Every `ViewModel` must have a parameterless constructor and implement `INotifyPropertyChanged` (if only `Page` has to receive messages) or `IBaseMessagable` (if both `Page` and `ViewModel` have to receive messages). There are no other requirements.
+- Every `ViewModel` must implement `INotifyPropertyChanged` (if only `Page` has to receive messages) or `IBaseMessagable` (if both `Page` and `ViewModel` have to receive messages). 
+- If ViewModel doesn't have a default parameterless constructor Page has to override ViewModelInitializer method. It has to return a new instance of ViewModel (it's used for Page ViewModel initialization)
+
+There are no other requirements.
 
 ### PageFactory Factory instance
 
@@ -72,13 +80,14 @@ var page = PageFactory.GetPageAsNewInstance<HomeViewModel>(saveOrReplaceInCache:
 var theSamePageFromCache = PageFactory.GetMessagablePageFromCache<HomeViewModel>();
 ```
 ### ViewModels
-- ViewModel must have a parameterless constructor and implement `INotifyPropertyChanged` or `IBaseMessagable`
+- ViewModel must implement `INotifyPropertyChanged` or `IBaseMessagable`
 - If you want to receive messages also on ViewModel it must also implement `IBaseMessagable` interface (without it, only Page can receive messages)
 - `BaseViewModel` class implements both interfaces
 - You can get the Page from ViewModel:
   -  Static methods: `GetPageByViewModel` or `GetMessagablePageByViewModel`
   -  Extension methods `.GetPage()` and `.GetMessagablePage()`
 - All pages have access to their ViewModels through `ViewModel` property 
+- If ViewModel doesn't have a default parameterless constructor Page has to override ViewModelInitializer method. It has to return a new instance of ViewModel (it's used for Page ViewModel initialization)
 
 ### Messaging
 

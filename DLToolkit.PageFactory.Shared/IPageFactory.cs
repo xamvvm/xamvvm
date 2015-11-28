@@ -15,7 +15,7 @@ namespace DLToolkit.PageFactory
 		/// <returns>The page by view model.</returns>
 		/// <param name="viewModelInstance">View model instance.</param>
 		/// <typeparam name="TViewModel">View model type.</typeparam>
-		IBasePage<INotifyPropertyChanged> GetPageByViewModel<TViewModel>(TViewModel viewModelInstance) where TViewModel : class, INotifyPropertyChanged, new();
+		IBasePage<INotifyPropertyChanged> GetPageByViewModel<TViewModel>(TViewModel viewModelInstance) where TViewModel : class, INotifyPropertyChanged;
 
 		/// <summary>
 		/// Replaces the page view model.

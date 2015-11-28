@@ -17,7 +17,7 @@ namespace DLToolkit.PageFactory
 		/// <returns>The page.</returns>
 		/// <param name="viewModel">View model.</param>
 		/// <typeparam name="TViewModel">View model type.</typeparam>
-		public static IBasePage<INotifyPropertyChanged> GetPage<TViewModel>(this TViewModel viewModel) where TViewModel : class, INotifyPropertyChanged, new()
+		public static IBasePage<INotifyPropertyChanged> GetPage<TViewModel>(this TViewModel viewModel) where TViewModel : class, INotifyPropertyChanged
 		{
 			return PF.Factory.GetPageByViewModel(viewModel);
 		}
@@ -28,7 +28,7 @@ namespace DLToolkit.PageFactory
 		/// <returns>The page.</returns>
 		/// <param name="viewModel">View model.</param>
 		/// <typeparam name="TViewModel">View model type.</typeparam>
-		public static IBasePage<IBaseMessagable> GetMessagablePage<TViewModel>(this TViewModel viewModel) where TViewModel : class, IBaseMessagable, new()
+		public static IBasePage<IBaseMessagable> GetMessagablePage<TViewModel>(this TViewModel viewModel) where TViewModel : class, IBaseMessagable
 		{
 			return PF.Factory.GetMessagablePageByViewModel(viewModel);
 		}
@@ -58,7 +58,7 @@ namespace DLToolkit.PageFactory
 		/// </summary>
 		/// <param name = "page">Page.</param>
 		/// <param name="newViewModel">New view model.</param>
-		public static IBasePage<INotifyPropertyChanged> ReplaceViewModel<TViewModel>(this IBasePage<INotifyPropertyChanged> page, TViewModel newViewModel) where TViewModel : class, INotifyPropertyChanged, new()
+		public static IBasePage<INotifyPropertyChanged> ReplaceViewModel<TViewModel>(this IBasePage<INotifyPropertyChanged> page, TViewModel newViewModel) where TViewModel : class, INotifyPropertyChanged
 		{
 			PF.Factory.ReplacePageViewModel(page, newViewModel);
 			return page;
@@ -69,7 +69,7 @@ namespace DLToolkit.PageFactory
 		/// </summary>
 		/// <param name = "page">Page.</param>
 		/// <param name="newViewModel">New view model.</param>
-		public static IBasePage<IBaseMessagable> ReplaceViewModel<TViewModel>(this IBasePage<IBaseMessagable> page, TViewModel newViewModel) where TViewModel : class, IBaseMessagable, new()
+		public static IBasePage<IBaseMessagable> ReplaceViewModel<TViewModel>(this IBasePage<IBaseMessagable> page, TViewModel newViewModel) where TViewModel : class, IBaseMessagable
 		{
 			PF.Factory.ReplacePageViewModel(page, newViewModel);
 			return page;

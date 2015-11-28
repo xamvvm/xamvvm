@@ -14,7 +14,7 @@ namespace DLToolkit.PageFactory
 		/// <returns>The page from cache.</returns>
 		/// <param name="resetViewModel">If set to <c>true</c> resets view model.</param>
 		/// <typeparam name="TViewModel">View model type.</typeparam>
-		IBasePage<INotifyPropertyChanged> GetPageFromCache<TViewModel>(bool resetViewModel = false) where TViewModel : class, INotifyPropertyChanged, new();
+		IBasePage<INotifyPropertyChanged> GetPageFromCache<TViewModel>(bool resetViewModel = false) where TViewModel : class, INotifyPropertyChanged;
 
 		/// <summary>
 		/// Gets the page from cache. Creates a new page instances if not exists.
@@ -30,7 +30,7 @@ namespace DLToolkit.PageFactory
 		/// <returns>The page as new instance.</returns>
 		/// <param name="saveOrReplaceInCache">If set to <c>true</c> saves or replaces page in cache.</param>
 		/// <typeparam name="TViewModel">View model type.</typeparam>
-		IBasePage<INotifyPropertyChanged> GetPageAsNewInstance<TViewModel>(bool saveOrReplaceInCache = false) where TViewModel : class, INotifyPropertyChanged, new();
+		IBasePage<INotifyPropertyChanged> GetPageAsNewInstance<TViewModel>(bool saveOrReplaceInCache = false) where TViewModel : class, INotifyPropertyChanged;
 
 		/// <summary>
 		/// Gets the page as new instance.
@@ -46,14 +46,14 @@ namespace DLToolkit.PageFactory
 		/// <returns><c>true</c>, if cached page view model was replaced, <c>false</c> otherwise (eg. if page type doesn't exist in cache).</returns>
 		/// <param name="newViewModel">New view model.</param>
 		/// <typeparam name="TViewModel">View model type.</typeparam>
-		bool ReplaceCachedPageViewModel<TViewModel>(TViewModel newViewModel) where TViewModel : class, INotifyPropertyChanged, new();
+		bool ReplaceCachedPageViewModel<TViewModel>(TViewModel newViewModel) where TViewModel : class, INotifyPropertyChanged;
 
 		/// <summary>
 		/// Resets the cached page view model.
 		/// </summary>
 		/// <returns><c>true</c>, if cached page view model was reset, <c>false</c> otherwise (eg. if page type doesn't exist in cache).</returns>
 		/// <typeparam name="TViewModel">View model type.</typeparam>
-		bool ResetCachedPageViewModel<TViewModel>() where TViewModel : class, INotifyPropertyChanged, new();
+		bool ResetCachedPageViewModel<TViewModel>() where TViewModel : class, INotifyPropertyChanged;
 
 		/// <summary>
 		/// Removes the page from cache.
@@ -67,7 +67,7 @@ namespace DLToolkit.PageFactory
 		/// </summary>
 		/// <returns><c>true</c>, if page was removed from cache, <c>false</c> otherwise (eg. if page type doesn't exist in cache).</returns>
 		/// <typeparam name="TViewModel">View model type.</typeparam>
-		bool RemovePageTypeFromCache<TViewModel>() where TViewModel : class, INotifyPropertyChanged, new();
+		bool RemovePageTypeFromCache<TViewModel>() where TViewModel : class, INotifyPropertyChanged;
 
 		/// <summary>
 		/// Removes the page instance from cache if exists.

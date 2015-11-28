@@ -18,16 +18,14 @@ namespace DLToolkit.PageFactory
 		}
 	}
 
-	public abstract class NavigationPage<TViewModel> : Xamarin.Forms.NavigationPage, IBasePage<TViewModel> where TViewModel : class, INotifyPropertyChanged, new()
+	public abstract class NavigationPage<TViewModel> : Xamarin.Forms.NavigationPage, IBasePage<TViewModel> where TViewModel : class, INotifyPropertyChanged
 	{
 		protected NavigationPage(bool forcedConstructor = true) : base()
 		{ 
-			PageFactory.ReplacePageViewModel(this, new TViewModel());
 		}
 
 		protected NavigationPage(Xamarin.Forms.Page root, bool forcedConstructor = true) : base(root)
 		{
-			PageFactory.ReplacePageViewModel(this, new TViewModel());
 		}
 
 		public TViewModel ViewModel
@@ -36,6 +34,11 @@ namespace DLToolkit.PageFactory
 			{
 				return BindingContext == null ? default(TViewModel) : (TViewModel)BindingContext;
 			}
+		}
+
+		public virtual TViewModel ViewModelInitializer()
+		{
+			return Activator.CreateInstance<TViewModel>();
 		}
 
 		public IPageFactory PageFactory

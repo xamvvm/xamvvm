@@ -15,7 +15,7 @@ namespace DLToolkit.PageFactory
 		/// <returns>The page from cache.</returns>
 		/// <param name="resetViewModel">If set to <c>true</c> resets view model.</param>
 		/// <typeparam name="TViewModel">View model type.</typeparam>
-		IBasePage<IBaseMessagable> GetMessagablePageFromCache<TViewModel>(bool resetViewModel = false) where TViewModel : class, IBaseMessagable, INotifyPropertyChanged, new();
+		IBasePage<IBaseMessagable> GetMessagablePageFromCache<TViewModel>(bool resetViewModel = false) where TViewModel : class, IBaseMessagable, INotifyPropertyChanged;
 
 		/// <summary>
 		/// Gets the page from cache. Creates a new page instances if not exists.
@@ -31,7 +31,7 @@ namespace DLToolkit.PageFactory
 		/// <returns>The page as new instance.</returns>
 		/// <param name="saveOrReplaceInCache">If set to <c>true</c> saves or replaces page in cache.</param>
 		/// <typeparam name="TViewModel">View model type.</typeparam>
-		IBasePage<IBaseMessagable> GetMessagablePageAsNewInstance<TViewModel>(bool saveOrReplaceInCache = false) where TViewModel : class, IBaseMessagable, INotifyPropertyChanged, new();
+		IBasePage<IBaseMessagable> GetMessagablePageAsNewInstance<TViewModel>(bool saveOrReplaceInCache = false) where TViewModel : class, IBaseMessagable, INotifyPropertyChanged;
 
 		/// <summary>
 		/// Gets the page as new instance.
@@ -47,7 +47,7 @@ namespace DLToolkit.PageFactory
 		/// <returns>The page by view model.</returns>
 		/// <param name="viewModelInstance">View model instance.</param>
 		/// <typeparam name="TViewModel">View model type.</typeparam>
-		IBasePage<IBaseMessagable> GetMessagablePageByViewModel<TViewModel>(TViewModel viewModelInstance) where TViewModel : class, IBaseMessagable, INotifyPropertyChanged, new();
+		IBasePage<IBaseMessagable> GetMessagablePageByViewModel<TViewModel>(TViewModel viewModelInstance) where TViewModel : class, IBaseMessagable, INotifyPropertyChanged;
 
 		/// <summary>
 		/// Sends the message to page only.
@@ -82,7 +82,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="message">Message.</param>
 		/// <param name="arg">Argument.</param>
 		/// <typeparam name="TViewModel">View model type.</typeparam>
-		bool SendMessageByViewModel<TViewModel>(MessageConsumer consumer, TViewModel viewModelInstance, string message, object sender = null, object arg = null) where TViewModel : class, INotifyPropertyChanged, IBaseMessagable, new();
+		bool SendMessageByViewModel<TViewModel>(MessageConsumer consumer, TViewModel viewModelInstance, string message, object sender = null, object arg = null) where TViewModel : class, INotifyPropertyChanged, IBaseMessagable;
 
 		/// <summary>
 		/// Sends the message to cached page.
@@ -94,7 +94,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="arg">Argument.</param>
 		/// <param name="createPageIfNotExists">If set to <c>true</c> creates page instance if not exists in cache.</param>
 		/// <typeparam name="TViewModel">View model type.</typeparam>
-		bool SendMessageToCached<TViewModel>(MessageConsumer consumer, string message, object sender = null, object arg = null, bool createPageIfNotExists = true) where TViewModel : class, INotifyPropertyChanged, IBaseMessagable, new();
+		bool SendMessageToCached<TViewModel>(MessageConsumer consumer, string message, object sender = null, object arg = null, bool createPageIfNotExists = true) where TViewModel : class, INotifyPropertyChanged, IBaseMessagable;
 	}
 }
 

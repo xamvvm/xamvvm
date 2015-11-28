@@ -32,7 +32,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="resetViewModel">If set to <c>true</c> resets page view model.</param>
 		/// <param name="animated">If set to <c>true</c> animation enabled.</param>
 		/// <typeparam name="TViewModel">View model type.</typeparam>
-		Task<bool> PushPageFromCacheAsync<TViewModel>(bool resetViewModel = false, bool animated = true) where TViewModel : class, INotifyPropertyChanged, new();
+		Task<bool> PushPageFromCacheAsync<TViewModel>(bool resetViewModel = false, bool animated = true) where TViewModel : class, INotifyPropertyChanged;
 
 		/// <summary>
 		/// Pushes the cached page as modal. Creates a new page instances if not exists.
@@ -41,7 +41,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="resetViewModel">If set to <c>true</c> resets view model.</param>
 		/// <param name="animated">If set to <c>true</c> animation enabled.</param>
 		/// <typeparam name="TViewModel">View model type.</typeparam>
-		Task<bool> PushModalPageFromCacheAsync<TViewModel>(bool resetViewModel = false, bool animated = true) where TViewModel : class, INotifyPropertyChanged, new();
+		Task<bool> PushModalPageFromCacheAsync<TViewModel>(bool resetViewModel = false, bool animated = true) where TViewModel : class, INotifyPropertyChanged;
 
 		/// <summary>
 		/// Pushes a new page instance into navigation stack.
@@ -50,7 +50,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="saveOrReplaceInCache">If set to <c>true</c> will save page to cache or replace existing one in cache.</param>
 		/// <param name="animated">If set to <c>true</c> animation enabled.</param>
 		/// <typeparam name="TViewModel">View model type.</typeparam>
-		Task<bool> PushPageAsNewAsync<TViewModel>(bool saveOrReplaceInCache = false, bool animated = true) where TViewModel : class, INotifyPropertyChanged, new();
+		Task<bool> PushPageAsNewAsync<TViewModel>(bool saveOrReplaceInCache = false, bool animated = true) where TViewModel : class, INotifyPropertyChanged;
 
 		/// <summary>
 		/// Pushes a new page instance as modal.
@@ -59,7 +59,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="saveOrReplaceInCache">If set to <c>true</c> will save page to cache or replace existing one in cache.</param>
 		/// <param name="animated">If set to <c>true</c> animation enabled.</param>
 		/// <typeparam name="TViewModel">View model type.</typeparam>
-		Task<bool> PushModalPageAsNewAsync<TViewModel>(bool saveOrReplaceInCache = false, bool animated = true) where TViewModel : class, INotifyPropertyChanged, new();
+		Task<bool> PushModalPageAsNewAsync<TViewModel>(bool saveOrReplaceInCache = false, bool animated = true) where TViewModel : class, INotifyPropertyChanged;
 
 		/// <summary>
 		/// Inserts the page before another page into navigation stack.
@@ -76,7 +76,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="resetViewModel">If set to <c>true</c> resets the view model.</param>
 		/// <typeparam name="TViewModel">Type of page to insert.</typeparam>
 		/// <typeparam name="TBeforeViewModel">Type of before page.</typeparam>
-		bool InsertPageBeforeFromCache<TViewModel, TBeforeViewModel>(bool resetViewModel = false) where TViewModel : class, INotifyPropertyChanged, new() where TBeforeViewModel : class, INotifyPropertyChanged, new();
+		bool InsertPageBeforeFromCache<TViewModel, TBeforeViewModel>(bool resetViewModel = false) where TViewModel : class, INotifyPropertyChanged where TBeforeViewModel : class, INotifyPropertyChanged;
 
 		/// <summary>
 		/// Inserts the page before another page into navigation stack as new instance.
@@ -85,7 +85,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="saveOrReplaceInCache">If set to <c>true</c> will save page to cache or replace existing one in cache.</param>
 		/// <typeparam name="TViewModel">Type of page to insert.</typeparam>
 		/// <typeparam name="TBeforeViewModel">Type of before page.</typeparam>
-		bool InsertPageBeforeAsNew<TViewModel, TBeforeViewModel>(bool saveOrReplaceInCache = false) where TViewModel : class, INotifyPropertyChanged, new() where TBeforeViewModel : class, INotifyPropertyChanged, new();
+		bool InsertPageBeforeAsNew<TViewModel, TBeforeViewModel>(bool saveOrReplaceInCache = false) where TViewModel : class, INotifyPropertyChanged  where TBeforeViewModel : class, INotifyPropertyChanged;
 
 		/// <summary>
 		/// Pops the page from navigation stack.
@@ -117,7 +117,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="removeFromCache">If set to <c>true</c> removes the page from cache.</param>
 		/// <param name="resetViewModel">If set to <c>true</c> resets the view model.</param>
 		/// <typeparam name="TViewModel">Cached view model type.</typeparam>
-		bool RemoveCachedPage<TViewModel>(bool removeFromCache = false, bool resetViewModel = false) where TViewModel : class, INotifyPropertyChanged, new();
+		bool RemoveCachedPage<TViewModel>(bool removeFromCache = false, bool resetViewModel = false) where TViewModel : class, INotifyPropertyChanged;
 
 		/// <summary>
 		/// Pops the pages to root.
@@ -130,7 +130,7 @@ namespace DLToolkit.PageFactory
 		/// Sets the new root and resets.
 		/// </summary>
 		/// <typeparam name="TViewModel">New root view model type.</typeparam>
-		void SetNewRootAndReset<TViewModel>() where TViewModel : class, INotifyPropertyChanged, new();
+		void SetNewRootAndReset<TViewModel>() where TViewModel : class, INotifyPropertyChanged;
 	}
 }
 

@@ -3,11 +3,10 @@ using System.ComponentModel;
 
 namespace DLToolkit.PageFactory
 {
-	public abstract  class PFContentPage<TViewModel> : Xamarin.Forms.ContentPage, IBasePage<TViewModel> where TViewModel : class, INotifyPropertyChanged, new()
+	public abstract  class PFContentPage<TViewModel> : Xamarin.Forms.ContentPage, IBasePage<TViewModel> where TViewModel : class, INotifyPropertyChanged
 	{
 		protected PFContentPage(bool forcedConstructor = true)
 		{ 
-			PageFactory.ReplacePageViewModel(this, new TViewModel());
 		}
 
 		public TViewModel ViewModel
@@ -16,6 +15,11 @@ namespace DLToolkit.PageFactory
 			{
 				return BindingContext == null ? default(TViewModel) : (TViewModel)BindingContext;
 			}
+		}
+
+		public virtual TViewModel ViewModelInitializer()
+		{
+			return Activator.CreateInstance<TViewModel>();
 		}
 
 		public IPageFactory PageFactory

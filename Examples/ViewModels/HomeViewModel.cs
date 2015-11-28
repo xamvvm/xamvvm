@@ -17,6 +17,14 @@ namespace PageFactory.Examples.ViewModels
 				PageFactory.GetMessagablePageFromCache<SimpleXamlFirstViewModel>()
 				.PushPage());
 
+			OpenPageInheritanceExampleCommand = new PageFactoryCommand(() => 
+				PageFactory.GetMessagablePageFromCache<PageInheritanceViewModel>()
+				.PushPage());
+
+			OpenPageViewModelCtrExampleCommand = new PageFactoryCommand(() => 
+				PageFactory.GetMessagablePageFromCache<ViewModelCtorViewModel>()
+				.PushPage());
+
 			MenuItems = new ObservableCollection<MenuItem>() {
 
 				new MenuItem() {
@@ -31,6 +39,18 @@ namespace PageFactory.Examples.ViewModels
 					Command = OpenSimpleXamlExampleCommand
 				},
 
+				new MenuItem() {
+					Section = "Advanced",
+					Title = "Page inheritance example",
+					Command = OpenPageInheritanceExampleCommand
+				},
+
+				new MenuItem() {
+					Section = "Advanced",
+					Title = "ViewModel with non-default constructor example",
+					Command = OpenPageViewModelCtrExampleCommand
+				},
+
 			};
 		}
 
@@ -43,6 +63,10 @@ namespace PageFactory.Examples.ViewModels
 		public IPageFactoryCommand OpenSimpleExampleCommand { get; private set; }
 
 		public IPageFactoryCommand OpenSimpleXamlExampleCommand { get; private set; }
+
+		public IPageFactoryCommand OpenPageInheritanceExampleCommand { get; private set; }
+
+		public IPageFactoryCommand OpenPageViewModelCtrExampleCommand { get; private set; }
 	}
 }
 

@@ -1,33 +1,41 @@
 #<img style="vertical-align:middle" src="http://res.cloudinary.com/dqeaiomo8/image/upload/v1442721091/PageFactory-logo-128_mlrygy.png" width="64"/> DLToolkit.PageFactory [![PayPayl donate button](http://img.shields.io/paypal/donate.png?color=green)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=T54TSWGPZGNDY "Donate to this project using Paypal") [![Bitcoin donate button](http://img.shields.io/bitcoin/donate.png?color=green)](https://blockchain.info/address/16CvewT3QyAc5ATTVNHQ2EomxLQPXxyKQ7 "Donate to this project using Bitcoin")
 
-###Simple MVVM (Model, View, ViewModel) Framework for .Net - Xamarin.Forms compatible
-*Currently only implemented Factory is* ***Xamarin.Forms*** *PageFactory*
+###Simple MVVM (Model, View, ViewModel) Framework for .Net
 
-The main reason for making PageFactory was that I needed a very simple to use MVVM library which would free me from implementing the same things for any Xamarin.Forms project I created all over again. Those things were Page Caching, ViewModel oriented Navigation, INotifyPropertyChanged and ICommand implementations, Messaging between Pages and ViewModels. I also wanted my ViewModels to be dependency free (not forcing any concrete class inheritance).
+*Currently only implemented IPageFactory is* ***Xamarin.Forms*** *PageFactory*
 
-That’s it. It’s very simple, no dependency injections, no platform specific code - just plain PCL. What comes with it, it’s very very lightweight.
+The main reason for making PageFactory was that I needed a simple to use MVVM library which would free me from implementing the same things for any Xamarin.Forms projects I created all over again.
+
+```C#
+PageFactory.GetMessagablePageFromCache<SimpleSecondViewModel>()
+    .ResetViewModel()
+    .SendMessageToViewModel("ViewModelTestMessage", sender: this, arg: Guid.NewGuid())
+    .SendMessageToPage("PageTestMessage", sender: this, arg: Guid.NewGuid())
+    .PushPage();
+```
 
 ## Features
 
-- **Easy to use. Just declare your views as `PF[PageType]` classes and have access to all features**
+- **Easy to use. Just declare your pages as `PF[PageType]` classes and have access to all features**
 - **ViewModel oriented Navigation**
-- **Simple ViewModel and Page messaging**
-- **Page caching**
+- **Simple ViewModel and Page messaging** 
+- **Pages / ViewModels caching** - more responsive UI experience
 - **Pure ViewModels - only requirement is `INotifyPropertyChanged` or `IBaseMessagable` implementation (when view model has to receive messages)**
 - **Fluent style extensions methods to write less code**
 - Helper classes with `INotifyPropertyChanged` implementation *(Fody `INotifyPropertyChanged` compatible)*:
-  - `BaseViewModel` for ViewModels. It implements `INotifyPropertyChanged`, `IBaseMessagable`) and has PageFactory property which returns `PF.Factory` instance.
+  - `BaseViewModel` for ViewModels. It implements `INotifyPropertyChanged`, `IBaseMessagable`) and has `PageFactory` property which is an alias to `PF.Factory` static property.
   - `BaseModel` for Models.  It implements `INotifyPropertyChanged`.
 - Every page has access to typed ViewModel instance which is automatically instantiated
 - Pages have override methods to respond / intercept navigation (eg. PageFactoryPushing, PageFactoryPushed, etc.) 
+- Not limited to any concrete implementation of Pages, ViewModels or PageFactory
+- Strongly typed classes / methods
 - Dependency free ICommand implementation
 - PCL compatible with dependency free DLToolkit.PageFactory.Shared.dll for ViewModels
 
 ## NuGet
 
-- Dependency Free: [https://www.nuget.org/packages/DLToolkit.PageFactory.Shared/](https://www.nuget.org/packages/DLToolkit.PageFactory.Shared/)
 - Xamarin.Forms: [https://www.nuget.org/packages/DLToolkit.PageFactory.Forms/](https://www.nuget.org/packages/DLToolkit.PageFactory.Forms/)
-
+- Shared: [https://www.nuget.org/packages/DLToolkit.PageFactory.Shared/](https://www.nuget.org/packages/DLToolkit.PageFactory.Shared/)
 
 ## Example project
 

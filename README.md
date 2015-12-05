@@ -18,14 +18,16 @@ PageFactory.GetMessagablePageFromCache<SimpleSecondViewModel>()
 
 - **Easy to use. Just declare your pages as `PF[PageType]` classes and have access to all features**
 - **ViewModel oriented Navigation**
-- **Simple ViewModel and Page messaging** 
-- **Pages / ViewModels caching** - more responsive UI experience
+- **Automatic wiring of BindingContext**
+- **Simple ViewModel and Page messaging** (Page-Page, Page-ViewModel, ViewModel-Page, ViewModel-ViewModel) 
+- **Pages / ViewModels caching** - more responsive UI experience!
 - **Pure ViewModels - only requirement is `INotifyPropertyChanged` or `IBaseMessagable` implementation (when view model has to receive messages)**
+- **You're not limited to any concrete implementation of Pages, ViewModels or PageFactory (which is just a one, small file!)**
 - **Fluent style extensions methods to write less code**
 - Helper classes with `INotifyPropertyChanged` implementation *(Fody `INotifyPropertyChanged` compatible)*:
   - `BaseViewModel` for ViewModels. It implements `INotifyPropertyChanged`, `IBaseMessagable`) and has `PageFactory` property which is an alias to `PF.Factory` static property.
   - `BaseModel` for Models.  It implements `INotifyPropertyChanged`.
-- Every page has access to typed ViewModel instance which is automatically instantiated
+- Every page has access to typed ViewModel instance which is automatically instantiated and wired to BindingContext
 - Pages have override methods to respond / intercept navigation (eg. PageFactoryPushing, PageFactoryPushed, etc.) 
 - Not limited to any concrete implementation of Pages, ViewModels or PageFactory
 - Strongly typed classes / methods

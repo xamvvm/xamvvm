@@ -55,7 +55,8 @@ namespace DLToolkit.PageFactory
 
 			foreach (var assembly in pagesAssemblies.Distinct())
 			{
-				foreach(var pageTypeInfo in assembly.DefinedTypes.Where(t => t.IsClass && !t.IsAbstract && t.ImplementedInterfaces != null))
+				foreach(var pageTypeInfo in assembly.DefinedTypes.Where(t => t.IsClass && !t.IsAbstract 
+					&& t.ImplementedInterfaces != null && !t.IsGenericTypeDefinition))
 				{
 					var found = pageTypeInfo.ImplementedInterfaces.FirstOrDefault(t => t.IsConstructedGenericType && 
 						t.GetGenericTypeDefinition() == typeof(IBasePage<>));
@@ -77,11 +78,8 @@ namespace DLToolkit.PageFactory
 
 						if (!parameterlessCtors.Any())
 						{
-							var ovViewModelInitializer = pageType.GetRuntimeMethods()
-								.FirstOrDefault(v => v.Name.Equals("ViewModelInitializer", StringComparison.OrdinalIgnoreCase));
-
-							var overridesViewModelInitializer = ovViewModelInitializer != null &&
-								ovViewModelInitializer.DeclaringType != ovViewModelInitializer.GetRuntimeBaseDefinition().DeclaringType;
+							var method = pageType.GetRuntimeMethod("ViewModelInitializer", new Type[0]);
+							var overridesViewModelInitializer = method.DeclaringType == pageType; 
 
 							if (!overridesViewModelInitializer)
 								throw new Exception(string.Format("ViewModel {0} must have a public parameterless constructor OR Page {1} must override ViewModelInitializer method", 

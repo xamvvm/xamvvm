@@ -1,15 +1,16 @@
 ﻿using System;
 using System.ComponentModel;
+using Xamarin.Forms;
 
 namespace DLToolkit.PageFactory
 {
-	public class PFNavigationPage : NavigationPage<PFNavigationPage.NavigationPageViewModel>
+	public class PFNavigationPage : PFNavigationPage<PFNavigationPage.NavigationPageViewModel>
 	{
 		public PFNavigationPage() : base(true)
 		{
 		}
 
-		public PFNavigationPage(Xamarin.Forms.Page root, bool forcedConstructor = true) : base(root, forcedConstructor)
+		public PFNavigationPage(IBasePage<INotifyPropertyChanged> root, bool forcedConstructor = true) : base(root, forcedConstructor)
 		{
 		}
 
@@ -18,29 +19,52 @@ namespace DLToolkit.PageFactory
 		}
 	}
 
-	public abstract class PFNavigationPage<TViewModel> : Xamarin.Forms.NavigationPage, IBasePage<TViewModel> where TViewModel : class, INotifyPropertyChanged
+	public abstract class PFNavigationPage<TNavigationViewModel, TPageViewModel> : PFNavigationPage<TNavigationViewModel>, IBaseNavigationPage<TNavigationViewModel, TPageViewModel>
+		where TNavigationViewModel : class, INotifyPropertyChanged
+		where TPageViewModel : class, INotifyPropertyChanged
+	{
+		protected PFNavigationPage(bool forcedConstructor = true) : base(PF.Factory.GetPageFromCache<TPageViewModel>(), forcedConstructor)
+		{ 
+		}
+
+		protected PFNavigationPage(IBasePage<INotifyPropertyChanged> root, bool forcedConstructor = true) : base(root, forcedConstructor)
+		{
+		}
+
+		public IBasePage<TPageViewModel> GetCurrentPage()
+		{
+			return CurrentPage as IBasePage<TPageViewModel>;
+		}
+
+		public IBasePage<TPageViewModel> GetRootPage()
+		{
+			return Navigation.NavigationStack[0] as IBasePage<TPageViewModel>;
+		}
+	}
+
+	public abstract class PFNavigationPage<TNavigationViewModel> : NavigationPage, IBaseNavigationPage<TNavigationViewModel> where TNavigationViewModel : class, INotifyPropertyChanged
 	{
 		protected PFNavigationPage(bool forcedConstructor = true) : base()
 		{ 
 			PageFactory.ResetPageViewModel(this);
 		}
 
-		protected PFNavigationPage(Xamarin.Forms.Page root, bool forcedConstructor = true) : base(root)
+		protected PFNavigationPage(IBasePage<INotifyPropertyChanged> root, bool forcedConstructor = true) : base((Page)root)
 		{
 			PageFactory.ResetPageViewModel(this);
 		}
 
-		public TViewModel ViewModel
+		public TNavigationViewModel ViewModel
 		{
 			get 
 			{
-				return BindingContext == null ? default(TViewModel) : (TViewModel)BindingContext;
+				return BindingContext == null ? default(TNavigationViewModel) : (TNavigationViewModel)BindingContext;
 			}
 		}
 
-		public virtual TViewModel ViewModelInitializer()
+		public virtual TNavigationViewModel ViewModelInitializer()
 		{
-			return Activator.CreateInstance<TViewModel>();
+			return Activator.CreateInstance<TNavigationViewModel>();
 		}
 
 		public IPageFactory PageFactory
@@ -96,30 +120,30 @@ namespace DLToolkit.PageFactory
 		}
 	}
 
-	[Obsolete("Use PFNavigationPage<TViewModel>")]
-	public abstract class NavigationPage<TViewModel> : Xamarin.Forms.NavigationPage, IBasePage<TViewModel> where TViewModel : class, INotifyPropertyChanged
+	[Obsolete("Use PFNavigationPage instead")]
+	public abstract class NavigationPage<TNavigationViewModel> : NavigationPage, IBaseNavigationPage<TNavigationViewModel> where TNavigationViewModel : class, INotifyPropertyChanged
 	{
 		protected NavigationPage(bool forcedConstructor = true) : base()
 		{ 
 			PageFactory.ResetPageViewModel(this);
 		}
 
-		protected NavigationPage(Xamarin.Forms.Page root, bool forcedConstructor = true) : base(root)
+		protected NavigationPage(Page root, bool forcedConstructor = true) : base(root)
 		{
 			PageFactory.ResetPageViewModel(this);
 		}
 
-		public TViewModel ViewModel
+		public TNavigationViewModel ViewModel
 		{
 			get 
 			{
-				return BindingContext == null ? default(TViewModel) : (TViewModel)BindingContext;
+				return BindingContext == null ? default(TNavigationViewModel) : (TNavigationViewModel)BindingContext;
 			}
 		}
 
-		public virtual TViewModel ViewModelInitializer()
+		public virtual TNavigationViewModel ViewModelInitializer()
 		{
-			return Activator.CreateInstance<TViewModel>();
+			return Activator.CreateInstance<TNavigationViewModel>();
 		}
 
 		public IPageFactory PageFactory

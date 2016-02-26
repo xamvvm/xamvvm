@@ -5,7 +5,7 @@ using PageFactory.Examples.ViewModels;
 
 namespace PageFactory.Examples.Pages
 {
-	public class HomePage : PFContentPage<HomeViewModel>
+    public class HomePage : ContentPage, IBasePage<HomeViewModel>
 	{
 		public HomePage()
 		{

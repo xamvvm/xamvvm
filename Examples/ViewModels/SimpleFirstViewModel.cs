@@ -3,7 +3,7 @@ using DLToolkit.PageFactory;
 
 namespace PageFactory.Examples.ViewModels
 {
-	public class SimpleFirstViewModel : BaseViewModel
+    public class SimpleFirstViewModel : BasePageModel
 	{
 		public SimpleFirstViewModel()
 		{
@@ -13,8 +13,8 @@ namespace PageFactory.Examples.ViewModels
 			OpenPageCommand = new PageFactoryCommand(() => {
 
 				PageFactory.GetMessagablePageFromCache<SimpleSecondViewModel>()
-					.ResetViewModel()
-					.SendMessageToViewModel("ViewModelTestMessage", sender: this, arg: Guid.NewGuid())
+					.ResetPageModel()
+					.SendMessageToPageModel("ViewModelTestMessage", sender: this, arg: Guid.NewGuid())
 					.SendMessageToPage("PageTestMessage", sender: this, arg: Guid.NewGuid())
 					.PushPage();
 			}); 

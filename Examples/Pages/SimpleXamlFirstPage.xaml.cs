@@ -7,7 +7,7 @@ using PageFactory.Examples.ViewModels;
 
 namespace PageFactory.Examples.Pages
 {
-	public partial class SimpleXamlFirstPage : PFContentPage<SimpleXamlFirstViewModel>
+    public partial class SimpleXamlFirstPage : ContentPage, IBasePage<SimpleXamlFirstViewModel>
 	{
 		public SimpleXamlFirstPage()
 		{

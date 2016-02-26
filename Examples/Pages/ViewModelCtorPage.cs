@@ -24,7 +24,7 @@ namespace PageFactory.Examples.Pages
 			Content = label;
 		}
 
-		public override ViewModelCtorViewModel ViewModelInitializer()
+		public override ViewModelCtorViewModel PageModelInitializer()
 		{
 			return new ViewModelCtorViewModel(Guid.NewGuid());
 		}

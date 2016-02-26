@@ -3,13 +3,13 @@ using DLToolkit.PageFactory;
 
 namespace PageFactory.Examples.ViewModels
 {
-	public class SimpleXamlFirstViewModel : BaseViewModel
+    public class SimpleXamlFirstViewModel : BasePageModel
 	{
 		public SimpleXamlFirstViewModel()
 		{
 			OpenSecondPageCommand = new PageFactoryCommand(() => 
 				PageFactory.GetMessagablePageFromCache<SimpleXamlSecondViewModel>()
-				.SendMessageToViewModel("Hello", this, Guid.NewGuid())
+				.SendMessageToPageModel("Hello", this, Guid.NewGuid())
 				.PushPage());
 		}
 

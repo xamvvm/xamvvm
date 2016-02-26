@@ -6,7 +6,7 @@ using PageFactory.Examples.ViewModels;
 
 namespace PageFactory.Examples.Pages
 {
-	public class SimpleSecondPage : PFContentPage<SimpleSecondViewModel>
+    public class SimpleSecondPage : ContentPage, IBaseMessagablePage<SimpleSecondViewModel>, INavigationEvents
 	{
 		public SimpleSecondPage()
 		{
@@ -21,42 +21,65 @@ namespace PageFactory.Examples.Pages
 			Content = button;
 		}
 
-		public override void PageFactoryMessageReceived(string message, object sender, object arg)
+		public void PageFactoryMessageReceived(string message, object sender, object arg)
 		{
 			System.Diagnostics.Debug.WriteLine("SimpleSecondPage received {0} message from {1} with arg: {2}",  
 				message, sender.GetType(), arg);
 		}
 
-		public override bool PageFactoryPushing()
+        public bool PageFactoryPushing()
 		{
 			System.Diagnostics.Debug.WriteLine("SimpleSecondPage PageFactoryPushing");
+            // if false is returned Pushing will be cancelled
 
-			return base.PageFactoryPushing();
+			return true;
 		}
 
-		public override void PageFactoryPushed()
+        public void PageFactoryPushed()
 		{
 			System.Diagnostics.Debug.WriteLine("SimpleSecondPage PageFactoryPushed");
 		}
 
-		public override bool PageFactoryPopping()
+        public bool PageFactoryPopping()
 		{
 			System.Diagnostics.Debug.WriteLine("SimpleSecondPage PageFactoryPopping");
 
-			return base.PageFactoryPopping();
+            return true;
 		}
 
-		public override void PageFactoryPopped()
+        public void PageFactoryPopped()
 		{
 			System.Diagnostics.Debug.WriteLine("SimpleSecondPage PageFactoryPopped");
 		}
 
-		public override void PageFactoryRemovingFromCache()
+        public void PageFactoryRemovingFromCache()
 		{
 			// FREE some resources here
-
-			base.PageFactoryRemovingFromCache();
 		}
+
+        public bool PageFactoryRemoving()
+        {
+            System.Diagnostics.Debug.WriteLine("SimpleSecondPage PageFactoryRemoving");
+
+            return true;
+        }
+
+        public bool PageFactoryInserting()
+        {
+            System.Diagnostics.Debug.WriteLine("SimpleSecondPage PageFactoryInserting");
+
+            return true;
+        }
+
+        public void PageFactoryRemoved()
+        {
+            System.Diagnostics.Debug.WriteLine("SimpleSecondPage PageFactoryRemoved");
+        }
+
+        public void PageFactoryInserted()
+        {
+            System.Diagnostics.Debug.WriteLine("SimpleSecondPage PageFactoryInserted");
+        }
 	}
 }
 

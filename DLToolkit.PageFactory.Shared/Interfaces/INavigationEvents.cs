@@ -5,7 +5,7 @@ namespace DLToolkit.PageFactory
 	/// <summary>
 	/// IBasePage navigation events.
 	/// </summary>
-	public interface IBaseNavigationEvents
+	public interface INavigationEvents
 	{
 		/// <summary>
 		/// Triggered when removing from cache.

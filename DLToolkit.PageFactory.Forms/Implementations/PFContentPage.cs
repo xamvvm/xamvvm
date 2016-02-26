@@ -3,34 +3,21 @@ using System.ComponentModel;
 
 namespace DLToolkit.PageFactory
 {
-	public abstract class PFPage<TViewModel> : Xamarin.Forms.Page, IBasePage<TViewModel> where TViewModel : class, INotifyPropertyChanged
+    public abstract  class PFContentPage<TPageModel> : Xamarin.Forms.ContentPage, IBasePageAll<TPageModel> where TPageModel : class, INotifyPropertyChanged
 	{
-		protected PFPage(bool forcedConstructor = true)
-		{ 
-			PageFactory.ResetPageViewModel(this);
-		}
-
-		public TViewModel ViewModel
+		public TPageModel PageModel
 		{
 			get 
 			{
-				return BindingContext == null ? default(TViewModel) : (TViewModel)BindingContext;
+				return BindingContext == null ? default(TPageModel) : (TPageModel)BindingContext;
 			}
 		}
 
-		public virtual TViewModel ViewModelInitializer()
+		public virtual TPageModel PageModelInitializer()
 		{
-			return Activator.CreateInstance<TViewModel>();
+			return Activator.CreateInstance<TPageModel>();
 		}
-
-		public IPageFactory PageFactory
-		{
-			get
-			{
-				return PF.Factory;
-			}
-		}
-
+            
 		public virtual void PageFactoryMessageReceived(string message, object sender, object arg)
 		{
 		}
@@ -71,17 +58,9 @@ namespace DLToolkit.PageFactory
 		{
 		}
 
-		public virtual void PageFactoryRemovedFromNavigation()
-		{
-		}
-
-		public virtual void PageFactoryAddedToNavigation()
-		{
-		}
-
 		public virtual void PageFactoryRemovingFromCache()
 		{
 		}
-	}		
+	}
 }
 

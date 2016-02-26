@@ -6,7 +6,7 @@ using PageFactory.Examples.ViewModels;
 
 namespace PageFactory.Examples.Pages
 {
-	public class SimpleFirstPage : PFContentPage<SimpleFirstViewModel>
+    public class SimpleFirstPage : PFContentPage<SimpleFirstViewModel>
 	{
 		public SimpleFirstPage()
 		{

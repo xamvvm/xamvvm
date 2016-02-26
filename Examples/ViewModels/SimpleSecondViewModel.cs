@@ -3,7 +3,7 @@ using DLToolkit.PageFactory;
 
 namespace PageFactory.Examples.ViewModels
 {
-	public class SimpleSecondViewModel : BaseViewModel
+    public class SimpleSecondViewModel : BasePageModel
 	{
 		public SimpleSecondViewModel()
 		{

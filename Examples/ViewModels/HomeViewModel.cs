@@ -5,7 +5,7 @@ using PageFactory.Examples.Models;
 
 namespace PageFactory.Examples.ViewModels
 {
-	public class HomeViewModel : BaseViewModel
+    public class HomeViewModel : BasePageModel
 	{
 		public HomeViewModel()
 		{

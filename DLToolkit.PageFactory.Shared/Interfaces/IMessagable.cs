@@ -4,9 +4,9 @@ using System.ComponentModel;
 namespace DLToolkit.PageFactory
 {
 	/// <summary>
-	/// IBasePage base messaging for pages and view models.
+	/// IBasePage base messaging for pages and page models.
 	/// </summary>
-	public interface IBaseMessagable : INotifyPropertyChanged
+	public interface IMessagable : INotifyPropertyChanged
 	{
 		/// <summary>
 		/// Handles received message.

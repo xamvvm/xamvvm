@@ -95,4 +95,10 @@ Global
 		{35E63F5B-7628-46FA-B240-A9D97DE6929B} = {BB3F8074-2150-4C01-A68B-53A9F9EE9752}
 		{D67D4ECF-C31E-429A-AA2E-3DA8158584D5} = {BB3F8074-2150-4C01-A68B-53A9F9EE9752}
 	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		Policies = $0
+		$0.DotNetNamingPolicy = $1
+		$1.DirectoryNamespaceAssociation = None
+		$1.ResourceNamePolicy = FileFormatDefault
+	EndGlobalSection
 EndGlobal

@@ -3,33 +3,20 @@ using System.ComponentModel;
 
 namespace DLToolkit.PageFactory
 {
-	public abstract class PFTabbedPage<TViewModel> : Xamarin.Forms.TabbedPage, IBasePage<TViewModel> where TViewModel : class, INotifyPropertyChanged
+    public abstract class PFPage<TPageModel> : Xamarin.Forms.Page, IBasePageAll<TPageModel> where TPageModel : class, INotifyPropertyChanged
 	{
-		protected PFTabbedPage(bool forcedConstructor = true)
-		{ 
-			PageFactory.ResetPageViewModel(this);
-		}
+        public TPageModel PageModel
+        {
+            get 
+            {
+                return BindingContext == null ? default(TPageModel) : (TPageModel)BindingContext;
+            }
+        }
 
-		public TViewModel ViewModel
-		{
-			get 
-			{
-				return BindingContext == null ? default(TViewModel) : (TViewModel)BindingContext;
-			}
-		}
-
-		public virtual TViewModel ViewModelInitializer()
-		{
-			return Activator.CreateInstance<TViewModel>();
-		}
-
-		public IPageFactory PageFactory
-		{
-			get
-			{
-				return PF.Factory;
-			}
-		}
+        public virtual TPageModel PageModelInitializer()
+        {
+            return Activator.CreateInstance<TPageModel>();
+        }
 
 		public virtual void PageFactoryMessageReceived(string message, object sender, object arg)
 		{
@@ -68,6 +55,14 @@ namespace DLToolkit.PageFactory
 		}
 
 		public virtual void PageFactoryRemoved()
+		{
+		}
+
+		public virtual void PageFactoryRemovedFromNavigation()
+		{
+		}
+
+		public virtual void PageFactoryAddedToNavigation()
 		{
 		}
 

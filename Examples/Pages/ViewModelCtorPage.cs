@@ -6,7 +6,7 @@ using PageFactory.Examples.ViewModels;
 
 namespace PageFactory.Examples.Pages
 {
-	public class ViewModelCtorPage : PFContentPage<ViewModelCtorViewModel>
+    public class ViewModelCtorPage : ContentPage, IBasePage<ViewModelCtorViewModel>, IPageModelInitializer<ViewModelCtorViewModel>
 	{
 		public ViewModelCtorPage()
 		{
@@ -24,7 +24,7 @@ namespace PageFactory.Examples.Pages
 			Content = label;
 		}
 
-		public override ViewModelCtorViewModel PageModelInitializer()
+		public ViewModelCtorViewModel PageModelInitializer()
 		{
 			return new ViewModelCtorViewModel(Guid.NewGuid());
 		}

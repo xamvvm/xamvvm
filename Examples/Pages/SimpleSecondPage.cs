@@ -6,7 +6,7 @@ using PageFactory.Examples.ViewModels;
 
 namespace PageFactory.Examples.Pages
 {
-    public class SimpleSecondPage : ContentPage, IBaseMessagablePage<SimpleSecondViewModel>, INavigationEvents
+    public class SimpleSecondPage : ContentPage, IBaseMessagablePage<SimpleSecondViewModel>, INavigationPushing, INavigationPushed, INavigationPopping, INavigationPopped, INavigationRemovingFromCache
 	{
 		public SimpleSecondPage()
 		{
@@ -56,30 +56,6 @@ namespace PageFactory.Examples.Pages
 		{
 			// FREE some resources here
 		}
-
-        public bool PageFactoryRemoving()
-        {
-            System.Diagnostics.Debug.WriteLine("SimpleSecondPage PageFactoryRemoving");
-
-            return true;
-        }
-
-        public bool PageFactoryInserting()
-        {
-            System.Diagnostics.Debug.WriteLine("SimpleSecondPage PageFactoryInserting");
-
-            return true;
-        }
-
-        public void PageFactoryRemoved()
-        {
-            System.Diagnostics.Debug.WriteLine("SimpleSecondPage PageFactoryRemoved");
-        }
-
-        public void PageFactoryInserted()
-        {
-            System.Diagnostics.Debug.WriteLine("SimpleSecondPage PageFactoryInserted");
-        }
 	}
 }
 

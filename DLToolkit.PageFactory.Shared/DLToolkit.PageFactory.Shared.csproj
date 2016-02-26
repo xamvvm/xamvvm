@@ -38,7 +38,6 @@
     <Compile Include="Interfaces\IBaseNavigationPage.cs" />
     <Compile Include="Interfaces\IBasePage.cs" />
     <Compile Include="Interfaces\IMessagable.cs" />
-    <Compile Include="Interfaces\INavigationEvents.cs" />
     <Compile Include="Interfaces\IPageFactory.cs" />
     <Compile Include="Interfaces\IPageFactoryCaching.cs" />
     <Compile Include="Interfaces\IPageFactoryCommand.cs" />
@@ -50,6 +49,7 @@
     <Compile Include="Extensions\NavigationExtensions.cs" />
     <Compile Include="Extensions\CachingExtensions.cs" />
     <Compile Include="Extensions\MessagingExtensions.cs" />
+    <Compile Include="Interfaces\INavigationInterceptors.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>

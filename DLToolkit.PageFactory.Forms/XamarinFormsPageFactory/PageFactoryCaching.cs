@@ -103,7 +103,7 @@ namespace DLToolkit.PageFactory
 
             if (pageCache.TryGetValue(pageModelType, out page))
             {
-                var navEventsPage = page as INavigationEvents;
+                var navEventsPage = page as INavigationRemovingFromCache;
                 if (navEventsPage != null)
                     #pragma warning disable 4014
                     Task.Run(() => navEventsPage.PageFactoryRemovingFromCache()).ConfigureAwait(false);
@@ -131,7 +131,7 @@ namespace DLToolkit.PageFactory
             {
                 if (pageExists == page)
                 {
-                    var navEventsPage = page as INavigationEvents;
+                    var navEventsPage = page as INavigationRemovingFromCache;
                     if (navEventsPage != null)
                         #pragma warning disable 4014
                         Task.Run(() => navEventsPage.PageFactoryRemovingFromCache()).ConfigureAwait(false);
@@ -150,7 +150,7 @@ namespace DLToolkit.PageFactory
         {
             foreach (var page in pageCache.Values)
             {
-                var navEventsPage = page as INavigationEvents;
+                var navEventsPage = page as INavigationRemovingFromCache;
                 if (navEventsPage != null)
                     #pragma warning disable 4014
                     Task.Run(() => navEventsPage.PageFactoryRemovingFromCache()).ConfigureAwait(false);

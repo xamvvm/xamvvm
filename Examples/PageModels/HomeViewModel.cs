@@ -10,19 +10,19 @@ namespace PageFactory.Examples.ViewModels
 		public HomeViewModel()
 		{
 			OpenSimpleExampleCommand = new PageFactoryCommand(() => 
-				PageFactory.GetMessagablePageFromCache<SimpleFirstViewModel>()
+				PageFactory.GetPageFromCache<SimpleFirstViewModel>()
 				.PushPage());
 
 			OpenSimpleXamlExampleCommand = new PageFactoryCommand(() => 
-				PageFactory.GetMessagablePageFromCache<SimpleXamlFirstViewModel>()
+				PageFactory.GetPageFromCache<SimpleXamlFirstViewModel>()
 				.PushPage());
 
 			OpenPageInheritanceExampleCommand = new PageFactoryCommand(() => 
-				PageFactory.GetMessagablePageFromCache<PageInheritanceViewModel>()
+				PageFactory.GetPageFromCache<PageInheritanceViewModel>()
 				.PushPage());
 
 			OpenPageViewModelCtrExampleCommand = new PageFactoryCommand(() => 
-				PageFactory.GetMessagablePageFromCache<ViewModelCtorViewModel>()
+				PageFactory.GetPageFromCache<ViewModelCtorViewModel>()
 				.PushPage());
 
 			MenuItems = new ObservableCollection<MenuItem>() {

@@ -12,15 +12,16 @@ namespace DLToolkit.PageFactory
 
         public async Task<bool> PushPageAsync<TPageModel>(IBasePage<TPageModel> page, bool animated = true) where TPageModel : class, INotifyPropertyChanged
         {
-            var navEventsPage = page as INavigationEvents;
+            var navEventsPage = page as INavigationPushing;
             if (navEventsPage != null && !navEventsPage.PageFactoryPushing())
                 return false;
 
             await NavigationPage.Navigation.PushAsync((Page)page, animated);
 
-            if (navEventsPage != null)
+            var navEventsPage2 = page as INavigationPushed;
+            if (navEventsPage2 != null)
                 #pragma warning disable 4014
-                Task.Run(() => navEventsPage.PageFactoryPushed()).ConfigureAwait(false);
+                Task.Run(() => navEventsPage2.PageFactoryPushed()).ConfigureAwait(false);
                 #pragma warning restore 4014
 
             return true;
@@ -28,16 +29,17 @@ namespace DLToolkit.PageFactory
 
         public async Task<bool> PushModalPageAsync<TPageModel>(IBasePage<TPageModel> page, bool animated = true) where TPageModel : class, INotifyPropertyChanged
         {
-            var navEventsPage = page as INavigationEvents;
+            var navEventsPage = page as INavigationPushing;
             if (navEventsPage != null && !navEventsPage.PageFactoryPushing())
                 return false;
 
             await NavigationPage.Navigation.PushModalAsync((Page)page, animated);
 
-            if (navEventsPage != null)
+            var navEventsPage2 = page as INavigationPushed;
+            if (navEventsPage2 != null)
                 #pragma warning disable 4014
-                Task.Run(() => navEventsPage.PageFactoryPushed()).ConfigureAwait(false);
-                #pragma warning restore 4014
+                Task.Run(() => navEventsPage2.PageFactoryPushed()).ConfigureAwait(false);
+            #pragma warning restore 4014
 
             return true;
         }
@@ -68,14 +70,15 @@ namespace DLToolkit.PageFactory
 
         public bool InsertPageBefore<TPageModel, TBeforePageModel>(IBasePage<TPageModel> page, IBasePage<TBeforePageModel> before) where TPageModel : class, INotifyPropertyChanged where TBeforePageModel : class, INotifyPropertyChanged
         {
-            var navEventsPage = page as INavigationEvents;
+            var navEventsPage = page as INavigationInserting;
             if (navEventsPage != null && !navEventsPage.PageFactoryInserting())
                 return false;
 
             NavigationPage.Navigation.InsertPageBefore((Page)page, (Page)before);
 
-            if (navEventsPage != null)
-                Task.Run(() => navEventsPage.PageFactoryInserted()).ConfigureAwait(false);
+            var navEventsPage2 = page as INavigationInserted;
+            if (navEventsPage2 != null)
+                Task.Run(() => navEventsPage2.PageFactoryInserted()).ConfigureAwait(false);
 
             return true;
         }
@@ -102,7 +105,7 @@ namespace DLToolkit.PageFactory
 
             if (page != null)
             {
-                var navEventsPage = page as INavigationEvents;
+                var navEventsPage = page as INavigationPopping;
 
                 if (navEventsPage != null && !navEventsPage.PageFactoryPopping())
                     return false;
@@ -112,9 +115,10 @@ namespace DLToolkit.PageFactory
 
                 await NavigationPage.Navigation.PopAsync(animated); 
 
-                if (navEventsPage != null)
+                var navEventsPage2 = page as INavigationPopped;
+                if (navEventsPage2 != null)
                     #pragma warning disable 4014
-                    Task.Run(() => navEventsPage.PageFactoryPopped()).ConfigureAwait(false);
+                    Task.Run(() => navEventsPage2.PageFactoryPopped()).ConfigureAwait(false);
                     #pragma warning restore 4014
 
                 return true;
@@ -129,7 +133,7 @@ namespace DLToolkit.PageFactory
 
             if (page != null)
             {
-                var navEventsPage = page as INavigationEvents;
+                var navEventsPage = page as INavigationPopping;
 
                 if (navEventsPage != null && !navEventsPage.PageFactoryPopping())
                     return false;
@@ -139,9 +143,10 @@ namespace DLToolkit.PageFactory
 
                 await NavigationPage.Navigation.PopModalAsync(animated);    
 
-                if (navEventsPage != null)
+                var navEventsPage2 = page as INavigationPopped;
+                if (navEventsPage2 != null)
                     #pragma warning disable 4014
-                    Task.Run(() => navEventsPage.PageFactoryPopped()).ConfigureAwait(false);
+                    Task.Run(() => navEventsPage2.PageFactoryPopped()).ConfigureAwait(false);
                     #pragma warning restore 4014
 
                 return true;
@@ -156,14 +161,15 @@ namespace DLToolkit.PageFactory
 
             if (exists)
             {
-                var navEventsPage = pageToRemove as INavigationEvents;
+                var navEventsPage = pageToRemove as INavigationRemoving;
                 if (navEventsPage != null && !navEventsPage.PageFactoryRemoving())
                     return false;
 
                 NavigationPage.Navigation.RemovePage((Page)pageToRemove);
 
-                if (navEventsPage != null)
-                    Task.Run(() => navEventsPage.PageFactoryRemoved()).ConfigureAwait(false);
+                var navEventsPage2 = pageToRemove as INavigationRemoved;
+                if (navEventsPage2 != null)
+                    Task.Run(() => navEventsPage2.PageFactoryRemoved()).ConfigureAwait(false);
             }
 
             return false;
@@ -206,7 +212,7 @@ namespace DLToolkit.PageFactory
 
         public async Task<bool> PushPageIntoNavigationAsync<TPageModel>(IBaseNavigationPage<TPageModel> navigation, IBasePage<INotifyPropertyChanged> page, bool animated = true) where TPageModel : class, INotifyPropertyChanged
         {
-            var navEventsPage = page as INavigationEvents;
+            var navEventsPage = page as INavigationPushing;
             if (navEventsPage != null && !navEventsPage.PageFactoryPushing())
                 return false;
 
@@ -214,9 +220,10 @@ namespace DLToolkit.PageFactory
 
             await xfNavigation.Navigation.PushAsync((Page)page, animated);
 
-            if (navEventsPage != null)
+            var navEventsPage2 = page as INavigationPushed;
+            if (navEventsPage2 != null)
                 #pragma warning disable 4014
-                Task.Run(() => navEventsPage.PageFactoryPushed()).ConfigureAwait(false);
+                Task.Run(() => navEventsPage2.PageFactoryPushed()).ConfigureAwait(false);
                 #pragma warning restore 4014
 
             return true;

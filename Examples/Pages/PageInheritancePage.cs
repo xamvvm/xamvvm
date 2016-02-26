@@ -19,7 +19,7 @@ namespace PageFactory.Examples.Pages
 		}
 	}
 
-	public class PageInheritancePageBase<TViewModel> : PFContentPage<TViewModel> where TViewModel : class, INotifyPropertyChanged
+    public class PageInheritancePageBase<TViewModel> : ContentPage, IBasePage<TViewModel> where TViewModel : class, INotifyPropertyChanged
 	{
 		public PageInheritancePageBase()
 		{

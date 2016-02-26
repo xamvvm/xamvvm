@@ -40,17 +40,17 @@
     <Compile Include="Pages\SimpleXamlSecondPage.xaml.cs">
       <DependentUpon>SimpleXamlSecondPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\SimpleFirstViewModel.cs" />
-    <Compile Include="ViewModels\SimpleSecondViewModel.cs" />
-    <Compile Include="ViewModels\SimpleXamlFirstViewModel.cs" />
-    <Compile Include="ViewModels\SimpleXamlSecondViewModel.cs" />
     <Compile Include="Pages\HomePage.cs" />
-    <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="Models\MenuItem.cs" />
     <Compile Include="Pages\PageInheritancePage.cs" />
-    <Compile Include="ViewModels\PageInheritanceViewModel.cs" />
-    <Compile Include="ViewModels\ViewModelCtorViewModel.cs" />
     <Compile Include="Pages\ViewModelCtorPage.cs" />
+    <Compile Include="PageModels\SimpleFirstViewModel.cs" />
+    <Compile Include="PageModels\SimpleSecondViewModel.cs" />
+    <Compile Include="PageModels\SimpleXamlFirstViewModel.cs" />
+    <Compile Include="PageModels\SimpleXamlSecondViewModel.cs" />
+    <Compile Include="PageModels\HomeViewModel.cs" />
+    <Compile Include="PageModels\PageInheritanceViewModel.cs" />
+    <Compile Include="PageModels\ViewModelCtorViewModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.1.4.4.6392\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.4.4.6392\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
@@ -70,8 +70,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Pages\" />
-    <Folder Include="ViewModels\" />
     <Folder Include="Models\" />
+    <Folder Include="PageModels\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Pages\SimpleXamlFirstPage.xaml">

@@ -19,7 +19,7 @@ namespace DLToolkit.PageFactory
 		}
 	}
 
-	public abstract class PFNavigationPage<TNavigationModel, TPageModel> : PFNavigationPage<TNavigationModel>, IBaseNavigationPage<TNavigationModel, TPageModel>
+    public abstract class PFNavigationPage<TNavigationModel, TPageModel> : PFNavigationPage<TNavigationModel>, IBaseNavigationPage<TNavigationModel, TPageModel>, IBaseMessagablePage<TNavigationModel>, IPageModelInitializer<TNavigationModel>, INavigationInterceptors
 		where TNavigationModel : class, INotifyPropertyChanged
 		where TPageModel : class, INotifyPropertyChanged
 	{
@@ -44,7 +44,7 @@ namespace DLToolkit.PageFactory
 		}
 	}
 
-	public abstract class PFNavigationPage<TNavigationModel> : NavigationPage, IBaseNavigationPage<TNavigationModel> where TNavigationModel : class, INotifyPropertyChanged
+    public abstract class PFNavigationPage<TNavigationModel> : NavigationPage, IBaseNavigationPage<TNavigationModel>, IBaseMessagablePage<TNavigationModel>, IPageModelInitializer<TNavigationModel>, INavigationInterceptors where TNavigationModel : class, INotifyPropertyChanged
 	{
 		protected PFNavigationPage() : base()
 		{ 

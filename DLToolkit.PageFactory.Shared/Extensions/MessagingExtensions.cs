@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 
 namespace DLToolkit.PageFactory
 {
@@ -18,6 +19,19 @@ namespace DLToolkit.PageFactory
         public static IBasePage<TPageModel> SendMessageToPageModel<TPageModel>(this IBasePage<TPageModel> page, string message, object sender = null, object arg = null) where TPageModel : class, INotifyPropertyChanged, IMessagable
         {
             PF.Factory.SendMessageToPageModel(page, message, sender, arg);
+            return page;
+        }
+
+        /// <summary>
+        /// Sends the action to PageModel.
+        /// </summary>
+        /// <returns>The action to page model.</returns>
+        /// <param name="page">Page.</param>
+        /// <param name="action">Action.</param>
+        /// <typeparam name="TPageModel">The 1st type parameter.</typeparam>
+        public static IBasePage<TPageModel> SendActionToPageModel<TPageModel>(this IBasePage<TPageModel> page, Action<TPageModel> action) where TPageModel : class, INotifyPropertyChanged, IMessagable
+        {
+            PF.Factory.SendActionToPageModel(page, action);
             return page;
         }
     }

@@ -19,6 +19,14 @@ namespace DLToolkit.PageFactory
         /// <param name="arg">Argument.</param>
         /// <typeparam name="TPageModel">Page model.</typeparam>
         bool SendMessageToPageModel<TPageModel>(IBasePage<TPageModel> page, string message, object sender = null, object arg = null) where TPageModel : class, INotifyPropertyChanged, IMessagable;
+
+        /// <summary>
+        /// Sends the action to page model.
+        /// </summary>
+        /// <param name="page">Page.</param>
+        /// <param name="action">Action.</param>
+        /// <typeparam name="TPageModel">The 1st type parameter.</typeparam>
+        void SendActionToPageModel<TPageModel>(IBasePage<TPageModel> page, Action<TPageModel> action) where TPageModel : class, INotifyPropertyChanged, IMessagable;
 	}
 }
 

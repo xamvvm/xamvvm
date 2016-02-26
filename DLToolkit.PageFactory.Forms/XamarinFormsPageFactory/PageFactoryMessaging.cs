@@ -29,7 +29,15 @@ namespace DLToolkit.PageFactory
         }
         #endregion
 
-
+        public void SendActionToPageModel<TPageModel>(IBasePage<TPageModel> page, Action<TPageModel> action) where TPageModel : class, INotifyPropertyChanged, IMessagable
+        {
+            #pragma warning disable 4014
+            Task.Run(() => { 
+                TPageModel pageModel = GetPageModel(page);
+                action(pageModel); 
+            });
+            #pragma warning restore 4014
+        }
     }
 }
 

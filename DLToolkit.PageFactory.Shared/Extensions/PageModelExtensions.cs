@@ -3,6 +3,9 @@ using System.ComponentModel;
 
 namespace DLToolkit.PageFactory
 {
+    /// <summary>
+    /// Page model extensions.
+    /// </summary>
     public static class PageModelExtensions
     {
         /// <summary>

@@ -3,6 +3,9 @@ using System.ComponentModel;
 
 namespace DLToolkit.PageFactory
 {
+    /// <summary>
+    /// Caching extensions.
+    /// </summary>
     public static class CachingExtensions
     {
         /// <summary>

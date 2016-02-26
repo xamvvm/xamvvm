@@ -10,6 +10,9 @@ namespace DLToolkit.PageFactory
 	{
 	}
 
+    /// <summary>
+    /// INavigationRemovingFromCache.
+    /// </summary>
     public interface INavigationRemovingFromCache
     {
         /// <summary>
@@ -18,6 +21,9 @@ namespace DLToolkit.PageFactory
         void PageFactoryRemovingFromCache();
     }
 
+    /// <summary>
+    /// INavigationPushing.
+    /// </summary>
     public interface INavigationPushing
     {
         /// <summary>
@@ -26,6 +32,9 @@ namespace DLToolkit.PageFactory
         bool PageFactoryPushing();
     }
 
+    /// <summary>
+    /// INavigationPushed.
+    /// </summary>
     public interface INavigationPushed
     {
         /// <summary>
@@ -34,6 +43,9 @@ namespace DLToolkit.PageFactory
         void PageFactoryPushed();
     }
 
+    /// <summary>
+    /// INavigationPopping.
+    /// </summary>
     public interface INavigationPopping
     {
         /// <summary>
@@ -42,6 +54,9 @@ namespace DLToolkit.PageFactory
         bool PageFactoryPopping();
     }
 
+    /// <summary>
+    /// INavigationPopped.
+    /// </summary>
     public interface INavigationPopped
     {
         /// <summary>
@@ -50,6 +65,9 @@ namespace DLToolkit.PageFactory
         void PageFactoryPopped();
     }
 
+    /// <summary>
+    /// INavigationInserting.
+    /// </summary>
     public interface INavigationInserting
     {
         /// <summary>
@@ -58,6 +76,9 @@ namespace DLToolkit.PageFactory
         bool PageFactoryInserting();
     }
 
+    /// <summary>
+    /// INavigationInserted.
+    /// </summary>
     public interface INavigationInserted
     {
         /// <summary>
@@ -66,6 +87,9 @@ namespace DLToolkit.PageFactory
         void PageFactoryInserted();
     }
 
+    /// <summary>
+    /// INavigationRemoving.
+    /// </summary>
     public interface INavigationRemoving
     {
         /// <summary>
@@ -74,6 +98,9 @@ namespace DLToolkit.PageFactory
         bool PageFactoryRemoving();
     }
 
+    /// <summary>
+    /// INavigationRemoved.
+    /// </summary>
     public interface INavigationRemoved
     {
         /// <summary>

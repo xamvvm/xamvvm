@@ -3,6 +3,9 @@ using System.ComponentModel;
 
 namespace DLToolkit.PageFactory
 {
+    /// <summary>
+    /// Navigation extensions.
+    /// </summary>
     public static class NavigationExtensions
     {
         /// <summary>

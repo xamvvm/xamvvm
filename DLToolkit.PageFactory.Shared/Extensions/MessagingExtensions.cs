@@ -3,6 +3,9 @@ using System.ComponentModel;
 
 namespace DLToolkit.PageFactory
 {
+    /// <summary>
+    /// Messaging extensions.
+    /// </summary>
     public static class MessagingExtensions
     {
         /// <summary>

@@ -57,7 +57,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="page">Page instance.</param>
 		/// <param name="message">Message.</param>
 		/// <param name="arg">Argument.</param>
-		/// <typeparam name="TPage">Page type.</typeparam>
+        /// <typeparam name="TPageModel">Page model.</typeparam>
         bool SendMessageToPage<TPageModel>(IBaseMessagablePage<TPageModel> page, string message, object sender = null, object arg = null) where TPageModel : class, INotifyPropertyChanged;
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace DLToolkit.PageFactory
         /// <param name="message">Message.</param>
         /// <param name="sender">Sender.</param>
         /// <param name="arg">Argument.</param>
-        /// <typeparam name="TPage">The 1st type parameter.</typeparam>
+        /// <typeparam name="TPageModel">Page model.</typeparam>
         bool SendMessageToPageModel<TPageModel>(IBasePage<TPageModel> page, string message, object sender = null, object arg = null) where TPageModel : class, INotifyPropertyChanged, IMessagable;
 	}
 }

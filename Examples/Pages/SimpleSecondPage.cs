@@ -6,7 +6,7 @@ using PageFactory.Examples.ViewModels;
 
 namespace PageFactory.Examples.Pages
 {
-    public class SimpleSecondPage : ContentPage, IBaseMessagablePage<SimpleSecondViewModel>, INavigationPushing, INavigationPushed, INavigationPopping, INavigationPopped, INavigationRemovingFromCache
+    public class SimpleSecondPage : ContentPage, IBasePage<SimpleSecondViewModel>, INavigationPushing, INavigationPushed, INavigationPopping, INavigationPopped, INavigationRemovingFromCache
 	{
 		public SimpleSecondPage()
 		{
@@ -19,12 +19,6 @@ namespace PageFactory.Examples.Pages
 			button.SetBinding<SimpleSecondViewModel>(Button.CommandProperty, v => v.PopPageCommand);
 
 			Content = button;
-		}
-
-		public void PageFactoryMessageReceived(string message, object sender, object arg)
-		{
-			System.Diagnostics.Debug.WriteLine("SimpleSecondPage received {0} message from {1} with arg: {2}",  
-				message, sender.GetType(), arg);
 		}
 
         public bool PageFactoryPushing()

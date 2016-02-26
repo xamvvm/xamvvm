@@ -8,7 +8,7 @@ namespace PageFactory.Examples.ViewModels
 		public SimpleXamlFirstViewModel()
 		{
 			OpenSecondPageCommand = new PageFactoryCommand(() => 
-				PageFactory.GetMessagablePageFromCache<SimpleXamlSecondViewModel>()
+				PageFactory.GetPageFromCache<SimpleXamlSecondViewModel>()
 				.SendMessageToPageModel("Hello", this, Guid.NewGuid())
 				.PushPage());
 		}

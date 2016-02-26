@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace DLToolkit.PageFactory
 {
-    public abstract class PFPage<TPageModel> : Xamarin.Forms.Page, IBaseMessagablePage<TPageModel>, IPageModelInitializer<TPageModel>, INavigationInterceptors where TPageModel : class, INotifyPropertyChanged
+    public abstract class PFPage<TPageModel> : Xamarin.Forms.Page, IBasePage<TPageModel>, IPageModelInitializer<TPageModel>, INavigationInterceptors where TPageModel : class, INotifyPropertyChanged
 	{
         public TPageModel PageModel
         {

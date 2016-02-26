@@ -12,10 +12,9 @@ namespace PageFactory.Examples.ViewModels
 
 			OpenPageCommand = new PageFactoryCommand(() => {
 
-				PageFactory.GetMessagablePageFromCache<SimpleSecondViewModel>()
+				PageFactory.GetPageFromCache<SimpleSecondViewModel>()
 					.ResetPageModel()
 					.SendMessageToPageModel("ViewModelTestMessage", sender: this, arg: Guid.NewGuid())
-					.SendMessageToPage("PageTestMessage", sender: this, arg: Guid.NewGuid())
 					.PushPage();
 			}); 
 		}

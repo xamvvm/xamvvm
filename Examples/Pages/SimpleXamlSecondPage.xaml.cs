@@ -7,16 +7,12 @@ using PageFactory.Examples.ViewModels;
 
 namespace PageFactory.Examples.Pages
 {
-    public partial class SimpleXamlSecondPage : ContentPage, IBaseMessagablePage<SimpleXamlSecondViewModel>
+    public partial class SimpleXamlSecondPage : ContentPage, IBasePage<SimpleXamlSecondViewModel>
 	{
 		public SimpleXamlSecondPage()
 		{
 			InitializeComponent();
 		}
-
-        public void PageFactoryMessageReceived(string message, object sender, object arg)
-        {
-        }
 	}
 }
 

@@ -17,6 +17,14 @@ namespace DLToolkit.PageFactory
 		/// <typeparam name="TPageModel">Page model type.</typeparam>
         IBasePage<TPageModel> GetPageByModel<TPageModel>(TPageModel pageModelInstance) where TPageModel : class, INotifyPropertyChanged;
 
+        /// <summary>
+        /// Gets the Page PageModel.
+        /// </summary>
+        /// <returns>The page model.</returns>
+        /// <param name="page">Page.</param>
+        /// <typeparam name="TPageModel">The 1st type parameter.</typeparam>
+        TPageModel GetPageModel<TPageModel>(IBasePage<TPageModel> page) where TPageModel : class, INotifyPropertyChanged;
+
 		/// <summary>
 		/// Replaces the Page PageModel.
 		/// </summary>

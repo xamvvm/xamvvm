@@ -20,6 +20,16 @@ namespace DLToolkit.PageFactory
             return null;
         }
 
+        public TPageModel GetPageModel<TPageModel>(IBasePage<TPageModel> page) where TPageModel : class, INotifyPropertyChanged
+        {
+            var xfPage = page as Page;
+
+            if (xfPage != null)
+                return xfPage.BindingContext as TPageModel;
+
+            return null;
+        }
+
         public void ReplacePageModel<TPageModel>(IBasePage<TPageModel> page, TPageModel newPageModel) where TPageModel : class, INotifyPropertyChanged
         {
             RemoveFromWeakCacheIfExists(page);  

@@ -24,6 +24,17 @@ namespace DLToolkit.PageFactory
         }
 
         /// <summary>
+        /// Gets the Page PageModel.
+        /// </summary>
+        /// <returns>The page model.</returns>
+        /// <param name="page">Page.</param>
+        /// <typeparam name="TPageModel">The 1st type parameter.</typeparam>
+        public static TPageModel GetPageModel<TPageModel>(this IBasePage<TPageModel> page) where TPageModel : class, INotifyPropertyChanged
+        {
+            return PF.Factory.GetPageModel(page);
+        }
+
+        /// <summary>
         /// Gets the messagable page by page model.
         /// Page must implement IMessagable interface!!!
         /// </summary>

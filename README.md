@@ -55,6 +55,12 @@ https://github.com/daniel-luberda/DLToolkit.PageFactory/tree/master/Examples
 
 ## Interface based MVVM
 
+#### Initialization
+
+```C#
+MainPage = new XamarinFormsPageFactory().Init<HomeViewModel, PFNavigationPage>();
+```
+
 #### Minimal requirements
 
 - Every `Page` must implement `IBasePage<TPageModel>`

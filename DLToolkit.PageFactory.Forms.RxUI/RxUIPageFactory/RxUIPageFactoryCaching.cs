@@ -2,6 +2,8 @@
 using System.ComponentModel;
 using Xamarin.Forms;
 using System.Threading.Tasks;
+using Logging;
+
 
 namespace DLToolkit.PageFactory
 {
@@ -16,20 +18,40 @@ namespace DLToolkit.PageFactory
 
         public IBasePage<INotifyPropertyChanged> GetPageFromCache(Type pageModelType, bool resetPageModel = false)
         {
-            var pageType = GetPageType(pageModelType);
-
-            if (!pageCache.ContainsKey(pageModelType))
+            using (Log.Perf("GetPageFromCache"))
             {
-                IBasePage<INotifyPropertyChanged> page = Activator.CreateInstance(pageType) as IBasePage<INotifyPropertyChanged>;
-                ResetPageModel(page);
-                pageCache.Add(pageModelType, page);
-            }
-            else if (resetPageModel)
-            {
-                ResetPageModel(pageCache[pageModelType]);
-            }
 
-            return pageCache[pageModelType];
+
+                var pageType = GetPageType(pageModelType);
+
+
+                if (!pageCache.ContainsKey(pageModelType))
+                {
+                    using (Log.Perf("GetPageFromCache.CreateInstance"))
+                    {
+
+                        IBasePage<INotifyPropertyChanged> page =
+                            Activator.CreateInstance(pageType) as IBasePage<INotifyPropertyChanged>;
+
+                        using (Log.Perf("GetPageFromCache.ResetPageModel"))
+                        {
+
+                            ResetPageModel(page);
+                        }
+
+                        pageCache.Add(pageModelType, page);
+                    }
+                }
+                else if (resetPageModel)
+                {
+                    using (Log.Perf("GetPageFromCache.ResetPageModel"))
+                    {
+                        ResetPageModel(pageCache[pageModelType]);
+                    }
+                }
+
+                return pageCache[pageModelType];
+            }
         }
 
         public IBasePage<TPageModel> GetPageAsNewInstance<TPageModel>(bool saveOrReplaceInCache = false) where TPageModel : class, INotifyPropertyChanged

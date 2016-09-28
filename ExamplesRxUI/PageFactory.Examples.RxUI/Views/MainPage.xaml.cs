@@ -2,9 +2,11 @@
 using PageFactory.Examples.RxUI.ViewModels;
 using ReactiveUI;
 using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
 namespace PageFactory.Examples.RxUI.Views
-{    
+{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPage : ContentPage, IViewFor<MainPageViewModel>, IBasePage<MainPageViewModel>
     {    
         public MainPage ()

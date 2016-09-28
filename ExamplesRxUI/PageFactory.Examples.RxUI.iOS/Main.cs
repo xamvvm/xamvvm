@@ -17,4 +17,6 @@ namespace PageFactory.Examples.RxUI.iOS
             UIApplication.Main(args, null, "AppDelegate");
         }
     }
+
+
 }

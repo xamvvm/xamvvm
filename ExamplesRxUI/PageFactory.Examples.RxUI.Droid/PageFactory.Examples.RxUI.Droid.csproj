@@ -155,6 +155,10 @@
     <None Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\DLToolkit.PageFactory.Forms.RxUI\DLToolkit.PageFactory.Forms.RxUI.csproj">
+      <Project>{4bef57b2-fdc8-451e-97ed-c53b0a419600}</Project>
+      <Name>DLToolkit.PageFactory.Forms.RxUI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PageFactory.Examples.RxUI\PageFactory.Examples.RxUI.csproj">
       <Project>{8af44ea8-c3da-459c-a5cb-ded2a5da500a}</Project>
       <Name>PageFactory.Examples.RxUI</Name>

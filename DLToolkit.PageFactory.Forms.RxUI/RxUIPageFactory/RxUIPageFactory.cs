@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using Splat;
 using Xamarin.Forms;
 
 namespace DLToolkit.PageFactory
@@ -47,7 +48,7 @@ namespace DLToolkit.PageFactory
             }
             else
             {
-                var pageModel = Activator.CreateInstance(GetPageModelType(page)) as INotifyPropertyChanged;
+                var pageModel =  Activator.CreateInstance(GetPageModelType(page)) as INotifyPropertyChanged;
                 ReplacePageModel(page, pageModel);
             }
         }

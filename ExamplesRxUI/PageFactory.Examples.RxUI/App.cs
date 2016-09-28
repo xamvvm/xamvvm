@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using Logging;
+using PageFactory.Examples.RxUI.Views;
 using Xamarin.Forms;
 
 namespace PageFactory.Examples.RxUI
@@ -13,6 +14,11 @@ namespace PageFactory.Examples.RxUI
         {
             var bootstrapper = new AppBootstrapper();
             // The root page of your application
+
+            using (Log.Perf("Create MainPage"))
+            {
+                var t = new MainPage();
+            }
             MainPage = bootstrapper.CreateMainPage();
         }
 

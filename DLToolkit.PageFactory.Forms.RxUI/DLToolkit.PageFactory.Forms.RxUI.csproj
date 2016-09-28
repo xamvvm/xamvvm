@@ -43,6 +43,7 @@
     <Compile Include="Implementations\PFNavigationPage.cs" />
     <Compile Include="Implementations\PFPage.cs" />
     <Compile Include="Implementations\PFTabbedPage.cs" />
+    <Compile Include="Log.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RxUIPageFactory\RxUIPageFactory.cs" />
     <Compile Include="RxUIPageFactory\RxUIPageFactoryCaching.cs" />

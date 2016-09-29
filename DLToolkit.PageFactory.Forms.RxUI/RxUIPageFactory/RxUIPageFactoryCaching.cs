@@ -29,9 +29,17 @@ namespace DLToolkit.PageFactory
                 {
                     using (Log.Perf("GetPageFromCache.CreateInstance"))
                     {
+                        IBasePage<INotifyPropertyChanged> page;
 
-                        IBasePage<INotifyPropertyChanged> page =
-                            Activator.CreateInstance(pageType) as IBasePage<INotifyPropertyChanged>;
+                        if (staticInitialization)
+                        {
+                            page = viewModelToViewCreationMap[pageModelType]();
+                        }
+                        else
+                        {
+                            page = Activator.CreateInstance(pageType) as IBasePage<INotifyPropertyChanged>;
+                        }
+
 
                         using (Log.Perf("GetPageFromCache.ResetPageModel"))
                         {
@@ -61,9 +69,17 @@ namespace DLToolkit.PageFactory
 
         public IBasePage<INotifyPropertyChanged> GetPageAsNewInstance(Type pageModelType, bool saveOrReplaceInCache = false)
         {
-            var pageType = GetPageType(pageModelType);
+            IBasePage<INotifyPropertyChanged> page;
+            if (staticInitialization)
+            {
+                page = viewModelToViewCreationMap[pageModelType]();
+            }
+            else
+            {
+                var pageType = GetPageType(pageModelType);
 
-            IBasePage<INotifyPropertyChanged> page = (IBasePage<INotifyPropertyChanged>)Activator.CreateInstance(pageType);
+                page = (IBasePage<INotifyPropertyChanged>)Activator.CreateInstance(pageType);
+            }
             ResetPageModel(page);
 
             if (saveOrReplaceInCache && pageCache.ContainsKey(pageModelType))
@@ -147,7 +163,7 @@ namespace DLToolkit.PageFactory
         {
             IBasePage<INotifyPropertyChanged> pageExists;
 
-            var viewModelType = GetPageModelType(page);
+            var viewModelType =  staticInitialization ? viewToViewModelCreationMap[page.GetType()].GetType() : GetPageModelType(page);
 
             if (pageCache.TryGetValue(viewModelType, out pageExists))
             {

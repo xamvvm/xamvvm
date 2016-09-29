@@ -1,7 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
-using Splat;
+using System.Reflection;
 using Xamarin.Forms;
+using Logging;
 
 namespace DLToolkit.PageFactory
 {
@@ -33,8 +34,18 @@ namespace DLToolkit.PageFactory
 
         public void ReplacePageModel<TPageModel>(IBasePage<TPageModel> page, TPageModel newPageModel) where TPageModel : class, INotifyPropertyChanged
         {
-            RemoveFromWeakCacheIfExists(page);  
+            RemoveFromWeakCacheIfExists(page);
             ((Page)page).BindingContext = newPageModel;
+
+            ((Page)page).BindingContext = newPageModel;
+
+
+            using (Log.Perf("SetViewModel"))
+            {
+                PropertyInfo prop = page.GetType().GetRuntimeProperty("ViewModel");
+                prop.SetValue(page, newPageModel);
+            }
+
             AddToWeakCacheIfNotExists(page);
         }
 
@@ -48,8 +59,22 @@ namespace DLToolkit.PageFactory
             }
             else
             {
-                var pageModel =  Activator.CreateInstance(GetPageModelType(page)) as INotifyPropertyChanged;
+                var pageModel = CreatePageModelInstance(page);
                 ReplacePageModel(page, pageModel);
+            }
+        }
+
+        private INotifyPropertyChanged CreatePageModelInstance<TPageModel>(IBasePage<TPageModel> page)
+            where TPageModel : class, INotifyPropertyChanged
+        {
+            if (staticInitialization)
+            {
+                return viewToViewModelCreationMap[page.GetType()]();
+                }
+            else
+            {
+                return Activator.CreateInstance(GetPageModelType(page)) as INotifyPropertyChanged;
+
             }
         }
 

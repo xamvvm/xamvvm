@@ -5,7 +5,7 @@ using ReactiveUI;
 
 namespace PageFactory.Examples.RxUI.Views
 {
-    public partial class DemoListViewView : IBasePage<DemoListViewViewModel>
+    public partial class DemoListViewView : IBasePage<DemoListViewViewModel> , IViewFor<DemoListViewViewModel>
     {
         public DemoListViewView ()
         {
@@ -14,7 +14,6 @@ namespace PageFactory.Examples.RxUI.Views
 
             this.WhenActivated(d => 
             {
-                ViewModel = (DemoListViewViewModel)BindingContext;
 
                 this.OneWayBind(ViewModel, vm => vm.DogViewModelList, v => v.DogListView.ItemsSource)
                     .DisposeWith(d);

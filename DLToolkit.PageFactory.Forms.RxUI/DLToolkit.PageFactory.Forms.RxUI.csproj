@@ -36,7 +36,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Implementations\PFCarouselPage.cs" />
     <Compile Include="Implementations\PFContentPage.cs" />
     <Compile Include="Implementations\PFMasterDetailPage.cs" />

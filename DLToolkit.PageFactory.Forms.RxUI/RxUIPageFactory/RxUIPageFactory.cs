@@ -17,9 +17,9 @@ namespace DLToolkit.PageFactory
             RemoveFromWeakCacheIfExists(page);
             ((Page)page).BindingContext = newPageModel;
 
-            using (Log.Perf("SetViewModel"))
+            PropertyInfo prop = page.GetType().GetRuntimeProperty("ViewModel");
+            if (prop != null)
             {
-                PropertyInfo prop = page.GetType().GetRuntimeProperty("ViewModel");
                 prop.SetValue(page, newPageModel);
             }
 

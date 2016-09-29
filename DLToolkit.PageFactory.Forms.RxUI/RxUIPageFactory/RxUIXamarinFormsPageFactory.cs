@@ -36,20 +36,13 @@ namespace DLToolkit.PageFactory
 
             PF.SetPageFactory(this);
 
-            using (Log.Perf("Get From cache"))
-            {
+            var page = GetPageFromCache(typeof(TMainPageModel));
 
-                var page = GetPageFromCache(typeof(TMainPageModel));
+            // Not sure if this is clean
+            navigationPage = new TNavigationPage();
+            navigationPage.PushAsync((Page) page);
 
-                using (Log.Perf("Create PageInstance"))
-                {
-                    // Not sure if this is clean
-                    navigationPage = new TNavigationPage();
-                    navigationPage.PushAsync((Page) page);
-
-                    return NavigationPage;
-                }
-            }
+            return NavigationPage;
         }
 
 
@@ -58,54 +51,42 @@ namespace DLToolkit.PageFactory
             where TMainPageModel : class, INotifyPropertyChanged
             where TNavigationPage : NavigationPage, IBasePage<INotifyPropertyChanged>
         {
-            using (Log.Perf("Init Dictionary"))
+            PF.SetPageFactory(this);
+
+            viewModelToViewMap.Clear();
+
+            foreach (var pageType in pageTypes)
             {
+                var basePageInterface =
+                    pageType.GetTypeInfo().ImplementedInterfaces.FirstOrDefault(t => t.IsConstructedGenericType &&
+                                                                                        t.GetGenericTypeDefinition() ==
+                                                                                        typeof(IBasePage<>));
 
-                PF.SetPageFactory(this);
+                var viewModelType = basePageInterface.GenericTypeArguments.First();
 
-                viewModelToViewMap.Clear();
-
-                foreach (var pageType in pageTypes)
+                if (!viewModelToViewMap.ContainsKey(viewModelType))
                 {
-                    var basePageInterface =
-                        pageType.GetTypeInfo().ImplementedInterfaces.FirstOrDefault(t => t.IsConstructedGenericType &&
-                                                                                         t.GetGenericTypeDefinition() ==
-                                                                                         typeof(IBasePage<>));
+                    viewModelToViewMap.Add(viewModelType, pageType);
+                }
+                else
+                {
+                    var pageTypeInfo = pageType.GetTypeInfo();
 
-                    var viewModelType = basePageInterface.GenericTypeArguments.First();
+                    var oldPageType = viewModelToViewMap[viewModelType];
 
-                    if (!viewModelToViewMap.ContainsKey(viewModelType))
+                    if (pageTypeInfo.IsSubclassOf(oldPageType))
                     {
+                        viewModelToViewMap.Remove(viewModelType);
                         viewModelToViewMap.Add(viewModelType, pageType);
                     }
-                    else
-                    {
-                        var pageTypeInfo = pageType.GetTypeInfo();
-
-                        var oldPageType = viewModelToViewMap[viewModelType];
-
-                        if (pageTypeInfo.IsSubclassOf(oldPageType))
-                        {
-                            viewModelToViewMap.Remove(viewModelType);
-                            viewModelToViewMap.Add(viewModelType, pageType);
-                        }
-                    }
-
                 }
+
             }
-            using (Log.Perf("Get From cache"))
-            {
+            var page = GetPageFromCache(typeof(TMainPageModel));
 
-                var page = GetPageFromCache(typeof(TMainPageModel));
+            navigationPage = (NavigationPage) Activator.CreateInstance(typeof(TNavigationPage), page);
 
-                using (Log.Perf("Create PageInstance"))
-                {
-
-                    navigationPage = (NavigationPage) Activator.CreateInstance(typeof(TNavigationPage), page);
-
-                    return NavigationPage;
-                }
-            }
+            return NavigationPage;
         }
     }
 }

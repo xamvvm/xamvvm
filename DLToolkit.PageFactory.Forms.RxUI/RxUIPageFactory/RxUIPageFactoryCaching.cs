@@ -14,48 +14,31 @@ namespace DLToolkit.PageFactory
 
         public override  IBasePage<INotifyPropertyChanged> GetPageFromCache(Type pageModelType, bool resetPageModel = false)
         {
-            using (Log.Perf("GetPageFromCache"))
+            if (!pageCache.ContainsKey(pageModelType))
             {
+                    IBasePage<INotifyPropertyChanged> page;
 
-
-
-
-                if (!pageCache.ContainsKey(pageModelType))
+                if (staticInitialization)
                 {
-                    using (Log.Perf("GetPageFromCache.CreateInstance"))
-                    {
-                        IBasePage<INotifyPropertyChanged> page;
-
-                        if (staticInitialization)
-                        {
-                            page = viewModelToViewCreationMap[pageModelType]();
-                        }
-                        else
-                        {
-                            var pageType = GetPageType(pageModelType);
-                            page = Activator.CreateInstance(pageType) as IBasePage<INotifyPropertyChanged>;
-                        }
-
-
-                        using (Log.Perf("GetPageFromCache.ResetPageModel"))
-                        {
-
-                            ResetPageModel(page);
-                        }
-
-                        pageCache.Add(pageModelType, page);
-                    }
+                    page = viewModelToViewCreationMap[pageModelType]();
                 }
-                else if (resetPageModel)
+                else
                 {
-                    using (Log.Perf("GetPageFromCache.ResetPageModel"))
-                    {
-                        ResetPageModel(pageCache[pageModelType]);
-                    }
+                    var pageType = GetPageType(pageModelType);
+                    page = Activator.CreateInstance(pageType) as IBasePage<INotifyPropertyChanged>;
                 }
 
-                return pageCache[pageModelType];
+
+                ResetPageModel(page);
+
+                pageCache.Add(pageModelType, page);
             }
+            else if (resetPageModel)
+            {
+                ResetPageModel(pageCache[pageModelType]);
+            }
+
+            return pageCache[pageModelType];
         }
 
 

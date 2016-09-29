@@ -7,22 +7,17 @@ using Logging;
 
 namespace DLToolkit.PageFactory
 {
-    public partial class RxUIPageFactory : IPageFactoryCaching
+    public partial class RxUIPageFactory : XamarinFormsPageFactory
     {
         #region IPageFactoryCaching implementation
 
-        public IBasePage<TPageModel> GetPageFromCache<TPageModel>(bool resetPageModel = false) where TPageModel : class, INotifyPropertyChanged
-        {
-            return GetPageFromCache(typeof(TPageModel), resetPageModel) as IBasePage<TPageModel>;
-        }
 
-        public IBasePage<INotifyPropertyChanged> GetPageFromCache(Type pageModelType, bool resetPageModel = false)
+        public override  IBasePage<INotifyPropertyChanged> GetPageFromCache(Type pageModelType, bool resetPageModel = false)
         {
             using (Log.Perf("GetPageFromCache"))
             {
 
 
-                var pageType = GetPageType(pageModelType);
 
 
                 if (!pageCache.ContainsKey(pageModelType))
@@ -37,6 +32,7 @@ namespace DLToolkit.PageFactory
                         }
                         else
                         {
+                            var pageType = GetPageType(pageModelType);
                             page = Activator.CreateInstance(pageType) as IBasePage<INotifyPropertyChanged>;
                         }
 
@@ -62,12 +58,8 @@ namespace DLToolkit.PageFactory
             }
         }
 
-        public IBasePage<TPageModel> GetPageAsNewInstance<TPageModel>(bool saveOrReplaceInCache = false) where TPageModel : class, INotifyPropertyChanged
-        {
-            return GetPageAsNewInstance(typeof(TPageModel), saveOrReplaceInCache) as IBasePage<TPageModel>;
-        }
 
-        public IBasePage<INotifyPropertyChanged> GetPageAsNewInstance(Type pageModelType, bool saveOrReplaceInCache = false)
+        public override  IBasePage<INotifyPropertyChanged> GetPageAsNewInstance(Type pageModelType, bool saveOrReplaceInCache = false)
         {
             IBasePage<INotifyPropertyChanged> page;
             if (staticInitialization)
@@ -91,75 +83,9 @@ namespace DLToolkit.PageFactory
             return page;
         }
 
-        public IBaseNavigationPage<TPageModel> GetNavigationFromCache<TPageModel>(bool resetPageModel = false) where TPageModel : class, INotifyPropertyChanged
-        {
-            return GetPageFromCache(typeof(TPageModel), resetPageModel) as IBaseNavigationPage<TPageModel>;
-        }
 
-        public IBaseNavigationPage<INotifyPropertyChanged> GetNavigationFromCache(Type pageModelType, bool resetPageModel = false)
-        {
-            return GetPageFromCache(pageModelType, resetPageModel) as IBaseNavigationPage<INotifyPropertyChanged>;
-        }
 
-        public IBaseNavigationPage<TPageModel> GetNavigationAsNewInstance<TPageModel>(bool saveOrReplaceInCache = false) where TPageModel : class, INotifyPropertyChanged
-        {
-            return GetPageAsNewInstance(typeof(TPageModel), saveOrReplaceInCache) as  IBaseNavigationPage<TPageModel>;
-        }
-
-        public IBaseNavigationPage<INotifyPropertyChanged> GetNavigationAsNewInstance(Type pageModelType, bool saveOrReplaceInCache = false)
-        {
-            return GetPageAsNewInstance(pageModelType, saveOrReplaceInCache) as IBaseNavigationPage<INotifyPropertyChanged>;
-        }
-
-        public bool ReplaceCachedPageModel<TPageModel>(TPageModel newPageModel) where TPageModel : class, INotifyPropertyChanged
-        {
-            if (pageCache.ContainsKey(typeof(TPageModel)))
-            {
-                var page = GetPageFromCache<TPageModel>();
-                ReplacePageModel(page, newPageModel);
-                return true;
-            }
-
-            return false;
-        }
-
-        public bool ResetCachedPageModel<TPageModel>() where TPageModel : class, INotifyPropertyChanged
-        {
-            if (pageCache.ContainsKey(typeof(TPageModel)))
-            {
-                var page = GetPageFromCache<TPageModel>();
-                ResetPageModel(page);
-                return true;
-            }
-
-            return false;
-        }
-
-        public bool RemovePageTypeFromCache(Type pageModelType)
-        {
-            IBasePage<INotifyPropertyChanged> page;
-
-            if (pageCache.TryGetValue(pageModelType, out page))
-            {
-                var navEventsPage = page as INavigationRemovingFromCache;
-                if (navEventsPage != null)
-                    #pragma warning disable 4014
-                    Task.Run(() => navEventsPage.PageFactoryRemovingFromCache()).ConfigureAwait(false);
-                    #pragma warning restore 4014
-                
-                pageCache.Remove(pageModelType);
-                return true;
-            }
-
-            return false;
-        }
-
-        public bool RemovePageTypeFromCache<TPageModel>() where TPageModel : class, INotifyPropertyChanged
-        {
-            return RemovePageTypeFromCache(typeof(TPageModel));
-        }
-
-        public bool RemovePageInstanceFromCache<TPageModel>(IBasePage<TPageModel> page) where TPageModel : class, INotifyPropertyChanged
+        public new bool RemovePageInstanceFromCache<TPageModel>(IBasePage<TPageModel> page) where TPageModel : class, INotifyPropertyChanged
         {
             IBasePage<INotifyPropertyChanged> pageExists;
 
@@ -184,19 +110,6 @@ namespace DLToolkit.PageFactory
             return false;
         }
 
-        public void ClearCache()
-        {
-            foreach (var page in pageCache.Values)
-            {
-                var navEventsPage = page as INavigationRemovingFromCache;
-                if (navEventsPage != null)
-                    #pragma warning disable 4014
-                    Task.Run(() => navEventsPage.PageFactoryRemovingFromCache()).ConfigureAwait(false);
-                    #pragma warning restore 4014
-            }
-
-            pageCache.Clear();
-        }
 
         #endregion
     }

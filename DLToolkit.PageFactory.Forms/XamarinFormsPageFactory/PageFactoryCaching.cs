@@ -14,7 +14,7 @@ namespace DLToolkit.PageFactory
             return GetPageFromCache(typeof(TPageModel), resetPageModel) as IBasePage<TPageModel>;
         }
 
-        public IBasePage<INotifyPropertyChanged> GetPageFromCache(Type pageModelType, bool resetPageModel = false)
+        public virtual IBasePage<INotifyPropertyChanged> GetPageFromCache(Type pageModelType, bool resetPageModel = false)
         {
             var pageType = GetPageType(pageModelType);
 
@@ -37,7 +37,7 @@ namespace DLToolkit.PageFactory
             return GetPageAsNewInstance(typeof(TPageModel), saveOrReplaceInCache) as IBasePage<TPageModel>;
         }
 
-        public IBasePage<INotifyPropertyChanged> GetPageAsNewInstance(Type pageModelType, bool saveOrReplaceInCache = false)
+        public virtual IBasePage<INotifyPropertyChanged> GetPageAsNewInstance(Type pageModelType, bool saveOrReplaceInCache = false)
         {
             var pageType = GetPageType(pageModelType);
 

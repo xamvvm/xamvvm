@@ -30,14 +30,14 @@ namespace DLToolkit.PageFactory
             return null;
         }
 
-        public void ReplacePageModel<TPageModel>(IBasePage<TPageModel> page, TPageModel newPageModel) where TPageModel : class, INotifyPropertyChanged
+        public virtual void ReplacePageModel<TPageModel>(IBasePage<TPageModel> page, TPageModel newPageModel) where TPageModel : class, INotifyPropertyChanged
         {
             RemoveFromWeakCacheIfExists(page);  
             ((Page)page).BindingContext = newPageModel;
             AddToWeakCacheIfNotExists(page);
         }
 
-        public void ResetPageModel<TPageModel>(IBasePage<TPageModel> page) where TPageModel : class, INotifyPropertyChanged
+        public virtual void ResetPageModel<TPageModel>(IBasePage<TPageModel> page) where TPageModel : class, INotifyPropertyChanged
         {
             var pageModelInitializerPage = page as IPageModelInitializer<INotifyPropertyChanged>;
 

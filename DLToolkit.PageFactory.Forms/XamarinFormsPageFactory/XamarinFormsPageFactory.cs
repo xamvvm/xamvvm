@@ -11,9 +11,9 @@ namespace DLToolkit.PageFactory
 {
     public partial class XamarinFormsPageFactory : IPageFactory
     {
-        readonly Dictionary<Type, IBasePage<INotifyPropertyChanged>> pageCache = new Dictionary<Type, IBasePage<INotifyPropertyChanged>>();
+        protected readonly Dictionary<Type, IBasePage<INotifyPropertyChanged>> pageCache = new Dictionary<Type, IBasePage<INotifyPropertyChanged>>();
 
-        readonly Dictionary<Type, Type> viewModelsTypes = new Dictionary<Type, Type>();
+        protected readonly Dictionary<Type, Type> viewModelToViewMap = new Dictionary<Type, Type>();
 
         readonly ConditionalWeakTable<INotifyPropertyChanged, IBasePage<INotifyPropertyChanged>> weakPageCache = new ConditionalWeakTable<INotifyPropertyChanged, IBasePage<INotifyPropertyChanged>>();
 
@@ -57,7 +57,7 @@ namespace DLToolkit.PageFactory
         {
             PF.SetPageFactory(this);
 
-            viewModelsTypes.Clear();
+            viewModelToViewMap.Clear();
 
             var pagesAssemblies = additionalPagesAssemblies.ToList();
             pagesAssemblies.Add(typeof(TMainPageModel).GetTypeInfo().Assembly);
@@ -94,18 +94,18 @@ namespace DLToolkit.PageFactory
                             }
                         }
 
-                        if(!viewModelsTypes.ContainsKey(viewModelType))
+                        if(!viewModelToViewMap.ContainsKey(viewModelType))
                         {
-                            viewModelsTypes.Add(viewModelType, pageType);
+                            viewModelToViewMap.Add(viewModelType, pageType);
                         }
                         else
                         {
-                            var oldPageType = viewModelsTypes[viewModelType];
+                            var oldPageType = viewModelToViewMap[viewModelType];
 
                             if (pageTypeInfo.IsSubclassOf(oldPageType))
                             {
-                                viewModelsTypes.Remove(viewModelType);
-                                viewModelsTypes.Add(viewModelType, pageType);
+                                viewModelToViewMap.Remove(viewModelType);
+                                viewModelToViewMap.Add(viewModelType, pageType);
                             }
                         }
                     }
@@ -118,7 +118,7 @@ namespace DLToolkit.PageFactory
             return NavigationPage;
         }
 
-        NavigationPage navigationPage = null;
+        protected NavigationPage navigationPage = null;
         public NavigationPage NavigationPage
         {
             get
@@ -130,11 +130,11 @@ namespace DLToolkit.PageFactory
             }
         }
 
-        Type GetPageType(Type viewModelType)
+        protected Type GetPageType(Type viewModelType)
         {
             Type pageType;
 
-            if (viewModelsTypes.TryGetValue(viewModelType, out pageType))
+            if (viewModelToViewMap.TryGetValue(viewModelType, out pageType))
             {
                 return pageType;
             }
@@ -143,7 +143,7 @@ namespace DLToolkit.PageFactory
                 string.Format("Page definition for {0} PageModel could not be found", viewModelType.ToString()));
         }
 
-        Type GetPageModelType(IBasePage<INotifyPropertyChanged> page)
+        protected Type GetPageModelType(IBasePage<INotifyPropertyChanged> page)
         {
             var found = page.GetType().GetTypeInfo().ImplementedInterfaces.FirstOrDefault(t => t.IsConstructedGenericType && t.GetGenericTypeDefinition() == typeof(IBasePage<>));
             var viewModelType = found.GenericTypeArguments.First();

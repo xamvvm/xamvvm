@@ -1,4 +1,4 @@
-﻿#define automatic_registration
+﻿#define manualFunc_registration
 
 
 using DLToolkit.PageFactory;
@@ -40,6 +40,18 @@ namespace PageFactory.Examples.RxUI
                 {
                     RxUIPageFactory.RegisterViews<MainPageViewModel, MainPage>();
                     RxUIPageFactory.RegisterViews<DemoListViewViewModel, DemoListViewView>();
+                }
+
+                using (Log.Perf("InitFactory"))
+                {
+                    return new RxUIPageFactory().InitStatic<MainPageViewModel, PFNavigationPage>();
+
+                }
+#elif manualFunc_registration             
+                using (Log.Perf("Register"))
+                {
+                    RxUIPageFactory.RegisterViews<MainPageViewModel, MainPage>(() => new MainPageViewModel(), () => new MainPage() );
+                    RxUIPageFactory.RegisterViews<DemoListViewViewModel, DemoListViewView>(() => new DemoListViewViewModel(), () => new DemoListViewView());
                 }
 
                 using (Log.Perf("InitFactory"))

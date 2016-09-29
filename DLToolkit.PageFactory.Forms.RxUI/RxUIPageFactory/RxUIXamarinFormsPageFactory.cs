@@ -19,6 +19,18 @@ namespace DLToolkit.PageFactory
         static Dictionary<Type, Func<INotifyPropertyChanged>> viewToViewModelCreationMap = new Dictionary<Type, Func<INotifyPropertyChanged>>();
 
 
+
+        public static void RegisterViews<viewModelType, viewType>(Func<viewModelType> viewModelCreationFunc, Func<viewType> viewCreationFunc)
+            where viewType : class, IViewFor<viewModelType>, IBasePage<viewModelType>, new()
+            where viewModelType : class, INotifyPropertyChanged, new()
+        {
+            staticInitialization = true;
+            viewModelToViewCreationMap.Add(typeof(viewModelType), viewCreationFunc);
+            viewToViewModelCreationMap.Add(typeof(viewType), viewModelCreationFunc);
+        }
+
+
+
         public static void RegisterViews<viewModelType, viewType>()
             where viewType : class, IViewFor<viewModelType>, IBasePage<viewModelType>, new()
             where viewModelType : class, INotifyPropertyChanged, new()
@@ -52,6 +64,7 @@ namespace DLToolkit.PageFactory
             where TNavigationPage : NavigationPage, IBasePage<INotifyPropertyChanged>
         {
             PF.SetPageFactory(this);
+            staticInitialization = false;
 
             viewModelToViewMap.Clear();
 

@@ -5,7 +5,7 @@ using ReactiveUI;
 
 namespace PageFactory.Examples.RxUI.Views
 {
-    public partial class DemoListViewView : IBasePage<DemoListViewViewModel> , IViewFor<DemoListViewViewModel>
+    public partial class DemoListViewView : IBasePage<DemoListViewViewModel> 
     {
         public DemoListViewView ()
         {

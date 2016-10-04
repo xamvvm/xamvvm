@@ -10,8 +10,9 @@ namespace DLToolkit.PageFactory
 	/// </summary>
 	public class BaseCommand<T> : IBaseCommand
 	{
-		readonly Action<T> execute;
-		readonly Func<T, bool> canExecute;
+		readonly Action<T> _execute;
+		readonly Func<T, bool> _canExecuteFunc;
+		bool _canExecute = true;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="DLToolkit.PageFactory.BaseCommand"/> class.
@@ -29,13 +30,17 @@ namespace DLToolkit.PageFactory
 		public BaseCommand(Action<T> execute, Func<T, bool> canExecute)
 		{
 			if (execute == null)
-			{
-				throw new ArgumentNullException("execute Action");
-			}
+				throw new ArgumentNullException(nameof(execute));
 
-			this.execute = execute;
-			this.canExecute = canExecute;
+			_execute = execute;
+			_canExecuteFunc = canExecute;
 		}
+
+		/// <summary>
+		/// Gets or sets the delay used for CanExecute.
+		/// </summary>
+		/// <value>The delay.</value>
+		public int Delay { get; set; } = 500;
 
 		/// <summary>
 		/// Occurs when can execute changed.
@@ -62,7 +67,7 @@ namespace DLToolkit.PageFactory
 		[DebuggerStepThrough]
 		public bool CanExecute(object parameter)
 		{
-			return canExecute == null || canExecute((T)parameter);
+			return _canExecute && (_canExecuteFunc == null || _canExecuteFunc((T)parameter));
 		}
 
 		/// <summary>
@@ -71,7 +76,20 @@ namespace DLToolkit.PageFactory
 		/// <param name="parameter">Parameter.</param>
 		public void Execute(object parameter)
 		{
-			execute((T)parameter);
+			try
+			{
+				_canExecute = false;
+				RaiseCanExecuteChanged();
+				if (parameter == null)
+					_execute(default(T));
+				else
+					_execute((T)parameter);
+			}
+			finally
+			{
+				_canExecute = true;
+				RaiseCanExecuteChanged();
+			}
 		}		
 	}
 
@@ -80,14 +98,15 @@ namespace DLToolkit.PageFactory
 	/// </summary>
 	public class BaseCommand : IBaseCommand
 	{
-		readonly Action execute;
-		readonly Func<bool> canExecute;
+		readonly Action<object> _execute;
+		readonly Func<bool> _canExecuteFunc;
+		bool _canExecute = true;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="DLToolkit.PageFactory.BaseCommand"/> class.
 		/// </summary>
 		/// <param name="execute">Execute.</param>
-		public BaseCommand(Action execute) : this(execute, null)
+		public BaseCommand(Action<object> execute) : this(execute, null)
 		{
 		}
 
@@ -96,16 +115,22 @@ namespace DLToolkit.PageFactory
 		/// </summary>
 		/// <param name="execute">Execute.</param>
 		/// <param name="canExecute">Can execute.</param>
-		public BaseCommand(Action execute, Func<bool> canExecute)
+		public BaseCommand(Action<object> execute, Func<bool> canExecute)
 		{
 			if (execute == null)
 			{
 				throw new ArgumentNullException("execute Action");
 			}
 
-			this.execute = execute;
-			this.canExecute = canExecute;
+			_execute = execute;
+			_canExecuteFunc = canExecute;
 		}
+
+		/// <summary>
+		/// Gets or sets the delay used for CanExecute.
+		/// </summary>
+		/// <value>The delay.</value>
+		public int Delay { get; set; } = 500;
 
 		/// <summary>
 		/// Occurs when can execute changed.
@@ -132,7 +157,7 @@ namespace DLToolkit.PageFactory
 		[DebuggerStepThrough]
 		public bool CanExecute(object parameter)
 		{
-			return canExecute == null || canExecute();
+			return _canExecute && (_canExecuteFunc == null || _canExecuteFunc());
 		}
 			
 		/// <summary>
@@ -141,7 +166,17 @@ namespace DLToolkit.PageFactory
 		/// <param name="parameter">Parameter.</param>
 		public void Execute(object parameter)
 		{
-			execute();
+			try
+			{
+				_canExecute = false;
+				RaiseCanExecuteChanged();
+				_execute(parameter);
+			}
+			finally
+			{
+				_canExecute = true;
+				RaiseCanExecuteChanged();
+			}
 		}
 	}
 }

@@ -35,22 +35,17 @@
     <Compile Include="Implementations\BaseModel.cs" />
     <Compile Include="Implementations\BaseNotifyPropertyChanged.cs" />
     <Compile Include="Implementations\BasePageModel.cs" />
-    <Compile Include="Interfaces\IBaseNavigationPage.cs" />
     <Compile Include="Interfaces\IBasePage.cs" />
-    <Compile Include="Interfaces\IMessagable.cs" />
     <Compile Include="Interfaces\IPageFactory.cs" />
     <Compile Include="Interfaces\IPageFactoryCaching.cs" />
     <Compile Include="Interfaces\IPageFactoryCommand.cs" />
-    <Compile Include="Interfaces\IPageFactoryMessaging.cs" />
     <Compile Include="Interfaces\IPageFactoryNavigation.cs" />
-    <Compile Include="Interfaces\IPageModelInitializer.cs" />
-    <Compile Include="Implementations\PageFactoryCommand.cs" />
+    <Compile Include="Implementations\BaseCommand.cs" />
     <Compile Include="Extensions\PageModelExtensions.cs" />
     <Compile Include="Extensions\NavigationExtensions.cs" />
     <Compile Include="Extensions\CachingExtensions.cs" />
-    <Compile Include="Extensions\MessagingExtensions.cs" />
     <Compile Include="Interfaces\INavigationInterceptors.cs" />
-    <Compile Include="Implementations\BaseViewModel.cs" />
+    <Compile Include="Interfaces\IBasePageModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>

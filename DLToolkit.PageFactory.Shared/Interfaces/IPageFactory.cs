@@ -7,15 +7,15 @@ namespace DLToolkit.PageFactory
 	/// <summary>
 	/// DLToolkit.PageFactory
 	/// </summary>
-	public interface IPageFactory : IPageFactoryCaching, IPageFactoryNavigation, IPageFactoryMessaging
+	public interface IPageFactory : IPageFactoryCaching, IPageFactoryNavigation
 	{
 		/// <summary>
-		/// Gets the Page by PageModel.
+		/// Gets the page by model.
 		/// </summary>
-		/// <returns>The page by page model.</returns>
-		/// <param name="pageModelInstance">Page model instance.</param>
-		/// <typeparam name="TPageModel">Page model type.</typeparam>
-        IBasePage<TPageModel> GetPageByModel<TPageModel>(TPageModel pageModelInstance) where TPageModel : class, INotifyPropertyChanged;
+		/// <returns>The page by model.</returns>
+		/// <param name="pageModel">Page model.</param>
+		/// <typeparam name="TPageModel">The 1st type parameter.</typeparam>
+		IBasePage<TPageModel> GetPageByModel<TPageModel>(TPageModel pageModel) where TPageModel : class, IBasePageModel, new();
 
         /// <summary>
         /// Gets the Page PageModel.
@@ -23,7 +23,7 @@ namespace DLToolkit.PageFactory
         /// <returns>The page model.</returns>
         /// <param name="page">Page.</param>
         /// <typeparam name="TPageModel">The 1st type parameter.</typeparam>
-        TPageModel GetPageModel<TPageModel>(IBasePage<TPageModel> page) where TPageModel : class, INotifyPropertyChanged;
+        TPageModel GetPageModel<TPageModel>(IBasePage<TPageModel> page) where TPageModel : class, IBasePageModel, new();
 
 		/// <summary>
 		/// Replaces the Page PageModel.
@@ -31,13 +31,7 @@ namespace DLToolkit.PageFactory
 		/// <param name = "page">Page.</param>
 		/// <param name="newPageModel">New page model.</param>
 		/// <typeparam name="TPageModel">Page model type.</typeparam>
-        void ReplacePageModel<TPageModel>(IBasePage<TPageModel> page, TPageModel newPageModel) where TPageModel : class, INotifyPropertyChanged;
-
-		/// <summary>
-		/// Resets the Page PageModel.
-		/// </summary>
-		/// <param name = "page">Page.</param>
-        void ResetPageModel<TPageModel>(IBasePage<TPageModel> page) where TPageModel : class, INotifyPropertyChanged;
+        void SetPageModel<TPageModel>(IBasePage<TPageModel> page, TPageModel newPageModel) where TPageModel : class, IBasePageModel, new();
 	}
 }
 

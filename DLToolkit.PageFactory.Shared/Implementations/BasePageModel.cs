@@ -10,30 +10,8 @@ namespace DLToolkit.PageFactory
     /// <summary>
     /// PageFactory BasePageModel implementation.
     /// </summary>
-    public class BasePageModel : BaseNotifyPropertyChanged, INotifyPropertyChanged, IMessagable
+    public class BasePageModel : BaseNotifyPropertyChanged, INotifyPropertyChanged, IBasePageModel
     {
-        /// <summary>
-        /// Gets the PageFactory Factory.
-        /// </summary>
-        /// <value>The page factory.</value>
-        public IPageFactory PageFactory
-        {
-            get
-            {
-                return PF.Factory;
-            }
-        }
-
-        /// <summary>
-        /// Handles received message.
-        /// </summary>
-        /// <param name = "sender">Sender.</param>
-        /// <param name="message">Message.</param>
-        /// <param name="arg">Argument.</param>
-        public virtual void PageFactoryMessageReceived(string message, object sender, object arg)
-        {
-        }
-
         private readonly object syncRoot = new object();
 
         readonly Dictionary<string, object> fieldValuesDictionary = new Dictionary<string, object>();

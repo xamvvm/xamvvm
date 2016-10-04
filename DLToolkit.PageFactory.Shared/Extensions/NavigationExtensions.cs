@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 
 namespace DLToolkit.PageFactory
 {
@@ -8,95 +9,114 @@ namespace DLToolkit.PageFactory
     /// </summary>
     public static class NavigationExtensions
     {
-        /// <summary>
-        /// Pushes the page into navigation stack.
-        /// </summary>
-        /// <param name="page">Page to push.</param>
-        /// <param name="animated">If set to <c>true</c> animation enabled.</param>
-        public static IBasePage<TPageModel> PushPage<TPageModel>(this IBasePage<TPageModel> page, bool animated = true) where TPageModel : class, INotifyPropertyChanged
+		/// <summary>
+		/// Pushes the page into current navigation stack.
+		/// </summary>
+		/// <returns>The page async.</returns>
+		/// <param name="currentPageModel">Current page model.</param>
+		/// <param name="pageToPush">Page to push.</param>
+		/// <param name="animated">If set to <c>true</c> animated.</param>
+		/// <typeparam name="TCurrentPageModel">The 1st type parameter.</typeparam>
+		/// <typeparam name="TPageModel">The 2nd type parameter.</typeparam>
+        public static Task<bool> PushPageAsync<TCurrentPageModel, TPageModel>(this TCurrentPageModel currentPageModel, IBasePage<TPageModel> pageToPush,  bool animated = true) where TCurrentPageModel : class, IBasePageModel, new() where TPageModel : class, IBasePageModel, new()
         {
-            PF.Factory.PushPageAsync(page, animated);
-            return page;
+			var currentPage = PageFactory.Instance.GetPageByModel(currentPageModel);
+
+			if (currentPage != null)
+			{
+				return PageFactory.Instance.PushPageAsync(currentPage, pageToPush, animated);
+			}
+
+			return Task.FromResult(false);
         }
  
-        /// <summary>
-        /// Pushes the page as modal.
-        /// </summary>
-        /// <param name="page">Page to push.</param>
-        /// <param name="animated">If set to <c>true</c> animation enabled.</param>
-        public static IBasePage<TPageModel> PushModalPage<TPageModel>(this  IBasePage<TPageModel> page, bool animated = true)  where TPageModel : class, INotifyPropertyChanged
+		/// <summary>
+		/// Pushes the modal page into current navigation stack.
+		/// </summary>
+		/// <returns>The modal page async.</returns>
+		/// <param name="currentPageModel">Current page model.</param>
+		/// <param name="pageToPush">Page to push.</param>
+		/// <param name="animated">If set to <c>true</c> animated.</param>
+		/// <typeparam name="TCurrentPageModel">The 1st type parameter.</typeparam>
+		/// <typeparam name="TPageModel">The 2nd type parameter.</typeparam>
+        public static Task<bool> PushModalPageAsync<TCurrentPageModel, TPageModel>(this TCurrentPageModel currentPageModel, IBasePage<TPageModel> pageToPush, bool animated = true) where TCurrentPageModel : class, IBasePageModel, new() where TPageModel : class, IBasePageModel, new()
+		{
+			var currentPage = PageFactory.Instance.GetPageByModel(currentPageModel);
+
+			if (currentPage != null)
+				return PageFactory.Instance.PushModalPageAsync(currentPage, pageToPush, animated);
+
+			return Task.FromResult(false);
+		}
+
+		/// <summary>
+		/// Pops the page from current navigation stack.
+		/// </summary>
+		/// <returns>The page async.</returns>
+		/// <param name="pageModel">Page model.</param>
+		/// <param name="animated">If set to <c>true</c> animated.</param>
+		/// <typeparam name="TPageModel">The 1st type parameter.</typeparam>
+		public static Task<bool> PopPageAsync<TPageModel>(this TPageModel pageModel, bool animated = true)  where TPageModel : class, IBasePageModel, new()
         {
-            PF.Factory.PushModalPageAsync(page, animated);
-            return page;
+			var page = PageFactory.Instance.GetPageByModel(pageModel);
+
+			if (page != null)
+				return PageFactory.Instance.PopPageAsync(page, animated);
+					              
+            return Task.FromResult(false);
         }
 
-        /// <summary>
-        /// Pushes another page into current navigation page navigation stack.
-        /// </summary>
-        /// <param name = "navigation">Navigation page.</param>
-        /// <param name="page">Page to push.</param>
-        /// <param name="animated">If set to <c>true</c> animation enabled.</param>
-        public static IBaseNavigationPage<TNavigationPageModel> PushPageIntoNavigation<TNavigationPageModel, TPageModel>(this IBaseNavigationPage<TNavigationPageModel> navigation, IBasePage<TPageModel> page, bool animated = true) where TPageModel : class, INotifyPropertyChanged where TNavigationPageModel : class, INotifyPropertyChanged
+		/// <summary>
+		/// Pops the modal page from current navigation stack.
+		/// </summary>
+		/// <returns>The modal page async.</returns>
+		/// <param name="pageModel">Page model.</param>
+		/// <param name="animated">If set to <c>true</c> animated.</param>
+		/// <typeparam name="TPageModel">The 1st type parameter.</typeparam>
+		public static Task<bool> PopModalPageAsync<TPageModel>(this TPageModel pageModel, bool animated = true) where TPageModel : class, IBasePageModel, new()
+		{
+			var page = PageFactory.Instance.GetPageByModel(pageModel);
+
+			if (page != null)
+				return PageFactory.Instance.PopModalPageAsync(page, animated);
+
+			return Task.FromResult(false);
+		}
+
+		/// <summary>
+		/// Removes the page from current navigation stack.
+		/// </summary>
+		/// <returns>The page.</returns>
+		/// <param name="currentPageModel">Current page model.</param>
+		/// <param name="pageToRemove">Page to remove.</param>
+		/// <typeparam name="TCurrentPageModel">The 1st type parameter.</typeparam>
+		/// <typeparam name="TPageModel">The 2nd type parameter.</typeparam>
+		public static Task<bool> RemovePageAsync<TCurrentPageModel, TPageModel>(this TCurrentPageModel currentPageModel, IBasePage<TPageModel> pageToRemove) where TCurrentPageModel : class, IBasePageModel, new() where TPageModel : class, IBasePageModel, new()
         {
-            PF.Factory.PushPageIntoNavigationAsync(navigation, page, animated);
-            return navigation;
+			var currentPage = PageFactory.Instance.GetPageByModel(currentPageModel);
+
+			if (currentPage != null)
+				return PageFactory.Instance.RemovePageAsync(currentPage, pageToRemove);
+
+			return Task.FromResult(false);
         }
 
-        /// <summary>
-        /// Pops the page from navigation stack.
-        /// </summary>
-        /// <param name = "page">Page.</param>
-        /// <param name="animated">If set to <c>true</c> animation enabled.</param>
-        public static IBasePage<TPageModel> PopPage<TPageModel>(this  IBasePage<TPageModel> page, bool animated = true)  where TPageModel : class, INotifyPropertyChanged
+		/// <summary>
+		/// Pops all pages to root in current navigation stack.
+		/// </summary>
+		/// <returns>The pages to root async.</returns>
+		/// <param name="currentPageModel">Current page model.</param>
+		/// <param name="clearCache">If set to <c>true</c> clear cache.</param>
+		/// <param name="animated">If set to <c>true</c> animated.</param>
+		/// <typeparam name="TCurrentPageModel">The 1st type parameter.</typeparam>
+		public static Task<bool> PopPagesToRootAsync<TCurrentPageModel>(this TCurrentPageModel currentPageModel, bool clearCache = false, bool animated = true)  where TCurrentPageModel : class, IBasePageModel, new()
         {
-            PF.Factory.PopPageAsync(false, animated);
-            return page;
-        }
+			var currentPage = PageFactory.Instance.GetPageByModel(currentPageModel);
 
-        /// <summary>
-        /// Pops the modal page.
-        /// </summary>
-        /// <param name = "page">Page.</param>
-        /// <param name="animated">If set to <c>true</c> animation enabled.</param>
-        public static IBasePage<TPageModel> PopModalPage<TPageModel>(this  IBasePage<TPageModel> page, bool animated = true)  where TPageModel : class, INotifyPropertyChanged
-        {
-            PF.Factory.PopModalPageAsync(false, animated);
-            return page;
-        }
+			if (currentPage != null)
+				return PageFactory.Instance.PopPagesToRootAsync(currentPage, clearCache, animated);
 
-        /// <summary>
-        /// Removes page from Navigation.
-        /// </summary>
-        /// <returns>The page.</returns>
-        /// <param name="page">Page.</param>
-        public static IBasePage<TPageModel> RemovePage<TPageModel>(this  IBasePage<TPageModel> page)  where TPageModel : class, INotifyPropertyChanged
-        {
-            PF.Factory.RemovePage(page);
-            return page;
-        }
-
-        /// <summary>
-        /// Inserts the page before another page in Navigation stack.
-        /// </summary>
-        /// <returns>The page before.</returns>
-        /// <param name="page">Page.</param>
-        /// <param name="before">Before.</param>
-        public static IBasePage<TPageModel> InsertPageBefore<TPageModel, TBeforePageModel>(this  IBasePage<TPageModel> page, IBasePage<TBeforePageModel> before) where TPageModel : class, INotifyPropertyChanged where TBeforePageModel : class, INotifyPropertyChanged
-        {
-            PF.Factory.InsertPageBefore(page, before);
-            return page;
-        }
-
-        /// <summary>
-        /// Pops the pages to root.
-        /// </summary>
-        /// <returns>Page.</returns>
-        /// <param name="page">Page.</param>
-        /// <param name="animated">If set to <c>true</c> animation enabled.</param>
-        public static IBasePage<TPageModel> PopPagesToRoot<TPageModel>(this  IBasePage<TPageModel> page, bool animated = true)  where TPageModel : class, INotifyPropertyChanged
-        {
-            PF.Factory.PopPagesToRootAsync(false, animated);
-            return page;
+			return Task.FromResult(false);
         }
     }
 }

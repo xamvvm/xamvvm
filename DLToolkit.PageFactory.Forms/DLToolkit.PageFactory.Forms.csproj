@@ -30,30 +30,29 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Implementations\PFCarouselPage.cs" />
-    <Compile Include="Implementations\PFContentPage.cs" />
-    <Compile Include="Implementations\PFMasterDetailPage.cs" />
-    <Compile Include="Implementations\PFNavigationPage.cs" />
-    <Compile Include="Implementations\PFPage.cs" />
-    <Compile Include="Implementations\PFTabbedPage.cs" />
-    <Compile Include="XamarinFormsPageFactory\PageFactory.cs" />
-    <Compile Include="XamarinFormsPageFactory\XamarinFormsPageFactory.cs" />
-    <Compile Include="XamarinFormsPageFactory\PageFactoryCaching.cs" />
-    <Compile Include="XamarinFormsPageFactory\PageFactoryNavigation.cs" />
-    <Compile Include="XamarinFormsPageFactory\PageFactoryMessaging.cs" />
+    <Compile Include="Helpers\PFCarouselPage.cs" />
+    <Compile Include="Helpers\PFContentPage.cs" />
+    <Compile Include="Helpers\PFMasterDetailPage.cs" />
+    <Compile Include="Helpers\PFNavigationPage.cs" />
+    <Compile Include="Helpers\PFPage.cs" />
+    <Compile Include="Helpers\PFTabbedPage.cs" />
+    <Compile Include="PageFactory\PageFactory.cs" />
+    <Compile Include="PageFactory\XamarinFormsPageFactory.cs" />
+    <Compile Include="PageFactory\PageFactoryCaching.cs" />
+    <Compile Include="PageFactory\PageFactoryNavigation.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.1.3.5.6335\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.3.5.6335\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
-      <HintPath>..\packages\Xamarin.Forms.1.3.5.6335\lib\portable-win+net45+wp80+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.Core.dll</HintPath>
+      <HintPath>..\packages\Xamarin.Forms.2.3.2.127\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Platform">
+      <HintPath>..\packages\Xamarin.Forms.2.3.2.127\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.Platform.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Forms.Xaml">
-      <HintPath>..\packages\Xamarin.Forms.1.3.5.6335\lib\portable-win+net45+wp80+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.Xaml.dll</HintPath>
+      <HintPath>..\packages\Xamarin.Forms.2.3.2.127\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.Xaml.dll</HintPath>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DLToolkit.PageFactory.Shared\DLToolkit.PageFactory.Shared.csproj">
@@ -62,7 +61,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="XamarinFormsPageFactory\" />
-    <Folder Include="Implementations\" />
+    <Folder Include="PageFactory\" />
+    <Folder Include="Helpers\" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="..\packages\Xamarin.Forms.2.3.2.127\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.3.2.127\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
 </Project>

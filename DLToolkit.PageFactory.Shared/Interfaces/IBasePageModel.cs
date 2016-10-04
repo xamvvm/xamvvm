@@ -4,10 +4,9 @@ using System.ComponentModel;
 namespace DLToolkit.PageFactory
 {
 	/// <summary>
-	/// Base page.
+	/// Base page model.
 	/// </summary>
-	public interface IBasePage<TPageModel> where TPageModel: class, IBasePageModel
+	public interface IBasePageModel : INotifyPropertyChanged
 	{
 	}
 }
-

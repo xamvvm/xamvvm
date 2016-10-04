@@ -4,9 +4,9 @@ using System.Windows.Input;
 namespace DLToolkit.PageFactory
 {
 	/// <summary>
-	/// IPageFactoryCommand.
+	/// IBaseCommand.
 	/// </summary>
-	public interface IPageFactoryCommand : ICommand
+	public interface IBaseCommand : ICommand
 	{
 		/// <summary>
 		/// Raises the can execute changed.

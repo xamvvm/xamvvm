@@ -1,29 +1,25 @@
 ﻿using System;
-using System.Reflection;
-using System.Collections.Generic;
-using System.Linq;
-using System.ComponentModel;
 
 namespace DLToolkit.PageFactory
 {
 	/// <summary>
 	/// Page factory.
 	/// </summary>
-	public static class PF
+	public static class PageFactory
 	{ 
 		static IPageFactory instance;
 
 		/// <summary>
-		/// Gets the factory.
+		/// Gets the PageFactory instance.
 		/// </summary>
 		/// <value>The factory.</value>
-		public static IPageFactory Factory
+		public static IPageFactory Instance
 		{
 			get 
 			{
 				if (instance == null)
 				{
-					throw new NullReferenceException("PageFactory is null. Please set PageFactory with PageFactory.Init method");
+					throw new NullReferenceException("PageFactory is null. Please initialize PageFactory with PageFactory.Init method");
 				}
 
 				return instance;
@@ -31,10 +27,10 @@ namespace DLToolkit.PageFactory
 		}
 
 		/// <summary>
-		/// Sets the page factory.
+		/// Initializes PageFactory.
 		/// </summary>
 		/// <param name="factory">Factory.</param>
-		public static void SetPageFactory(IPageFactory factory)
+		public static void Init(IPageFactory factory)
 		{
 			instance = factory;
 		}

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 
 namespace DLToolkit.PageFactory
@@ -8,26 +8,16 @@ namespace DLToolkit.PageFactory
     /// </summary>
     public static class CachingExtensions
     {
-        /// <summary>
-        /// Removes the page instance from cache if instance exists in cache.
-        /// </summary>
-        /// <returns>Page.</returns>
-        /// <param name="page">Page.</param>
-        public static IBasePage<TPageModel> RemovePageInstanceFromCache<TPageModel>(this IBasePage<TPageModel> page) where TPageModel : class, INotifyPropertyChanged
+		/// <summary>
+		/// Removes the page type from cache if type exists in cache.
+		/// </summary>
+		/// <returns><c>true</c>, if type from cache was removed, <c>false</c> otherwise.</returns>
+		/// <param name="pageModel">Page model.</param>
+		/// <param name="cacheKey">Cache key.</param>
+		/// <typeparam name="TPageModel">The 1st type parameter.</typeparam>
+		public static bool RemoveTypeFromCache<TPageModel>(this TPageModel pageModel, string cacheKey = null) where TPageModel : class, IBasePageModel, new()
         {
-            PF.Factory.RemovePageInstanceFromCache(page);
-            return page;
-        }
-
-        /// <summary>
-        /// Removes the page type from cache if type exists in cache.
-        /// </summary>
-        /// <returns>Page.</returns>
-        /// <param name="page">Page.</param>
-        public static IBasePage<TPageModel> RemovePageTypeFromCache<TPageModel>(this IBasePage<TPageModel> page) where TPageModel : class, INotifyPropertyChanged
-        {
-            PF.Factory.RemovePageTypeFromCache(page.GetType());
-            return page;
+			return PageFactory.Instance.RemovePageTypeFromCache<TPageModel>(cacheKey);
         }
     }
 }

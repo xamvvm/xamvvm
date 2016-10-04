@@ -10,7 +10,7 @@ namespace DLToolkit.PageFactory
 	/// <summary>
 	/// PageFactory IBaseNotifyPropertyChanged implementation.
 	/// </summary>
-	public class BaseNotifyPropertyChanged
+	public class BaseNotifyPropertyChanged : INotifyPropertyChanged
 	{
 		/// <summary>
 		/// Occurs when property changed.

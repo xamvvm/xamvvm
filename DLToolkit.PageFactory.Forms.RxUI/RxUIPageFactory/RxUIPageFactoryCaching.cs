@@ -68,7 +68,7 @@ namespace DLToolkit.PageFactory
 
 
 
-        public new bool RemovePageInstanceFromCache<TPageModel>(IBasePage<TPageModel> page) where TPageModel : class, INotifyPropertyChanged
+        public override bool RemovePageInstanceFromCache<TPageModel>(IBasePage<TPageModel> page)
         {
             IBasePage<INotifyPropertyChanged> pageExists;
 

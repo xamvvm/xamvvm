@@ -121,7 +121,7 @@ namespace DLToolkit.PageFactory
             return RemovePageTypeFromCache(typeof(TPageModel));
         }
 
-        public bool RemovePageInstanceFromCache<TPageModel>(IBasePage<TPageModel> page) where TPageModel : class, INotifyPropertyChanged
+        public virtual bool RemovePageInstanceFromCache<TPageModel>(IBasePage<TPageModel> page) where TPageModel : class, INotifyPropertyChanged
         {
             IBasePage<INotifyPropertyChanged> pageExists;
 

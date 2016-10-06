@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>DLToolkit.PageFactory.Forms</id>
-    <version>3.0.0-alpha1</version>
+    <version>3.0.0-alpha2</version>
     <authors>Daniel Luberda</authors>
     <owners>Daniel Luberda</owners>
     <licenseUrl>https://github.com/daniel-luberda/DLToolkit.PageFactory/blob/master/LICENSEE</licenseUrl>
@@ -17,10 +17,11 @@
     <tags>xamarin, forms, xamarin.forms, android, ios, mvvm, pagefactory, inotifypropertychanged, notifypropertychanged, caching, viewmodel</tags>
     <dependencies>
 		<dependency id="Xamarin.Forms" version="1.4.4.6392" />
-		<dependency id="DLToolkit.PageFactory.Shared" version="2.0.1" />
     </dependencies>
   </metadata>
   <files>
 	<file src="DLToolkit.PageFactory.Forms/bin/Release/DLToolkit.PageFactory.Forms.dll" target="lib/portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10/DLToolkit.PageFactory.Forms.dll" />
+	<file src="DLToolkit.PageFactory.Shared/bin/Release/DLToolkit.PageFactory.Shared.dll" target="lib/portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10/DLToolkit.PageFactory.Shared.dll" />
+	<file src="DLToolkit.PageFactory.Shared/bin/Release/DLToolkit.PageFactory.Shared.xml" target="lib/portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10/DLToolkit.PageFactory.Shared.xml" />
 </files>
 </package>

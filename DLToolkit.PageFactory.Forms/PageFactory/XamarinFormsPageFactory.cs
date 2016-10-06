@@ -9,17 +9,19 @@ namespace DLToolkit.PageFactory
 {
     public partial class XamarinFormsPageFactory : IPageFactory
     {
-		bool isInitialized = false;
+		bool _isInitialized = false;
+		int _maxPageCacheItems;
 
 		readonly Dictionary<Type, Type> _pageModelTypes = new Dictionary<Type, Type>();
-		readonly Dictionary<Tuple<Type, string>, IBasePage<IBasePageModel>> _pageCache = new Dictionary<Tuple<Type, string>, IBasePage<IBasePageModel>>();
+		readonly Dictionary<Tuple<Type, string>, int> _pageCacheHits = new Dictionary<Tuple<Type, string>, int>();
+		readonly Dictionary<Tuple<Type, string>, object> _pageCache = new Dictionary<Tuple<Type, string>, object>();
 		readonly Dictionary<Type, Func<object>> _pageCreation = new Dictionary<Type, Func<object>>();
 		readonly Dictionary<Type, Func<object>> _pageModelCreation = new Dictionary<Type, Func<object>>();
-		readonly ConditionalWeakTable<IBasePageModel, IBasePage<IBasePageModel>> _weakPageCache = new ConditionalWeakTable<IBasePageModel, IBasePage<IBasePageModel>>();
+		readonly ConditionalWeakTable<IBasePageModel, object> _weakPageCache = new ConditionalWeakTable<IBasePageModel, object>();
 
 		public virtual void RegisterView<TPageModel, TPage>(Func<IBasePageModel> createPageModel = null, Func<object> createPage = null) where TPageModel : class, IBasePageModel, new() where TPage : class, new()
 		{
-			if (!isInitialized)
+			if (!_isInitialized)
 				throw new Exception("Factory not initialized. You must call Init method first");
 
 			if (createPageModel != null)
@@ -41,9 +43,10 @@ namespace DLToolkit.PageFactory
 			}
 		}
 
-        public virtual void Init(Application appInstance, bool automaticAssembliesDiscovery = true, params Assembly[] additionalPagesAssemblies)
+        public virtual void Init(Application appInstance, int maxPageCacheItems = 6, bool automaticAssembliesDiscovery = true, params Assembly[] additionalPagesAssemblies)
         {
-			isInitialized = false;
+			_isInitialized = false;
+			_maxPageCacheItems = maxPageCacheItems;
 			_pageModelTypes.Clear();
 			_pageCache.Clear();
 			_pageModelCreation.Clear();
@@ -102,7 +105,7 @@ namespace DLToolkit.PageFactory
             }
 
 			PageFactory.Init(this);
-			isInitialized = true;
+			_isInitialized = true;
         }
 
 		internal void AddToWeakCacheIfNotExists<TPageModel>(IBasePage<TPageModel> page, TPageModel pageModel) where TPageModel : class, IBasePageModel, new()
@@ -110,9 +113,9 @@ namespace DLToolkit.PageFactory
 			if (pageModel == null)
 				return;
 
-			IBasePage<IBasePageModel> weakExists;
+			object weakExists;
 			if (!_weakPageCache.TryGetValue(pageModel, out weakExists))
-				_weakPageCache.Add(pageModel, page as IBasePage<IBasePageModel>);
+				_weakPageCache.Add(pageModel, page);
 		}
 
         internal Type GetPageType(Type pageModelType)

@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Examples.MainPage">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Examples.MainPage"
+		Title="Main Page">
 	<ContentPage.Content>
-		<Label Text="{Binding WelcomeText}" VerticalOptions="Center" HorizontalOptions="Center" />
+		<StackLayout>
+			<Label Text="{Binding WelcomeText}" VerticalOptions="Center" HorizontalOptions="Center" />
+			<Button Text="Red Detail" Command="{Binding ButtonCommand}" CommandParameter="red"/>
+			<Button Text="Green Detail" Command="{Binding ButtonCommand}" CommandParameter="green"/>
+			<Button Text="Blue Detail" Command="{Binding ButtonCommand}" CommandParameter="blue"/>
+		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

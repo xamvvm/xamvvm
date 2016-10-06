@@ -113,7 +113,11 @@ namespace DLToolkit.PageFactory
 			}
 			else
 			{
-				_pageCacheHits.Add(key, 1);
+				var minValue = _pageCacheHits.Values
+					.OrderByDescending(v => v)
+					.LastOrDefault();
+
+				_pageCacheHits.Add(key, minValue == 0 ? 1 : minValue);
 			}
 		}
 	}

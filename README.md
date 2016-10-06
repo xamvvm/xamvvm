@@ -3,28 +3,50 @@
 ### Simple MVVM Framework for Xamarin.Forms with fluent API
 
 ```C#
-PageFactory.GetPageFromCache<SecondPageModel>()
-    .ResetPageModel()
-    .SendActionToPageModel((model) => { model.Message = "Hello World!"; })
-    .PushPage();
+var pageToPush = PageFactory.Instance.GetPageFromCache<DetailPageModel>();
+await this.PushPageAsync(pageToPush, (v) => v.Init("blue", Color.Blue));
+
 ```
 ```C#
-public class SecondPage : ContentPage, IBasePage<SecondPageModel> 
+public partial class DetailPage : ContentPage, IBasePage<DetailPageModel>
 {
-	public SecondPage()
+	public DetailPage()
 	{
-		var label = new Label();
-		label.SetBinding<SecondPageModel>(Label.TextProperty, v => v.Message); 
-		Content = label;
+		InitializeComponent();
 	}
 }
+```
 
-public class SecondPageModel : BasePageModel
-{	
-	public string Message 
-	{ 
-		get { return GetField<string>(); } 
-		set { SetField(value); } 
+```XML
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Examples.DetailPage"
+		Title="Detail Page">
+	<ContentPage.Content>
+		<Label Text="{Binding Text}" BackgroundColor="{Binding Color}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+	</ContentPage.Content>
+</ContentPage>
+
+```
+
+```C#
+public class DetailPageModel : BasePageModel
+{
+	public void Init(string text, Color color)
+	{
+		Text = text;
+		Color = color;
+	}
+
+	public Color Color
+	{
+		get { return GetField<Color>(); }
+		set { SetField(value); }
+	}
+
+	public string Text
+	{
+		get { return GetField<string>(); }
+		set { SetField(value); }
 	}
 }
 ```
@@ -36,13 +58,12 @@ public class SecondPageModel : BasePageModel
 - **Automatic wiring of BindingContext (PageModels)**
 - **Simple messaging system**
 - **Pages / PageModels caching** - more responsive UI experience!
-- **Pure PageModels - minimal requirement is `INotifyPropertyChanged`**
 - **You're not limited to any concrete implementation of Pages, PageModels**
 - **Fluent style extensions methods to write less code**
 - Helper classes with ready to use `INotifyPropertyChanged` implementation eg. `BasePageModel`
 - Pages have override methods to respond / intercept navigation (eg. PageFactoryPushing, PageFactoryPushed, etc.) 
 - Strongly typed classes / methods
-- Dependency free ICommand implementation
+- Dependency free ICommand implementation prevents multiple execution when previous execution not finished yet
 
 ## NuGet
 
@@ -52,22 +73,3 @@ public class SecondPageModel : BasePageModel
 ## Example project
 
 https://github.com/daniel-luberda/DLToolkit.PageFactory/tree/master/Examples
-
-## Interface based MVVM
-
-#### Initialization
-
-```C#
-MainPage = new XamarinFormsPageFactory().Init<HomeViewModel, PFNavigationPage>();
-```
-
-#### Minimal requirements
-
-- Every `Page` must implement `IBasePage<TPageModel>`
-- Every `PageModel` must implement `INotifyPropertyChanged`.
-
-#### Additional features requirements
-
-- If `PageModel` doesn't have a default parameterless constructor `Page` must implement `IPageModelInitializer` interface.
-- If you want to receive messages to PageModel it must also implement `IBaseMessagable` interface
-- If you want to intercept navigation, your `Page` must implement operation specific interface as `INavigationPushing`, `INavigationPushed`

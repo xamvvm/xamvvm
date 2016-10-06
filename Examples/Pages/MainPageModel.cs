@@ -2,6 +2,7 @@
 using DLToolkit.PageFactory;
 using System.Windows.Input;
 using Xamarin.Forms;
+using System.Threading.Tasks;
 
 namespace Examples
 {
@@ -11,21 +12,21 @@ namespace Examples
 		{
 			WelcomeText = "Welcome to PageFactory!";
 
-			ButtonCommand = new BaseCommand<string>((param) =>
+			ButtonCommand = new BaseCommand<string>(async (param) =>
 			{
 				var pageToPush = PageFactory.Instance.GetPageFromCache<DetailPageModel>();
 
 				if (param == "red")
 				{
-					this.PushPageAsync(pageToPush, (v) => v.Init("red", Color.Red));
+					await this.PushPageAsync(pageToPush, (v) => v.Init("red", Color.Red));
 				}
 				else if (param == "green")
 				{
-					this.PushPageAsync(pageToPush, (v) => v.Init("green", Color.Green));
+					await this.PushPageAsync(pageToPush, (v) => v.Init("green", Color.Green));
 				}
 				else if (param == "blue")
 				{
-					this.PushPageAsync(pageToPush, (v) => v.Init("blue", Color.Blue));
+					await this.PushPageAsync(pageToPush, (v) => v.Init("blue", Color.Blue));
 				}
 			});
 		}

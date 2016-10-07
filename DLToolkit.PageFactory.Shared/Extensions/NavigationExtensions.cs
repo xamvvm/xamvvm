@@ -18,12 +18,15 @@ namespace DLToolkit.PageFactory
 		/// <param name="animated">If set to <c>true</c> animated.</param>
 		/// <typeparam name="TCurrentPageModel">The 1st type parameter.</typeparam>
 		/// <typeparam name="TPageModel">The 2nd type parameter.</typeparam>
-        public static Task<bool> PushPageAsync<TCurrentPageModel, TPageModel>(this TCurrentPageModel currentPageModel, IBasePage<TPageModel> pageToPush,  bool animated = true) where TCurrentPageModel : class, IBasePageModel, new() where TPageModel : class, IBasePageModel, new()
+		public static Task<bool> PushPageAsync<TCurrentPageModel, TPageModel>(this TCurrentPageModel currentPageModel, IBasePage<TPageModel> pageToPush, Action<TPageModel> executeOnPageModel = null,  bool animated = true) where TCurrentPageModel : class, IBasePageModel, new() where TPageModel : class, IBasePageModel, new()
         {
 			var currentPage = PageFactory.Instance.GetPageByModel(currentPageModel);
 
 			if (currentPage != null)
 			{
+				if (executeOnPageModel != null)
+					pageToPush.ExecuteOnPageModel(executeOnPageModel);
+
 				return PageFactory.Instance.PushPageAsync(currentPage, pageToPush, animated);
 			}
 
@@ -39,12 +42,17 @@ namespace DLToolkit.PageFactory
 		/// <param name="animated">If set to <c>true</c> animated.</param>
 		/// <typeparam name="TCurrentPageModel">The 1st type parameter.</typeparam>
 		/// <typeparam name="TPageModel">The 2nd type parameter.</typeparam>
-        public static Task<bool> PushModalPageAsync<TCurrentPageModel, TPageModel>(this TCurrentPageModel currentPageModel, IBasePage<TPageModel> pageToPush, bool animated = true) where TCurrentPageModel : class, IBasePageModel, new() where TPageModel : class, IBasePageModel, new()
+        public static Task<bool> PushModalPageAsync<TCurrentPageModel, TPageModel>(this TCurrentPageModel currentPageModel, IBasePage<TPageModel> pageToPush, Action<TPageModel> executeOnPageModel = null, bool animated = true) where TCurrentPageModel : class, IBasePageModel, new() where TPageModel : class, IBasePageModel, new()
 		{
 			var currentPage = PageFactory.Instance.GetPageByModel(currentPageModel);
 
 			if (currentPage != null)
+			{
+				if (executeOnPageModel != null)
+					pageToPush.ExecuteOnPageModel(executeOnPageModel);
+				
 				return PageFactory.Instance.PushModalPageAsync(currentPage, pageToPush, animated);
+			}
 
 			return Task.FromResult(false);
 		}

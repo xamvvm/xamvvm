@@ -15,9 +15,10 @@ namespace DLToolkit.PageFactory
 		/// <returns>The page async.</returns>
 		/// <param name="currentPageModel">Current page model.</param>
 		/// <param name="pageToPush">Page to push.</param>
+		/// <param name="executeOnPageModel">Execute on page model.</param>
 		/// <param name="animated">If set to <c>true</c> animated.</param>
 		/// <typeparam name="TCurrentPageModel">The 1st type parameter.</typeparam>
-		/// <typeparam name="TPageModel">The 2nd type parameter.</typeparam>
+		/// <typeparam name="TPageModel">The 2nd type parameter.</typeparam>		
 		public static Task<bool> PushPageAsync<TCurrentPageModel, TPageModel>(this TCurrentPageModel currentPageModel, IBasePage<TPageModel> pageToPush, Action<TPageModel> executeOnPageModel = null,  bool animated = true) where TCurrentPageModel : class, IBasePageModel, new() where TPageModel : class, IBasePageModel, new()
         {
 			var currentPage = PageFactory.Instance.GetPageByModel(currentPageModel);
@@ -39,6 +40,7 @@ namespace DLToolkit.PageFactory
 		/// <returns>The modal page async.</returns>
 		/// <param name="currentPageModel">Current page model.</param>
 		/// <param name="pageToPush">Page to push.</param>
+		/// <param name="executeOnPageModel">Execute on page model.</param> 
 		/// <param name="animated">If set to <c>true</c> animated.</param>
 		/// <typeparam name="TCurrentPageModel">The 1st type parameter.</typeparam>
 		/// <typeparam name="TPageModel">The 2nd type parameter.</typeparam>

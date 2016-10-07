@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>DLToolkit.PageFactory.Forms</id>
-    <version>3.0.0-alpha2</version>
+    <version>3.0.0-alpha3</version>
     <authors>Daniel Luberda</authors>
     <owners>Daniel Luberda</owners>
     <licenseUrl>https://github.com/daniel-luberda/DLToolkit.PageFactory/blob/master/LICENSEE</licenseUrl>

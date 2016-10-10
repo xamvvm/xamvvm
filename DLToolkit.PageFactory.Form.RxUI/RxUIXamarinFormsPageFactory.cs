@@ -1,7 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
+using Xamarin.Forms;
 
 namespace DLToolkit.PageFactory.Form.RxUI
 {
@@ -19,6 +21,9 @@ namespace DLToolkit.PageFactory.Form.RxUI
          //           rxPage.ViewModel = newPageModel;
          //       }
          //   }
-    }
+            public RxUIXamarinFormsPageFactory(Application appInstance, int maxPageCacheItems = 6, bool automaticAssembliesDiscovery = true, params Assembly[] additionalPagesAssemblies) : base(appInstance, maxPageCacheItems, automaticAssembliesDiscovery, additionalPagesAssemblies)
+            {
+            }
+        }
 
 }

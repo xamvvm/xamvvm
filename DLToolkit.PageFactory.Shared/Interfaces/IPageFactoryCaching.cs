@@ -35,7 +35,7 @@ namespace DLToolkit.PageFactory
 		/// <summary>
 		/// Clears pages cache.
 		/// </summary>
-		void ClearCache();
+		void ClearPageCache();
 	}
 }
 

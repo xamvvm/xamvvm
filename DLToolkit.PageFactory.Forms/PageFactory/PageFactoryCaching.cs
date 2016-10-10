@@ -78,7 +78,7 @@ namespace DLToolkit.PageFactory
 			return false;
 		}
 
-		public void ClearCache()
+		public void ClearPageCache()
 		{
 			foreach (var page in _pageCache.Values)
 			{

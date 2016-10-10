@@ -14,7 +14,7 @@ namespace Examples
 
 			ButtonCommand = new BaseCommand<string>(async (param) =>
 			{
-				var pageToPush = PageFactory.Instance.GetPageFromCache<DetailPageModel>();
+				var pageToPush = this.GetPageFromCache<DetailPageModel>();
 
 				if (param == "red")
 				{

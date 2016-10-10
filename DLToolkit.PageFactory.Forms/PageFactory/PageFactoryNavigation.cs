@@ -115,7 +115,7 @@ namespace DLToolkit.PageFactory
 			await navigation.PopToRootAsync(animated);
 
 			if (clearCache)
-				ClearCache();
+				ClearPageCache();
 
 			return true;
 		}
@@ -123,7 +123,7 @@ namespace DLToolkit.PageFactory
 		public virtual Task<bool> SetNewRootAndResetAsync<TCurrentPageModel, TPageModel>(IBasePage<TCurrentPageModel> currentPage, IBasePage<TPageModel> newRootPage, bool clearCache = true) where TCurrentPageModel : class, IBasePageModel, new() where TPageModel : class, IBasePageModel, new()
 		{
 			if (clearCache)
-				ClearCache();
+				ClearPageCache();
 
 			Application.Current.MainPage = (Page)newRootPage;
 

@@ -9,20 +9,19 @@ namespace Examples
 		{
 			InitializeComponent();
 
-			var factory = new XamarinFormsPageFactory();
-
-			factory.Init(this);
-
+			var factory = new XamarinFormsPageFactory(this);
 			// Register custom navigation (using non default constructor)
 			factory.RegisterView<MainNavigationPageModel, MainNavigationPage>(
 				createPage: () =>
 				{
-					var mainPage = PageFactory.Instance.GetPageFromCache<MainPageModel>();
+					var mainPage = this.GetPageFromCache<MainPageModel>();
 					var navPage = new MainNavigationPage(mainPage as Page);
 					return navPage ;
 				});
 
-			MainPage = PageFactory.Instance.GetPageFromCache<MainNavigationPageModel>() as NavigationPage;
+			PageFactory.Init(factory);
+
+			MainPage = this.GetPageFromCache<MainNavigationPageModel>() as NavigationPage;
 		}
 
 		protected override void OnStart()

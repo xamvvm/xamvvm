@@ -9,9 +9,7 @@ namespace DLToolkit.PageFactory
 {
     public partial class XamarinFormsPageFactory : IPageFactory
     {
-		bool _isInitialized = false;
 		int _maxPageCacheItems;
-
 		readonly Dictionary<Type, Type> _pageModelTypes = new Dictionary<Type, Type>();
 		readonly Dictionary<Tuple<Type, string>, int> _pageCacheHits = new Dictionary<Tuple<Type, string>, int>();
 		readonly Dictionary<Tuple<Type, string>, object> _pageCache = new Dictionary<Tuple<Type, string>, object>();
@@ -19,11 +17,69 @@ namespace DLToolkit.PageFactory
 		readonly Dictionary<Type, Func<object>> _pageModelCreation = new Dictionary<Type, Func<object>>();
 		readonly ConditionalWeakTable<IBasePageModel, object> _weakPageCache = new ConditionalWeakTable<IBasePageModel, object>();
 
+		public XamarinFormsPageFactory(Application appInstance, int maxPageCacheItems = 6, bool automaticAssembliesDiscovery = true, params Assembly[] additionalPagesAssemblies)
+		{
+			_maxPageCacheItems = maxPageCacheItems;
+			_pageModelTypes.Clear();
+			_pageCache.Clear();
+			_pageModelCreation.Clear();
+			_pageCreation.Clear();
+
+			var pagesAssemblies = additionalPagesAssemblies.ToList();
+
+			if (automaticAssembliesDiscovery)
+				pagesAssemblies.Add(appInstance.GetType().GetTypeInfo().Assembly);
+
+			foreach (var assembly in pagesAssemblies.Distinct())
+			{
+				foreach (var pageTypeInfo in assembly.DefinedTypes.Where(t => t.IsClass && !t.IsAbstract
+					 && t.ImplementedInterfaces != null && !t.IsGenericTypeDefinition))
+				{
+					var found = pageTypeInfo.ImplementedInterfaces.FirstOrDefault(t => t.IsConstructedGenericType &&
+						t.GetGenericTypeDefinition() == typeof(IBasePage<>));
+
+					if (found != default(Type))
+					{
+						var pageType = pageTypeInfo.AsType();
+						var pageParameterlessCtors = (pageTypeInfo.DeclaredConstructors
+							.Where(c => c.IsPublic && c.GetParameters().Length == 0));
+
+						if (!pageParameterlessCtors.Any())
+							throw new Exception(string.Format("Page {0} must have a public parameterless constructor", pageType));
+
+						var pageModelType = found.GenericTypeArguments.First();
+						var pageModelTypeInfo = pageModelType.GetTypeInfo();
+
+						var parameterlessCtors = (pageModelTypeInfo.DeclaredConstructors
+							.Where(c => c.IsPublic && c.GetParameters().Length == 0));
+
+						if (!parameterlessCtors.Any())
+						{
+							throw new Exception(string.Format("PageModel {0} must have a public parameterless constructor",
+															  pageModelType, pageType));
+						}
+
+						if (!_pageModelTypes.ContainsKey(pageModelType))
+						{
+							_pageModelTypes.Add(pageModelType, pageType);
+						}
+						else
+						{
+							var oldPageType = _pageModelTypes[pageModelType];
+
+							if (pageTypeInfo.IsSubclassOf(oldPageType))
+							{
+								_pageModelTypes.Remove(pageModelType);
+								_pageModelTypes.Add(pageModelType, pageType);
+							}
+						}
+					}
+				}
+			}
+		}
+
 		public virtual void RegisterView<TPageModel, TPage>(Func<IBasePageModel> createPageModel = null, Func<object> createPage = null) where TPageModel : class, IBasePageModel, new() where TPage : class, new()
 		{
-			if (!_isInitialized)
-				throw new Exception("Factory not initialized. You must call Init method first");
-
 			if (createPageModel != null)
 			{
 				Func<object> found = null;
@@ -42,71 +98,6 @@ namespace DLToolkit.PageFactory
 					_pageCreation.Add(typeof(TPageModel), createPage);
 			}
 		}
-
-        public virtual void Init(Application appInstance, int maxPageCacheItems = 6, bool automaticAssembliesDiscovery = true, params Assembly[] additionalPagesAssemblies)
-        {
-			_isInitialized = false;
-			_maxPageCacheItems = maxPageCacheItems;
-			_pageModelTypes.Clear();
-			_pageCache.Clear();
-			_pageModelCreation.Clear();
-			_pageCreation.Clear();
-
-            var pagesAssemblies = additionalPagesAssemblies.ToList();
-
-			if (automaticAssembliesDiscovery)
-				pagesAssemblies.Add(appInstance.GetType().GetTypeInfo().Assembly);
-
-            foreach (var assembly in pagesAssemblies.Distinct())
-            {
-                foreach(var pageTypeInfo in assembly.DefinedTypes.Where(t => t.IsClass && !t.IsAbstract 
-                    && t.ImplementedInterfaces != null && !t.IsGenericTypeDefinition))
-                {                    
-                    var found = pageTypeInfo.ImplementedInterfaces.FirstOrDefault(t => t.IsConstructedGenericType && 
-                        t.GetGenericTypeDefinition() == typeof(IBasePage<>));
-
-                    if (found != default(Type))
-                    {
-                        var pageType = pageTypeInfo.AsType();
-                        var pageParameterlessCtors = (pageTypeInfo.DeclaredConstructors
-                            .Where(c => c.IsPublic && c.GetParameters().Length == 0));
-
-                        if (!pageParameterlessCtors.Any())
-                            throw new Exception(string.Format("Page {0} must have a public parameterless constructor", pageType));
-
-                        var pageModelType = found.GenericTypeArguments.First();
-                        var pageModelTypeInfo = pageModelType.GetTypeInfo();
-
-						var parameterlessCtors = (pageModelTypeInfo.DeclaredConstructors
-							.Where(c => c.IsPublic && c.GetParameters().Length == 0));
-
-						if (!parameterlessCtors.Any())
-						{
-							throw new Exception(string.Format("PageModel {0} must have a public parameterless constructor", 
-							                                  pageModelType, pageType));
-						}
-
-                        if(!_pageModelTypes.ContainsKey(pageModelType))
-                        {
-                            _pageModelTypes.Add(pageModelType, pageType);
-                        }
-                        else
-                        {
-                            var oldPageType = _pageModelTypes[pageModelType];
-
-                            if (pageTypeInfo.IsSubclassOf(oldPageType))
-                            {
-                                _pageModelTypes.Remove(pageModelType);
-                                _pageModelTypes.Add(pageModelType, pageType);
-                            }
-                        }
-                    }
-                }   
-            }
-
-			PageFactory.Init(this);
-			_isInitialized = true;
-        }
 
 		internal void AddToWeakCacheIfNotExists<TPageModel>(IBasePage<TPageModel> page, TPageModel pageModel) where TPageModel : class, IBasePageModel, new()
 		{

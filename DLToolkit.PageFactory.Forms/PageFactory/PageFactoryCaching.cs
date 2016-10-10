@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Xamarin.Forms;
 
 namespace DLToolkit.PageFactory
@@ -12,6 +13,7 @@ namespace DLToolkit.PageFactory
 
 			if (_pageCache.ContainsKey(key))
 			{
+				IncreaseCacheHits(key);
 				var cachedPage = _pageCache[key] as IBasePage<TPageModel>;
 
 				if (pageModel != null)
@@ -21,7 +23,9 @@ namespace DLToolkit.PageFactory
 			}
 
 			var page = GetPageAsNewInstance(pageModel);
-			_pageCache.Add(key, page as IBasePage<IBasePageModel>);
+			RemoveUnusedPagesFromCache();
+			_pageCache.Add(key, page);
+			IncreaseCacheHits(key);
 			return page;
 		}
 
@@ -59,7 +63,7 @@ namespace DLToolkit.PageFactory
 			var pageModelType = typeof(TPageModel);
 			var key = Tuple.Create(pageModelType, cacheKey);
 
-			IBasePage<IBasePageModel> page;
+			object page;
 			if (_pageCache.TryGetValue(key, out page))
 			{
 				var navEventsPage = page as INavigationRemovingFromCache;
@@ -67,6 +71,7 @@ namespace DLToolkit.PageFactory
 					navEventsPage.PageFactoryRemovingFromCache();
 				
 				_pageCache.Remove(key);
+				_pageCacheHits.Remove(key);
 				return true;
 			}
 
@@ -83,6 +88,37 @@ namespace DLToolkit.PageFactory
 			}
 
 			_pageCache.Clear();
+			_pageCacheHits.Clear();
+		}
+
+		internal void RemoveUnusedPagesFromCache()
+		{
+			var ordered = _pageCacheHits
+				.OrderByDescending(v => v.Value)
+				.Skip(_maxPageCacheItems);
+
+			foreach (var item in ordered)
+			{
+				_pageCache.Remove(item.Key);
+				_pageCacheHits.Remove(item.Key);
+			}
+		}
+
+		internal void IncreaseCacheHits(Tuple<Type, string> key)
+		{
+			int count;
+			if (_pageCacheHits.TryGetValue(key, out count))
+			{
+				_pageCacheHits[key] = count + 1;
+			}
+			else
+			{
+				var minValue = _pageCacheHits.Values
+					.OrderByDescending(v => v)
+					.LastOrDefault();
+
+				_pageCacheHits.Add(key, minValue == 0 ? 1 : minValue);
+			}
 		}
 	}
 }

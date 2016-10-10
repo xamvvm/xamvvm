@@ -7,7 +7,7 @@ namespace DLToolkit.PageFactory
     {
 		public virtual IBasePage<TPageModel> GetPageByModel<TPageModel>(TPageModel pageModel) where TPageModel : class, IBasePageModel, new()
 		{
-			IBasePage<IBasePageModel> page = null;
+			object page = null;
 			_weakPageCache.TryGetValue(pageModel, out page);
 			return page as IBasePage<TPageModel>;
 		}

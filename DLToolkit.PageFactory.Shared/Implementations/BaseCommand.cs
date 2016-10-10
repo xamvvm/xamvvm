@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using System.Diagnostics;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace DLToolkit.PageFactory
 {
@@ -10,7 +11,7 @@ namespace DLToolkit.PageFactory
 	/// </summary>
 	public class BaseCommand<T> : IBaseCommand
 	{
-		readonly Action<T> _execute;
+		readonly Func<T, Task> _execute;
 		readonly Func<T, bool> _canExecuteFunc;
 		bool _canExecute = true;
 
@@ -18,7 +19,19 @@ namespace DLToolkit.PageFactory
 		/// Initializes a new instance of the <see cref="DLToolkit.PageFactory.BaseCommand"/> class.
 		/// </summary>
 		/// <param name="execute">Execute.</param>
-		public BaseCommand(Action<T> execute) : this(execute, null)
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+		public BaseCommand(Action<T> execute) : this(new Func<T, Task>(async (obj) => execute(obj)), null)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+		{
+			if (execute == null)
+				throw new ArgumentNullException(nameof(execute));
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="DLToolkit.PageFactory.BaseCommand"/> class.
+		/// </summary>
+		/// <param name="execute">Execute.</param>
+		public BaseCommand(Func<T, Task> execute) : this(execute, null)
 		{
 		}
 
@@ -27,7 +40,7 @@ namespace DLToolkit.PageFactory
 		/// </summary>
 		/// <param name="execute">Execute.</param>
 		/// <param name="canExecute">Can execute.</param>
-		public BaseCommand(Action<T> execute, Func<T, bool> canExecute)
+		public BaseCommand(Func<T, Task> execute, Func<T, bool> canExecute)
 		{
 			if (execute == null)
 				throw new ArgumentNullException(nameof(execute));
@@ -35,12 +48,6 @@ namespace DLToolkit.PageFactory
 			_execute = execute;
 			_canExecuteFunc = canExecute;
 		}
-
-		/// <summary>
-		/// Gets or sets the delay used for CanExecute.
-		/// </summary>
-		/// <value>The delay.</value>
-		public int Delay { get; set; } = 500;
 
 		/// <summary>
 		/// Occurs when can execute changed.
@@ -74,16 +81,16 @@ namespace DLToolkit.PageFactory
 		/// Execute the specified action.
 		/// </summary>
 		/// <param name="parameter">Parameter.</param>
-		public void Execute(object parameter)
+		public async void Execute(object parameter)
 		{
 			try
 			{
 				_canExecute = false;
 				RaiseCanExecuteChanged();
 				if (parameter == null)
-					_execute(default(T));
+					await _execute(default(T));
 				else
-					_execute((T)parameter);
+					await _execute((T)parameter);
 			}
 			finally
 			{
@@ -98,7 +105,7 @@ namespace DLToolkit.PageFactory
 	/// </summary>
 	public class BaseCommand : IBaseCommand
 	{
-		readonly Action<object> _execute;
+		readonly Func<object, Task> _execute;
 		readonly Func<bool> _canExecuteFunc;
 		bool _canExecute = true;
 
@@ -106,7 +113,19 @@ namespace DLToolkit.PageFactory
 		/// Initializes a new instance of the <see cref="DLToolkit.PageFactory.BaseCommand"/> class.
 		/// </summary>
 		/// <param name="execute">Execute.</param>
-		public BaseCommand(Action<object> execute) : this(execute, null)
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+		public BaseCommand(Action<object> execute) : this(new Func<object, Task>(async (obj) => execute(obj)), null)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+		{
+			if (execute == null)
+				throw new ArgumentNullException(nameof(execute));
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="DLToolkit.PageFactory.BaseCommand"/> class.
+		/// </summary>
+		/// <param name="execute">Execute.</param>
+		public BaseCommand(Func<object, Task> execute) : this(execute, null)
 		{
 		}
 
@@ -115,22 +134,16 @@ namespace DLToolkit.PageFactory
 		/// </summary>
 		/// <param name="execute">Execute.</param>
 		/// <param name="canExecute">Can execute.</param>
-		public BaseCommand(Action<object> execute, Func<bool> canExecute)
+		public BaseCommand(Func<object, Task> execute, Func<bool> canExecute)
 		{
 			if (execute == null)
 			{
-				throw new ArgumentNullException("execute Action");
+				throw new ArgumentNullException(nameof(execute));
 			}
 
 			_execute = execute;
 			_canExecuteFunc = canExecute;
 		}
-
-		/// <summary>
-		/// Gets or sets the delay used for CanExecute.
-		/// </summary>
-		/// <value>The delay.</value>
-		public int Delay { get; set; } = 500;
 
 		/// <summary>
 		/// Occurs when can execute changed.
@@ -164,13 +177,13 @@ namespace DLToolkit.PageFactory
 		/// Execute the specified action.
 		/// </summary>
 		/// <param name="parameter">Parameter.</param>
-		public void Execute(object parameter)
+		public async void Execute(object parameter)
 		{
 			try
 			{
 				_canExecute = false;
 				RaiseCanExecuteChanged();
-				_execute(parameter);
+				await _execute(parameter);
 			}
 			finally
 			{

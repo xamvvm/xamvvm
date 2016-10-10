@@ -35,6 +35,9 @@
     <EmbeddedResource Include="Pages\MainPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="Pages\DetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -50,6 +53,10 @@
     </Compile>
     <Compile Include="PageModels\MainPageModel.cs" />
     <Compile Include="Pages\MainNavigationPage.cs" />
+    <Compile Include="Pages\DetailPage.xaml.cs">
+      <DependentUpon>DetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\DetailPageModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DLToolkit.PageFactory.Forms\DLToolkit.PageFactory.Forms.csproj">

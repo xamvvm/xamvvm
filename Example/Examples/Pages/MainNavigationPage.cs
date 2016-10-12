@@ -6,10 +6,6 @@ namespace Examples
 {
 	public class MainNavigationPage : NavigationPage, IBasePage<MainNavigationPageModel>
 	{
-		public MainNavigationPage()
-		{
-		}
-
 		public MainNavigationPage(Page root) : base(root)
 		{
 		}

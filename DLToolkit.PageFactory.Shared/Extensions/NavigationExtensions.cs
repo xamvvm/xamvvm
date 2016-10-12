@@ -86,6 +86,32 @@ namespace DLToolkit.PageFactory
 		}
 
 		/// <summary>
+		/// Pushes the modal cached page into current navigation stack.
+		/// </summary>
+		/// <returns>The page from cache async.</returns>
+		/// <param name="currentPageModel">Current page model.</param>
+		/// <param name="executeOnPageModel">Execute on page model.</param>
+		/// <param name="cacheKey">Cache key.</param>
+		/// <param name="animated">If set to <c>true</c> animated.</param>
+		/// <typeparam name="TPageModel">The 1st type parameter.</typeparam>
+		public static Task<bool> PushModalPageFromCacheAsync<TPageModel>(this IBasePageModel currentPageModel, Action<TPageModel> executeOnPageModel = null, string cacheKey = null, bool animated = true) where TPageModel : class, IBasePageModel
+		{
+			var currentPage = PageFactory.Current.GetPageByModel(currentPageModel);
+
+			if (currentPage != null)
+			{
+				var pageToPush = PageFactory.Current.GetPageFromCache<TPageModel>(cacheKey: cacheKey);
+
+				if (executeOnPageModel != null)
+					pageToPush.ExecuteOnPageModel(executeOnPageModel);
+
+				return PageFactory.Current.PushModalPageAsync(currentPage, pageToPush, animated);
+			}
+
+			return Task.FromResult(false);
+		}
+
+		/// <summary>
 		/// Pops the page from current navigation stack.
 		/// </summary>
 		/// <returns>The page async.</returns>

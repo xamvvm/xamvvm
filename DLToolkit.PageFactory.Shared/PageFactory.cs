@@ -7,22 +7,22 @@ namespace DLToolkit.PageFactory
 	/// </summary>
 	public static class PageFactory
 	{ 
-		static IPageFactory instance;
+		static IPageFactory current;
 
 		/// <summary>
 		/// Gets the PageFactory instance.
 		/// </summary>
 		/// <value>The factory.</value>
-		public static IPageFactory Instance
+		public static IPageFactory Current
 		{
 			get 
 			{
-				if (instance == null)
+				if (current == null)
 				{
 					throw new NullReferenceException("PageFactory is null. Please initialize PageFactory with PageFactory.Init method");
 				}
 
-				return instance;
+				return current;
 			}
 		}
 
@@ -30,9 +30,9 @@ namespace DLToolkit.PageFactory
 		/// Initializes PageFactory.
 		/// </summary>
 		/// <param name="factory">Factory.</param>
-		public static void Init(IPageFactory factory)
+		public static void SetCurrentFactory(IPageFactory factory)
 		{
-			instance = factory;
+			current = factory;
 		}
 	}
 }

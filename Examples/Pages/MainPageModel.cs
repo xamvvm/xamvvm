@@ -32,8 +32,7 @@ namespace Examples
 
 			DemoListButtonCommand = new BaseCommand<string>(async (param) =>
 			{
-				var pageToPush = this.GetPageFromCache<DemoListViewPageModel>();
-				await this.PushPageAsync(pageToPush);
+				await this.PushPageFromCacheAsync<DemoListViewPageModel>();
 			});
 		}
 

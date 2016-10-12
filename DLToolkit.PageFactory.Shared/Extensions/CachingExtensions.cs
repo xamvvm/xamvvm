@@ -17,7 +17,7 @@ namespace DLToolkit.PageFactory
 		/// <typeparam name="TPageModel">The 1st type parameter.</typeparam>
 		public static bool RemoveTypeFromCache<TPageModel>(this TPageModel pageModel, string cacheKey = null) where TPageModel : class, IBasePageModel
         {
-			return PageFactory.Instance.RemovePageTypeFromCache<TPageModel>(cacheKey);
+			return PageFactory.Current.RemovePageTypeFromCache<TPageModel>(cacheKey);
         }
     }
 }

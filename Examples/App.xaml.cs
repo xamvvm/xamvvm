@@ -19,7 +19,7 @@ namespace Examples
 					return navPage ;
 				});
 
-			PageFactory.Init(factory);
+			PageFactory.SetCurrentFactory(factory);
 			this.LogDebug("test");
 
 			MainPage = this.GetPageFromCache<MainNavigationPageModel>() as NavigationPage;

@@ -3,7 +3,7 @@
 namespace DLToolkit.PageFactory
 {
 	/// <summary>
-	/// Logging extensions.
+	/// sLogging extensions.
 	/// </summary>
 	public static class LoggingExtensions
 	{
@@ -14,7 +14,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="message">Message.</param>
 		public static void LogDebug(this object sender, string message)
 		{
-			PageFactory.Instance.Logger.LogDebug(sender, message);
+			PageFactory.Current.Logger.LogDebug(sender, message);
 		}
 
 		/// <summary>
@@ -24,7 +24,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="message">Message.</param>
 		public static void LogInfo(this object sender, string message)
 		{
-			PageFactory.Instance.Logger.LogInfo(sender, message);
+			PageFactory.Current.Logger.LogInfo(sender, message);
 		}
 
 		/// <summary>
@@ -35,7 +35,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="message">Message.</param>
 		public static void LogError(this object sender, Exception ex = null, string message = null)
 		{
-			PageFactory.Instance.Logger.LogError(sender, ex, message);
+			PageFactory.Current.Logger.LogError(sender, ex, message);
 		}
 	}
 }

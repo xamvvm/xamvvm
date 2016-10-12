@@ -49,8 +49,8 @@ namespace DLToolkit.PageFactory
 						//	throw new Exception(string.Format("Page {0} must have a public parameterless constructor", pageType));
 
 						var pageModelType = found.GenericTypeArguments.First();
-						var pageModelTypeInfo = pageModelType.GetTypeInfo();
 
+						//var pageModelTypeInfo = pageModelType.GetTypeInfo();
 						//var parameterlessCtors = (pageModelTypeInfo.DeclaredConstructors
 						//	.Where(c => c.IsPublic && c.GetParameters().Length == 0));
 

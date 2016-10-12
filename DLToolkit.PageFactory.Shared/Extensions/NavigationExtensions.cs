@@ -21,14 +21,14 @@ namespace DLToolkit.PageFactory
 		/// <typeparam name="TPageModel">The 2nd type parameter.</typeparam>		
 		public static Task<bool> PushPageAsync<TCurrentPageModel, TPageModel>(this TCurrentPageModel currentPageModel, IBasePage<TPageModel> pageToPush, Action<TPageModel> executeOnPageModel = null,  bool animated = true) where TCurrentPageModel : class, IBasePageModel where TPageModel : class, IBasePageModel
         {
-			var currentPage = PageFactory.Instance.GetPageByModel(currentPageModel);
+			var currentPage = PageFactory.Current.GetPageByModel(currentPageModel);
 
 			if (currentPage != null)
 			{
 				if (executeOnPageModel != null)
 					pageToPush.ExecuteOnPageModel(executeOnPageModel);
 
-				return PageFactory.Instance.PushPageAsync(currentPage, pageToPush, animated);
+				return PageFactory.Current.PushPageAsync(currentPage, pageToPush, animated);
 			}
 
 			return Task.FromResult(false);
@@ -45,16 +45,16 @@ namespace DLToolkit.PageFactory
 		/// <typeparam name="TPageModel">The 1st type parameter.</typeparam>
 		public static Task<bool> PushPageFromCacheAsync<TPageModel>(this IBasePageModel currentPageModel, Action<TPageModel> executeOnPageModel = null, string cacheKey = null, bool animated = true) where TPageModel : class, IBasePageModel
 		{
-			var currentPage = PageFactory.Instance.GetPageByModel(currentPageModel);
+			var currentPage = PageFactory.Current.GetPageByModel(currentPageModel);
 
 			if (currentPage != null)
 			{
-				var pageToPush = PageFactory.Instance.GetPageFromCache<TPageModel>(cacheKey: cacheKey);
+				var pageToPush = PageFactory.Current.GetPageFromCache<TPageModel>(cacheKey: cacheKey);
 
 				if (executeOnPageModel != null)
 					pageToPush.ExecuteOnPageModel(executeOnPageModel);
 
-				return PageFactory.Instance.PushPageAsync(currentPage, pageToPush, animated);
+				return PageFactory.Current.PushPageAsync(currentPage, pageToPush, animated);
 			}
 
 			return Task.FromResult(false);
@@ -72,14 +72,14 @@ namespace DLToolkit.PageFactory
 		/// <typeparam name="TPageModel">The 2nd type parameter.</typeparam>
         public static Task<bool> PushModalPageAsync<TCurrentPageModel, TPageModel>(this TCurrentPageModel currentPageModel, IBasePage<TPageModel> pageToPush, Action<TPageModel> executeOnPageModel = null, bool animated = true) where TCurrentPageModel : class, IBasePageModel where TPageModel : class, IBasePageModel
 		{
-			var currentPage = PageFactory.Instance.GetPageByModel(currentPageModel);
+			var currentPage = PageFactory.Current.GetPageByModel(currentPageModel);
 
 			if (currentPage != null)
 			{
 				if (executeOnPageModel != null)
 					pageToPush.ExecuteOnPageModel(executeOnPageModel);
 				
-				return PageFactory.Instance.PushModalPageAsync(currentPage, pageToPush, animated);
+				return PageFactory.Current.PushModalPageAsync(currentPage, pageToPush, animated);
 			}
 
 			return Task.FromResult(false);
@@ -94,10 +94,10 @@ namespace DLToolkit.PageFactory
 		/// <typeparam name="TPageModel">The 1st type parameter.</typeparam>
 		public static Task<bool> PopPageAsync<TPageModel>(this TPageModel pageModel, bool animated = true)  where TPageModel : class, IBasePageModel
         {
-			var page = PageFactory.Instance.GetPageByModel(pageModel);
+			var page = PageFactory.Current.GetPageByModel(pageModel);
 
 			if (page != null)
-				return PageFactory.Instance.PopPageAsync(page, animated);
+				return PageFactory.Current.PopPageAsync(page, animated);
 					              
             return Task.FromResult(false);
         }
@@ -111,10 +111,10 @@ namespace DLToolkit.PageFactory
 		/// <typeparam name="TPageModel">The 1st type parameter.</typeparam>
 		public static Task<bool> PopModalPageAsync<TPageModel>(this TPageModel pageModel, bool animated = true) where TPageModel : class, IBasePageModel
 		{
-			var page = PageFactory.Instance.GetPageByModel(pageModel);
+			var page = PageFactory.Current.GetPageByModel(pageModel);
 
 			if (page != null)
-				return PageFactory.Instance.PopModalPageAsync(page, animated);
+				return PageFactory.Current.PopModalPageAsync(page, animated);
 
 			return Task.FromResult(false);
 		}
@@ -129,10 +129,10 @@ namespace DLToolkit.PageFactory
 		/// <typeparam name="TPageModel">The 2nd type parameter.</typeparam>
 		public static Task<bool> RemovePageAsync<TCurrentPageModel, TPageModel>(this TCurrentPageModel currentPageModel, IBasePage<TPageModel> pageToRemove) where TCurrentPageModel : class, IBasePageModel where TPageModel : class, IBasePageModel
         {
-			var currentPage = PageFactory.Instance.GetPageByModel(currentPageModel);
+			var currentPage = PageFactory.Current.GetPageByModel(currentPageModel);
 
 			if (currentPage != null)
-				return PageFactory.Instance.RemovePageAsync(currentPage, pageToRemove);
+				return PageFactory.Current.RemovePageAsync(currentPage, pageToRemove);
 
 			return Task.FromResult(false);
         }
@@ -147,10 +147,10 @@ namespace DLToolkit.PageFactory
 		/// <typeparam name="TCurrentPageModel">The 1st type parameter.</typeparam>
 		public static Task<bool> PopPagesToRootAsync<TCurrentPageModel>(this TCurrentPageModel currentPageModel, bool clearCache = false, bool animated = true)  where TCurrentPageModel : class, IBasePageModel
         {
-			var currentPage = PageFactory.Instance.GetPageByModel(currentPageModel);
+			var currentPage = PageFactory.Current.GetPageByModel(currentPageModel);
 
 			if (currentPage != null)
-				return PageFactory.Instance.PopPagesToRootAsync(currentPage, clearCache, animated);
+				return PageFactory.Current.PopPagesToRootAsync(currentPage, clearCache, animated);
 
 			return Task.FromResult(false);
         }

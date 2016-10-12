@@ -15,7 +15,7 @@ namespace ExampleRxUI
         {
             InitializeComponent();
 			var factory = new RxUIXamarinFormsPageFactory(this);
-			PageFactory.Init(factory);
+			PageFactory.SetCurrentFactory(factory);
 
 			MainPage = this.GetPageFromCache<DemoListViewPageModel>() as Page;
         }

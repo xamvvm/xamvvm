@@ -14,11 +14,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{BB3F8074-2150-4C01-A68B-53A9F9EE9752}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples", "Examples\Examples.csproj", "{322279E7-3097-491D-A81B-C2700AACA090}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples", "Example\Examples\Examples.csproj", "{322279E7-3097-491D-A81B-C2700AACA090}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.iOS", "iOS\Examples.iOS.csproj", "{5E3E2972-2D0B-466E-856A-038E73591B6B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.iOS", "Example\iOS\Examples.iOS.csproj", "{5E3E2972-2D0B-466E-856A-038E73591B6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.Droid", "Droid\Examples.Droid.csproj", "{C4795BCC-9598-4D73-AC6A-B522A954EAA9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.Droid", "Example\Droid\Examples.Droid.csproj", "{C4795BCC-9598-4D73-AC6A-B522A954EAA9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DLToolkit.PageFactory.Forms.RxUI", "DLToolkit.PageFactory.Form.RxUI\DLToolkit.PageFactory.Forms.RxUI.csproj", "{8F5804F7-7AAB-4C72-80E7-7130BD15D70A}"
 EndProject

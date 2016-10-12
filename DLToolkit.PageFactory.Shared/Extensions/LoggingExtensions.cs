@@ -2,6 +2,9 @@
 
 namespace DLToolkit.PageFactory
 {
+	/// <summary>
+	/// Logging extensions.
+	/// </summary>
 	public static class LoggingExtensions
 	{
 		/// <summary>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using Xamarin.Forms;
+using DLToolkit.PageFactory;
 
 namespace ExampleRxUI
 {
@@ -12,8 +13,10 @@ namespace ExampleRxUI
         public App()
         {
             InitializeComponent();
+			var factory = new XamarinFormsPageFactory(this);
+			PageFactory.Init(factory);
 
-            MainPage = new ExampleRxUI.MainPage();
+			MainPage = this.GetPageFromCache<DemoListViewPageModel>() as Page;
         }
 
         protected override void OnStart()

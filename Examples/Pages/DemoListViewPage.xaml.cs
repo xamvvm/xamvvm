@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DLToolkit.PageFactory;
-using Examples.PageModels;
 using Xamarin.Forms;
 
-namespace Examples.Pages
+namespace Examples
 {
     public partial class DemoListViewPage : IBasePage<DemoListViewPageModel>
     {

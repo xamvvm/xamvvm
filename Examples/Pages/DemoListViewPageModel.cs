@@ -1,21 +1,18 @@
 ﻿using System.Collections.ObjectModel;
 using DLToolkit.PageFactory;
-using PropertyChanged;
 
-namespace Examples.PageModels
+namespace Examples
 {
-
-    [ImplementPropertyChanged]
     public class DemoListViewPageModel : BasePageModel
     {
-        public string UrlPathSegment { get; }
-
-
-        public ObservableCollection<DogsItemViewModel> DogViewModelList;
+        public ObservableCollection<DogsItemViewModel> DogViewModelList
+		{
+			get { return GetField<ObservableCollection<DogsItemViewModel>>(); }
+			set { SetField(value); }
+		}
 
         public DemoListViewPageModel()
         {
-
             DogViewModelList = new ObservableCollection<DogsItemViewModel>();
 
             DogViewModelList.Add(new DogsItemViewModel() { Name = "Rex", Race = "German Sheppard" });
@@ -23,20 +20,23 @@ namespace Examples.PageModels
             DogViewModelList.Add(new DogsItemViewModel() { Name = "Jimmy", Race = "Beagle" });
             DogViewModelList.Add(new DogsItemViewModel() { Name = "Rob", Race = "Labrador" });
         }
-
-
     }
-
 
     // Should be something that makes a bit of sense, so why not dogs
-    [ImplementPropertyChanged]
-    public class DogsItemViewModel 
+	public class DogsItemViewModel : BaseModel
     {
-        private string name;
-        private string race;
+		string name;
+		public string Name
+		{
+			get { return name; }
+			set { SetField(ref name, value); }
+		}
 
-        public string Name { get; set; }
-
-        public string Race { get; set; }
-    }
+		string race;
+		public string Race
+		{
+			get { return race; }
+			set { SetField(ref race, value); }
+		}
+	}
 }

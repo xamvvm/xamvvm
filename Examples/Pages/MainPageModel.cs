@@ -12,7 +12,7 @@ namespace Examples
 		{
 			WelcomeText = "Welcome to PageFactory!";
 
-			ButtonCommand = new BaseCommand<string>(async (param) =>
+			DetailButtonCommand = new BaseCommand<string>(async (param) =>
 			{
 				var pageToPush = this.GetPageFromCache<DetailPageModel>();
 
@@ -29,6 +29,12 @@ namespace Examples
 					await this.PushPageAsync(pageToPush, (v) => v.Init("blue", Color.Blue));
 				}
 			});
+
+			DemoListButtonCommand = new BaseCommand<string>(async (param) =>
+			{
+				var pageToPush = this.GetPageFromCache<DemoListViewPageModel>();
+				await this.PushPageAsync(pageToPush);
+			});
 		}
 
 		public string WelcomeText
@@ -37,7 +43,13 @@ namespace Examples
 			set { SetField(value); }
 		}
 
-		public ICommand ButtonCommand
+		public ICommand DetailButtonCommand
+		{
+			get { return GetField<ICommand>(); }
+			set { SetField(value); }
+		}
+
+		public ICommand DemoListButtonCommand
 		{
 			get { return GetField<ICommand>(); }
 			set { SetField(value); }

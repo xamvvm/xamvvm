@@ -4,9 +4,14 @@
 	<ContentPage.Content>
 		<StackLayout>
 			<Label Text="{Binding WelcomeText}" VerticalOptions="Center" HorizontalOptions="Center" />
-			<Button Text="Red Detail" Command="{Binding ButtonCommand}" CommandParameter="red"/>
-			<Button Text="Green Detail" Command="{Binding ButtonCommand}" CommandParameter="green"/>
-			<Button Text="Blue Detail" Command="{Binding ButtonCommand}" CommandParameter="blue"/>
+
+			<Label Text="DetailPage:"/>
+			<Button Text="Red Detail" Command="{Binding DetailButtonCommand}" CommandParameter="red"/>
+			<Button Text="Green Detail" Command="{Binding DetailButtonCommand}" CommandParameter="green"/>
+			<Button Text="Blue Detail" Command="{Binding DetailButtonCommand}" CommandParameter="blue"/>
+			
+			<Label Text="DemoListViewPage:"/>
+			<Button Text="Demo List" Command="{Binding DemoListButtonCommand}"/>
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

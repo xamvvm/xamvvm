@@ -3,27 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using ReactiveUI;
 using Xamarin.Forms;
 
-namespace DLToolkit.PageFactory.Form.RxUI
+namespace DLToolkit.PageFactory.FormsRxUI
 {
 
-        public class RxUIXamarinFormsPageFactory : XamarinFormsPageFactory
-        {
-	        //public override void SetPageModel<TPageModel>(IBasePage<TPageModel> page, TPageModel newPageModel) where TPageModel : class, IBasePageModel, new()
-         //   {
-         //       base.SetPageModel(page, newPageModel);
+	public class RxUIXamarinFormsPageFactory : XamarinFormsPageFactory
+	{
+		public RxUIXamarinFormsPageFactory(Application appInstance, int maxPageCacheItems = 6, bool automaticAssembliesDiscovery = true, params Assembly[] additionalPagesAssemblies) : base(appInstance, maxPageCacheItems, automaticAssembliesDiscovery, additionalPagesAssemblies)
+		{
+		}
 
-         //       var rxPage = page as IViewFor<TPageModel>;
+		public override void SetPageModel<TPageModel>(IBasePage<TPageModel> page, TPageModel newPageModel)
+		{
+			base.SetPageModel(page, newPageModel);
 
-         //       if (rxPage != null)
-         //       {
-         //           rxPage.ViewModel = newPageModel;
-         //       }
-         //   }
-            public RxUIXamarinFormsPageFactory(Application appInstance, int maxPageCacheItems = 6, bool automaticAssembliesDiscovery = true, params Assembly[] additionalPagesAssemblies) : base(appInstance, maxPageCacheItems, automaticAssembliesDiscovery, additionalPagesAssemblies)
-            {
-            }
-        }
-
+			var rxPage = page as IViewFor<TPageModel>;
+			if (rxPage != null)
+			{
+			   rxPage.ViewModel = newPageModel;
+			}
+		}
+	}
 }

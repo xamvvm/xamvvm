@@ -20,7 +20,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.iOS", "iOS\Example
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.Droid", "Droid\Examples.Droid.csproj", "{C4795BCC-9598-4D73-AC6A-B522A954EAA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DLToolkit.PageFactory.Form.RxUI", "DLToolkit.PageFactory.Form.RxUI\DLToolkit.PageFactory.Form.RxUI.csproj", "{8F5804F7-7AAB-4C72-80E7-7130BD15D70A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DLToolkit.PageFactory.Forms.RxUI", "DLToolkit.PageFactory.Form.RxUI\DLToolkit.PageFactory.Forms.RxUI.csproj", "{8F5804F7-7AAB-4C72-80E7-7130BD15D70A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ExamplesRxUI", "ExamplesRxUI", "{D66B19CD-BB50-4C40-A98B-34A5A6F03C9F}"
 EndProject

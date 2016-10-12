@@ -38,9 +38,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PageModels\DemoListViewPageModel.cs" />
+    <Compile Include="Pages\DemoListViewPageModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PageModels\DemoListViewPage.xaml.cs">
+    <Compile Include="Pages\DemoListViewPage.xaml.cs">
       <DependentUpon>DemoListViewPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -49,7 +49,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="PageModels\DemoListViewPage.xaml">
+    <EmbeddedResource Include="Pages\DemoListViewPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
@@ -96,7 +96,7 @@
     </ProjectReference>
     <ProjectReference Include="..\..\DLToolkit.PageFactory.Form.RxUI\DLToolkit.PageFactory.Form.RxUI.csproj">
       <Project>{8F5804F7-7AAB-4C72-80E7-7130BD15D70A}</Project>
-      <Name>DLToolkit.PageFactory.Form.RxUI</Name>
+      <Name>DLToolkit.PageFactory.Forms.RxUI</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

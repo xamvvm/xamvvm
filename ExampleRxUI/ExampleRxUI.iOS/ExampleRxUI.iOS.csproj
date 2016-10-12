@@ -166,7 +166,7 @@
     </ProjectReference>
     <ProjectReference Include="..\..\DLToolkit.PageFactory.Form.RxUI\DLToolkit.PageFactory.Form.RxUI.csproj">
       <Project>{8F5804F7-7AAB-4C72-80E7-7130BD15D70A}</Project>
-      <Name>DLToolkit.PageFactory.Form.RxUI</Name>
+      <Name>DLToolkit.PageFactory.Forms.RxUI</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />

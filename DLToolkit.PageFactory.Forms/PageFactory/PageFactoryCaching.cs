@@ -6,7 +6,7 @@ namespace DLToolkit.PageFactory
 {
     public partial class XamarinFormsPageFactory : IPageFactoryCaching
     {
-		public virtual IBasePage<TPageModel> GetPageFromCache<TPageModel>(TPageModel pageModel = null, string cacheKey = null) where TPageModel : class, IBasePageModel, new()
+		public virtual IBasePage<TPageModel> GetPageFromCache<TPageModel>(TPageModel pageModel = null, string cacheKey = null) where TPageModel : class, IBasePageModel
 		{
 			var pageModelType = typeof(TPageModel);
 			var key = Tuple.Create(pageModelType, cacheKey);
@@ -29,7 +29,7 @@ namespace DLToolkit.PageFactory
 			return page;
 		}
 
-		public virtual IBasePage<TPageModel> GetPageAsNewInstance<TPageModel>(TPageModel pageModel = null) where TPageModel : class, IBasePageModel, new()
+		public virtual IBasePage<TPageModel> GetPageAsNewInstance<TPageModel>(TPageModel pageModel = null) where TPageModel : class, IBasePageModel
 		{
 			var pageModelType = typeof(TPageModel);
 			var pageType = GetPageType(pageModelType);
@@ -52,13 +52,13 @@ namespace DLToolkit.PageFactory
 				if (_pageModelCreation.TryGetValue(pageModelType, out pageModelCreationFunc))
 					SetPageModel(page, pageModelCreationFunc() as TPageModel);
 				else
-					SetPageModel(page, new TPageModel());
+					SetPageModel(page, Activator.CreateInstance<TPageModel>());
 			}
 
 			return page;
 		}
 
-		public virtual bool RemovePageTypeFromCache<TPageModel>(string cacheKey = null) where TPageModel : class, IBasePageModel, new()
+		public virtual bool RemovePageTypeFromCache<TPageModel>(string cacheKey = null) where TPageModel : class, IBasePageModel
 		{
 			var pageModelType = typeof(TPageModel);
 			var key = Tuple.Create(pageModelType, cacheKey);

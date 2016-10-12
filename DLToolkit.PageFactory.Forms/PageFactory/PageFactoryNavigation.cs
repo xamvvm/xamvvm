@@ -8,7 +8,7 @@ namespace DLToolkit.PageFactory
 {
     public partial class XamarinFormsPageFactory : IPageFactoryNavigation
     {
-		public async virtual Task<bool> PushPageAsync<TCurrentPageModel, TPageModel>(IBasePage<TCurrentPageModel> currentPage, IBasePage<TPageModel> pageToPush, bool animated = true) where TCurrentPageModel : class, IBasePageModel, new() where TPageModel : class, IBasePageModel, new()
+		public async virtual Task<bool> PushPageAsync<TCurrentPageModel, TPageModel>(IBasePage<TCurrentPageModel> currentPage, IBasePage<TPageModel> pageToPush, bool animated = true) where TCurrentPageModel : class, IBasePageModel where TPageModel : class, IBasePageModel
 		{
 			var navigation = ((Page)currentPage)?.Navigation;
 			var navEventsPage = pageToPush as INavigationPushing;
@@ -24,7 +24,7 @@ namespace DLToolkit.PageFactory
 			return true;
 		}
 
-		public async virtual Task<bool> PushModalPageAsync<TCurrentPageModel, TPageModel>(IBasePage<TCurrentPageModel> currentPage, IBasePage<TPageModel> pageToPush, bool animated = true) where TCurrentPageModel : class, IBasePageModel, new() where TPageModel : class, IBasePageModel, new()
+		public async virtual Task<bool> PushModalPageAsync<TCurrentPageModel, TPageModel>(IBasePage<TCurrentPageModel> currentPage, IBasePage<TPageModel> pageToPush, bool animated = true) where TCurrentPageModel : class, IBasePageModel where TPageModel : class, IBasePageModel
 		{
 			var navigation = ((Page)currentPage)?.Navigation;
 			var navEventsPage = pageToPush as INavigationPushing;
@@ -40,7 +40,7 @@ namespace DLToolkit.PageFactory
 			return true;
 		}
 
-		public virtual Task<bool> InsertPageBeforeAsync<TPageModel, TBeforePageModel>(IBasePage<TPageModel> pageToInsert, IBasePage<TBeforePageModel> beforePage) where TPageModel : class, IBasePageModel, new() where TBeforePageModel : class, IBasePageModel, new()
+		public virtual Task<bool> InsertPageBeforeAsync<TPageModel, TBeforePageModel>(IBasePage<TPageModel> pageToInsert, IBasePage<TBeforePageModel> beforePage) where TPageModel : class, IBasePageModel where TBeforePageModel : class, IBasePageModel
 		{
 			var navigation = ((Page)beforePage)?.Navigation;
 			var navEventsPage = pageToInsert as INavigationInserting;
@@ -56,7 +56,7 @@ namespace DLToolkit.PageFactory
 			return Task.FromResult(true);
 		}
 
-		public async virtual Task<bool> PopPageAsync<TCurrentPageModel>(IBasePage<TCurrentPageModel> currentPage, bool animated = true) where TCurrentPageModel : class, IBasePageModel, new()
+		public async virtual Task<bool> PopPageAsync<TCurrentPageModel>(IBasePage<TCurrentPageModel> currentPage, bool animated = true) where TCurrentPageModel : class, IBasePageModel
 		{
 			var navigation = ((Page)currentPage)?.Navigation;
 			var navEventsPage = currentPage as INavigationPopping;
@@ -73,7 +73,7 @@ namespace DLToolkit.PageFactory
 			return true;
 		}
 
-		public async virtual Task<bool> PopModalPageAsync<TCurrentPageModel>(IBasePage<TCurrentPageModel> currentPage, bool animated = true) where TCurrentPageModel : class, IBasePageModel, new()
+		public async virtual Task<bool> PopModalPageAsync<TCurrentPageModel>(IBasePage<TCurrentPageModel> currentPage, bool animated = true) where TCurrentPageModel : class, IBasePageModel
 		{
 			var navigation = ((Page)currentPage)?.Navigation;
 			var navEventsPage = currentPage as INavigationPopping;
@@ -90,7 +90,7 @@ namespace DLToolkit.PageFactory
 			return true;
 		}
 
-		public virtual Task<bool> RemovePageAsync<TCurrentPageModel, TPageModel>(IBasePage<TCurrentPageModel> currentPage, IBasePage<TPageModel> pageToRemove) where TCurrentPageModel : class, IBasePageModel, new() where TPageModel : class, IBasePageModel, new()
+		public virtual Task<bool> RemovePageAsync<TCurrentPageModel, TPageModel>(IBasePage<TCurrentPageModel> currentPage, IBasePage<TPageModel> pageToRemove) where TCurrentPageModel : class, IBasePageModel where TPageModel : class, IBasePageModel
 		{
 			var navigation = ((Page)currentPage)?.Navigation;
 			var navEventsPage = pageToRemove as INavigationRemoving;
@@ -106,7 +106,7 @@ namespace DLToolkit.PageFactory
 			return Task.FromResult(true);
 		}
 
-		public async virtual Task<bool> PopPagesToRootAsync<TCurrentPageModel>(IBasePage<TCurrentPageModel> currentPage, bool clearCache = false, bool animated = true) where TCurrentPageModel : class, IBasePageModel, new()
+		public async virtual Task<bool> PopPagesToRootAsync<TCurrentPageModel>(IBasePage<TCurrentPageModel> currentPage, bool clearCache = false, bool animated = true) where TCurrentPageModel : class, IBasePageModel
 		{
 			var navigation = ((Page)currentPage)?.Navigation;
 			if (navigation == null)
@@ -120,7 +120,7 @@ namespace DLToolkit.PageFactory
 			return true;
 		}
 
-		public virtual Task<bool> SetNewRootAndResetAsync<TCurrentPageModel, TPageModel>(IBasePage<TCurrentPageModel> currentPage, IBasePage<TPageModel> newRootPage, bool clearCache = true) where TCurrentPageModel : class, IBasePageModel, new() where TPageModel : class, IBasePageModel, new()
+		public virtual Task<bool> SetNewRootAndResetAsync<TCurrentPageModel, TPageModel>(IBasePage<TCurrentPageModel> currentPage, IBasePage<TPageModel> newRootPage, bool clearCache = true) where TCurrentPageModel : class, IBasePageModel where TPageModel : class, IBasePageModel
 		{
 			if (clearCache)
 				ClearPageCache();

@@ -14,7 +14,7 @@ namespace DLToolkit.PageFactory
         /// <returns>The page.</returns>
         /// <param name="pageModel">Page model.</param>
         /// <typeparam name="TPageModel">Page model type.</typeparam>
-        public static IBasePage<TPageModel> GetCurrentPage<TPageModel>(this TPageModel pageModel) where TPageModel : class, IBasePageModel, new()
+        public static IBasePage<TPageModel> GetCurrentPage<TPageModel>(this TPageModel pageModel) where TPageModel : class, IBasePageModel
         {
             return PageFactory.Instance.GetPageByModel(pageModel);
         }
@@ -28,7 +28,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="currentPageModel">Current page model.</param>
 		/// <param name="cacheKey">Cache key.</param>
 		/// <typeparam name="TPageModel">The 1st type parameter.</typeparam>
-		public static IBasePage<TPageModel> GetPageFromCache<TPageModel>(this IBasePageModel currentPageModel, TPageModel pageModel = null, string cacheKey = null) where TPageModel : class, IBasePageModel, new()
+		public static IBasePage<TPageModel> GetPageFromCache<TPageModel>(this IBasePageModel currentPageModel, TPageModel pageModel = null, string cacheKey = null) where TPageModel : class, IBasePageModel
 		{
 			return PageFactory.Instance.GetPageFromCache(pageModel, cacheKey);
 		}
@@ -41,7 +41,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="pageModel">Page model.</param>
 		/// <param name="currentPageModel">Current page model.</param>
 		/// <typeparam name="TPageModel">The 1st type parameter.</typeparam>
-		public static IBasePage<TPageModel> GetPageAsNewInstance<TPageModel>(this IBasePageModel currentPageModel, TPageModel pageModel = null) where TPageModel : class, IBasePageModel, new()
+		public static IBasePage<TPageModel> GetPageAsNewInstance<TPageModel>(this IBasePageModel currentPageModel, TPageModel pageModel = null) where TPageModel : class, IBasePageModel
 		{
 			return PageFactory.Instance.GetPageAsNewInstance(pageModel);
 		}
@@ -53,7 +53,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="currentPageModel">Current page model.</param>
 		/// <param name="cacheKey">Cache key.</param>
 		/// <typeparam name="TPageModel">The 1st type parameter.</typeparam>
-		public static bool RemovePageTypeFromCache<TPageModel>(this IBasePageModel currentPageModel, string cacheKey = null) where TPageModel : class, IBasePageModel, new()
+		public static bool RemovePageTypeFromCache<TPageModel>(this IBasePageModel currentPageModel, string cacheKey = null) where TPageModel : class, IBasePageModel
 		{
 			return PageFactory.Instance.RemovePageTypeFromCache<TPageModel>(cacheKey);
 		}

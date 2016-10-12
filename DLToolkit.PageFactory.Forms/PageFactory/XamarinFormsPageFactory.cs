@@ -41,23 +41,24 @@ namespace DLToolkit.PageFactory
 					if (found != default(Type))
 					{
 						var pageType = pageTypeInfo.AsType();
-						var pageParameterlessCtors = (pageTypeInfo.DeclaredConstructors
-							.Where(c => c.IsPublic && c.GetParameters().Length == 0));
 
-						if (!pageParameterlessCtors.Any())
-							throw new Exception(string.Format("Page {0} must have a public parameterless constructor", pageType));
+						//var pageParameterlessCtors = (pageTypeInfo.DeclaredConstructors
+						//	.Where(c => c.IsPublic && c.GetParameters().Length == 0));
+
+						//if (!pageParameterlessCtors.Any())
+						//	throw new Exception(string.Format("Page {0} must have a public parameterless constructor", pageType));
 
 						var pageModelType = found.GenericTypeArguments.First();
 						var pageModelTypeInfo = pageModelType.GetTypeInfo();
 
-						var parameterlessCtors = (pageModelTypeInfo.DeclaredConstructors
-							.Where(c => c.IsPublic && c.GetParameters().Length == 0));
+						//var parameterlessCtors = (pageModelTypeInfo.DeclaredConstructors
+						//	.Where(c => c.IsPublic && c.GetParameters().Length == 0));
 
-						if (!parameterlessCtors.Any())
-						{
-							throw new Exception(string.Format("PageModel {0} must have a public parameterless constructor",
-															  pageModelType, pageType));
-						}
+						//if (!parameterlessCtors.Any())
+						//{
+						//	throw new Exception(string.Format("PageModel {0} must have a public parameterless constructor",
+						//									  pageModelType, pageType));
+						//}
 
 						if (!_pageModelTypes.ContainsKey(pageModelType))
 						{
@@ -78,7 +79,7 @@ namespace DLToolkit.PageFactory
 			}
 		}
 
-		public virtual void RegisterView<TPageModel, TPage>(Func<IBasePageModel> createPageModel = null, Func<object> createPage = null) where TPageModel : class, IBasePageModel, new() where TPage : class, new()
+		public virtual void RegisterView<TPageModel, TPage>(Func<IBasePageModel> createPageModel = null, Func<object> createPage = null) where TPageModel : class, IBasePageModel where TPage : class
 		{
 			if (createPageModel != null)
 			{
@@ -99,7 +100,7 @@ namespace DLToolkit.PageFactory
 			}
 		}
 
-		internal void AddToWeakCacheIfNotExists<TPageModel>(IBasePage<TPageModel> page, TPageModel pageModel) where TPageModel : class, IBasePageModel, new()
+		internal void AddToWeakCacheIfNotExists<TPageModel>(IBasePage<TPageModel> page, TPageModel pageModel) where TPageModel : class, IBasePageModel
 		{
 			if (pageModel == null)
 				return;

@@ -19,7 +19,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="animated">If set to <c>true</c> animated.</param>
 		/// <typeparam name="TCurrentPageModel">The 1st type parameter.</typeparam>
 		/// <typeparam name="TPageModel">The 2nd type parameter.</typeparam>		
-		public static Task<bool> PushPageAsync<TCurrentPageModel, TPageModel>(this TCurrentPageModel currentPageModel, IBasePage<TPageModel> pageToPush, Action<TPageModel> executeOnPageModel = null,  bool animated = true) where TCurrentPageModel : class, IBasePageModel, new() where TPageModel : class, IBasePageModel, new()
+		public static Task<bool> PushPageAsync<TCurrentPageModel, TPageModel>(this TCurrentPageModel currentPageModel, IBasePage<TPageModel> pageToPush, Action<TPageModel> executeOnPageModel = null,  bool animated = true) where TCurrentPageModel : class, IBasePageModel where TPageModel : class, IBasePageModel
         {
 			var currentPage = PageFactory.Instance.GetPageByModel(currentPageModel);
 
@@ -33,6 +33,32 @@ namespace DLToolkit.PageFactory
 
 			return Task.FromResult(false);
         }
+
+		/// <summary>
+		/// Pushes the cached page into current navigation stack.
+		/// </summary>
+		/// <returns>The page from cache async.</returns>
+		/// <param name="currentPageModel">Current page model.</param>
+		/// <param name="executeOnPageModel">Execute on page model.</param>
+		/// <param name="cacheKey">Cache key.</param>
+		/// <param name="animated">If set to <c>true</c> animated.</param>
+		/// <typeparam name="TPageModel">The 1st type parameter.</typeparam>
+		public static Task<bool> PushPageFromCacheAsync<TPageModel>(this IBasePageModel currentPageModel, Action<TPageModel> executeOnPageModel = null, string cacheKey = null, bool animated = true) where TPageModel : class, IBasePageModel
+		{
+			var currentPage = PageFactory.Instance.GetPageByModel(currentPageModel);
+
+			if (currentPage != null)
+			{
+				var pageToPush = PageFactory.Instance.GetPageFromCache<TPageModel>(cacheKey: cacheKey);
+
+				if (executeOnPageModel != null)
+					pageToPush.ExecuteOnPageModel(executeOnPageModel);
+
+				return PageFactory.Instance.PushPageAsync(currentPage, pageToPush, animated);
+			}
+
+			return Task.FromResult(false);
+		}
  
 		/// <summary>
 		/// Pushes the modal page into current navigation stack.
@@ -44,7 +70,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="animated">If set to <c>true</c> animated.</param>
 		/// <typeparam name="TCurrentPageModel">The 1st type parameter.</typeparam>
 		/// <typeparam name="TPageModel">The 2nd type parameter.</typeparam>
-        public static Task<bool> PushModalPageAsync<TCurrentPageModel, TPageModel>(this TCurrentPageModel currentPageModel, IBasePage<TPageModel> pageToPush, Action<TPageModel> executeOnPageModel = null, bool animated = true) where TCurrentPageModel : class, IBasePageModel, new() where TPageModel : class, IBasePageModel, new()
+        public static Task<bool> PushModalPageAsync<TCurrentPageModel, TPageModel>(this TCurrentPageModel currentPageModel, IBasePage<TPageModel> pageToPush, Action<TPageModel> executeOnPageModel = null, bool animated = true) where TCurrentPageModel : class, IBasePageModel where TPageModel : class, IBasePageModel
 		{
 			var currentPage = PageFactory.Instance.GetPageByModel(currentPageModel);
 
@@ -66,7 +92,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="pageModel">Page model.</param>
 		/// <param name="animated">If set to <c>true</c> animated.</param>
 		/// <typeparam name="TPageModel">The 1st type parameter.</typeparam>
-		public static Task<bool> PopPageAsync<TPageModel>(this TPageModel pageModel, bool animated = true)  where TPageModel : class, IBasePageModel, new()
+		public static Task<bool> PopPageAsync<TPageModel>(this TPageModel pageModel, bool animated = true)  where TPageModel : class, IBasePageModel
         {
 			var page = PageFactory.Instance.GetPageByModel(pageModel);
 
@@ -83,7 +109,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="pageModel">Page model.</param>
 		/// <param name="animated">If set to <c>true</c> animated.</param>
 		/// <typeparam name="TPageModel">The 1st type parameter.</typeparam>
-		public static Task<bool> PopModalPageAsync<TPageModel>(this TPageModel pageModel, bool animated = true) where TPageModel : class, IBasePageModel, new()
+		public static Task<bool> PopModalPageAsync<TPageModel>(this TPageModel pageModel, bool animated = true) where TPageModel : class, IBasePageModel
 		{
 			var page = PageFactory.Instance.GetPageByModel(pageModel);
 
@@ -101,7 +127,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="pageToRemove">Page to remove.</param>
 		/// <typeparam name="TCurrentPageModel">The 1st type parameter.</typeparam>
 		/// <typeparam name="TPageModel">The 2nd type parameter.</typeparam>
-		public static Task<bool> RemovePageAsync<TCurrentPageModel, TPageModel>(this TCurrentPageModel currentPageModel, IBasePage<TPageModel> pageToRemove) where TCurrentPageModel : class, IBasePageModel, new() where TPageModel : class, IBasePageModel, new()
+		public static Task<bool> RemovePageAsync<TCurrentPageModel, TPageModel>(this TCurrentPageModel currentPageModel, IBasePage<TPageModel> pageToRemove) where TCurrentPageModel : class, IBasePageModel where TPageModel : class, IBasePageModel
         {
 			var currentPage = PageFactory.Instance.GetPageByModel(currentPageModel);
 
@@ -119,7 +145,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="clearCache">If set to <c>true</c> clear cache.</param>
 		/// <param name="animated">If set to <c>true</c> animated.</param>
 		/// <typeparam name="TCurrentPageModel">The 1st type parameter.</typeparam>
-		public static Task<bool> PopPagesToRootAsync<TCurrentPageModel>(this TCurrentPageModel currentPageModel, bool clearCache = false, bool animated = true)  where TCurrentPageModel : class, IBasePageModel, new()
+		public static Task<bool> PopPagesToRootAsync<TCurrentPageModel>(this TCurrentPageModel currentPageModel, bool clearCache = false, bool animated = true)  where TCurrentPageModel : class, IBasePageModel
         {
 			var currentPage = PageFactory.Instance.GetPageByModel(currentPageModel);
 

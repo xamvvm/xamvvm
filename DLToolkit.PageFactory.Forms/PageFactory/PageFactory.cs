@@ -22,20 +22,20 @@ namespace DLToolkit.PageFactory
 			}
 		}
 
-		public virtual IBasePage<TPageModel> GetPageByModel<TPageModel>(TPageModel pageModel) where TPageModel : class, IBasePageModel, new()
+		public virtual IBasePage<TPageModel> GetPageByModel<TPageModel>(TPageModel pageModel) where TPageModel : class, IBasePageModel
 		{
 			object page = null;
 			_weakPageCache.TryGetValue(pageModel, out page);
 			return page as IBasePage<TPageModel>;
 		}
 
-		public virtual TPageModel GetPageModel<TPageModel>(IBasePage<TPageModel> page) where TPageModel : class, IBasePageModel, new()
+		public virtual TPageModel GetPageModel<TPageModel>(IBasePage<TPageModel> page) where TPageModel : class, IBasePageModel
 		{
 			var xfPage = page as Page;
 			return xfPage?.BindingContext as TPageModel;
 		}
 
-		public virtual void SetPageModel<TPageModel>(IBasePage<TPageModel> page, TPageModel newPageModel) where TPageModel : class, IBasePageModel, new()
+		public virtual void SetPageModel<TPageModel>(IBasePage<TPageModel> page, TPageModel newPageModel) where TPageModel : class, IBasePageModel
 		{
 			((Page)page).BindingContext = newPageModel;
 			AddToWeakCacheIfNotExists(page, newPageModel);

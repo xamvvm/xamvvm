@@ -10,6 +10,12 @@ namespace DLToolkit.PageFactory
 	public interface IPageFactory : IPageFactoryCaching, IPageFactoryNavigation
 	{
 		/// <summary>
+		/// Gets or sets the logger.
+		/// </summary>
+		/// <value>The logger.</value>
+		IBaseLogger Logger { get; set; }
+
+		/// <summary>
 		/// Gets the page by model.
 		/// </summary>
 		/// <returns>The page by model.</returns>

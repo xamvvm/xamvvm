@@ -5,6 +5,23 @@ namespace DLToolkit.PageFactory
 {
     public partial class XamarinFormsPageFactory : IPageFactory
     {
+		IBaseLogger logger;
+		public IBaseLogger Logger
+		{
+			get
+			{
+				if (logger == null)
+					logger = new BaseLogger();
+
+				return logger;
+			}
+
+			set
+			{
+				logger = value;
+			}
+		}
+
 		public virtual IBasePage<TPageModel> GetPageByModel<TPageModel>(TPageModel pageModel) where TPageModel : class, IBasePageModel, new()
 		{
 			object page = null;

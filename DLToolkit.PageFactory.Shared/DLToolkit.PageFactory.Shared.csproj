@@ -47,6 +47,9 @@
     <Compile Include="Interfaces\INavigationInterceptors.cs" />
     <Compile Include="Interfaces\IBasePageModel.cs" />
     <Compile Include="Extensions\PageExtensions.cs" />
+    <Compile Include="Extensions\LoggingExtensions.cs" />
+    <Compile Include="Interfaces\IBaseLogger.cs" />
+    <Compile Include="Implementations\BaseLogger.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>

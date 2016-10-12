@@ -156,6 +156,18 @@
       <Project>{F7B20921-508B-4E35-9205-8F51010939F9}</Project>
       <Name>ExampleRxUI</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\DLToolkit.PageFactory.Shared\DLToolkit.PageFactory.Shared.csproj">
+      <Project>{86124AC2-DCF7-4BBA-A303-93147CF1FA87}</Project>
+      <Name>DLToolkit.PageFactory.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLToolkit.PageFactory.Forms\DLToolkit.PageFactory.Forms.csproj">
+      <Project>{A02E864B-6EA9-4D75-8B69-45D6D12FC2DF}</Project>
+      <Name>DLToolkit.PageFactory.Forms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLToolkit.PageFactory.Form.RxUI\DLToolkit.PageFactory.Form.RxUI.csproj">
+      <Project>{8F5804F7-7AAB-4C72-80E7-7130BD15D70A}</Project>
+      <Name>DLToolkit.PageFactory.Form.RxUI</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.3.2.127\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.2.127\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />

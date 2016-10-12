@@ -94,6 +94,10 @@
       <Project>{86124AC2-DCF7-4BBA-A303-93147CF1FA87}</Project>
       <Name>DLToolkit.PageFactory.Shared</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\DLToolkit.PageFactory.Form.RxUI\DLToolkit.PageFactory.Form.RxUI.csproj">
+      <Project>{8F5804F7-7AAB-4C72-80E7-7130BD15D70A}</Project>
+      <Name>DLToolkit.PageFactory.Form.RxUI</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.3.2.127\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.2.127\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />

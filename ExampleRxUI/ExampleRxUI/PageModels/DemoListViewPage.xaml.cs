@@ -13,11 +13,7 @@ namespace ExampleRxUI
 			InitializeComponent();
 		}
 
-		public DemoListViewPageModel ViewModel
-		{
-			get { return (DemoListViewPageModel)BindingContext; }
-			set { BindingContext = value; }
-		}
+		public DemoListViewPageModel ViewModel { get; set; }
 
 		object IViewFor.ViewModel
 		{

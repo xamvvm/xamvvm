@@ -1,4 +1,6 @@
-#<img style="vertical-align:middle" src="http://res.cloudinary.com/dqeaiomo8/image/upload/v1442721091/PageFactory-logo-128_mlrygy.png" width="64"/> DLToolkit.PageFactory [![PayPayl donate button](http://img.shields.io/paypal/donate.png?color=green)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=T54TSWGPZGNDY "Donate to this project using Paypal") [![Bitcoin donate button](http://img.shields.io/bitcoin/donate.png?color=green)](https://blockchain.info/address/16CvewT3QyAc5ATTVNHQ2EomxLQPXxyKQ7 "Donate to this project using Bitcoin")
+ [![PayPayl donate button](http://img.shields.io/paypal/donate.png?color=green)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=T54TSWGPZGNDY "Donate to this project using Paypal") [![Bitcoin donate button](http://img.shields.io/bitcoin/donate.png?color=green)](https://blockchain.info/address/16CvewT3QyAc5ATTVNHQ2EomxLQPXxyKQ7 "Donate to this project using Bitcoin")
+
+ # **xamvvm**
 
 ### Simple, lightweight MVVM Framework for Xamarin.Forms with fluent API
 
@@ -12,25 +14,26 @@
 - **You're not limited to any concrete implementation of Pages, PageModels**
 - **Fluent style extensions methods to write less code**
 - Helper classes with ready to use `INotifyPropertyChanged` implementation eg. `BasePageModel`
-- Pages have override methods to respond / intercept navigation (eg. PageFactoryPushing, PageFactoryPushed, etc.) 
+- Pages have override methods to respond / intercept navigation (eg. NavPushing, NavPushed, etc.) 
 - Strongly typed classes / methods
 - Dependency free ICommand implementation prevents multiple execution when previous execution not finished yet
+
 
 
 ## Getting Started
 
 ## Initialize the Framework
 
-You have to create an instance of a PageFactory implementation and set it as the current factory to use
+You have to create an instance of a IBaseFactory implementation and set it as the current factory to use
 
 ```C#
 var factory = new XamarinFormsPageFactory(this);
-PageFactory.SetCurrentFactory(factory);
+XamvvmCore.SetCurrentFactory(factory);
 ```
 
 That's all :-) 
 
-PageFactory will scan your assemblies at start up and link Pages and PageModels together according to the IBasePage definition on your Pages.
+The PageFactory will scan your assemblies at start up and link Pages and PageModels together according to the IBasePage definition on your Pages.
 (You can also register your Pages manually if you want to. See Wiki)
 
 
@@ -102,15 +105,17 @@ public class DetailPageModel : BasePageModel
 	}
 }
 ```
+<sub>You don't have to inherit from BasePageModel it's just an included convinience class</sub>
 
 
-Please look into the Wiki for Detailed Information
+Please look into the [Wiki](https://github.com/xamvvm/wiki) for Detailed Information
 
 ## NuGet
 
+*Will all be updated*
 - Xamarin.Forms: [https://www.nuget.org/packages/DLToolkit.PageFactory.Forms/](https://www.nuget.org/packages/DLToolkit.PageFactory.Forms/)
 - Shared: [https://www.nuget.org/packages/DLToolkit.PageFactory.Shared/](https://www.nuget.org/packages/DLToolkit.PageFactory.Shared/)
 
 ## Example project
 
-https://github.com/daniel-luberda/DLToolkit.PageFactory/tree/master/Examples
+https://github.com/xamvvm/tree/master/Examples

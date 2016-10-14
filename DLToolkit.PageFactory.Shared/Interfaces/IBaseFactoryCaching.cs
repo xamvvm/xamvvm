@@ -6,7 +6,7 @@ namespace DLToolkit.PageFactory
 	/// <summary>
 	/// IPageFactory caching.
 	/// </summary>
-	public interface IPageFactoryCaching
+	public interface IBaseFactoryCaching
 	{
 		/// <summary>
 		/// Gets the page from cache. Creates a new page instances if not exists.

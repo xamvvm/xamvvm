@@ -31,15 +31,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PageFactory.cs" />
+    <Compile Include="XamvvmCore.cs" />
     <Compile Include="Implementations\BaseModel.cs" />
     <Compile Include="Implementations\BaseNotifyPropertyChanged.cs" />
     <Compile Include="Implementations\BasePageModel.cs" />
     <Compile Include="Interfaces\IBasePage.cs" />
-    <Compile Include="Interfaces\IPageFactory.cs" />
-    <Compile Include="Interfaces\IPageFactoryCaching.cs" />
-    <Compile Include="Interfaces\IPageFactoryCommand.cs" />
-    <Compile Include="Interfaces\IPageFactoryNavigation.cs" />
+    <Compile Include="Interfaces\IBaseFactory.cs" />
+    <Compile Include="Interfaces\IBaseFactoryCaching.cs" />
+    <Compile Include="Interfaces\IBaseCommand.cs" />
+    <Compile Include="Interfaces\IBaseFactoryNavigation.cs" />
     <Compile Include="Implementations\BaseCommand.cs" />
     <Compile Include="Extensions\PageModelExtensions.cs" />
     <Compile Include="Extensions\NavigationExtensions.cs" />

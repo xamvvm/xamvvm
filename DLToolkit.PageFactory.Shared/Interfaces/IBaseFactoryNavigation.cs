@@ -7,7 +7,7 @@ namespace DLToolkit.PageFactory
 	/// <summary>
 	/// IPageFactory navigation.
 	/// </summary>
-	public interface IPageFactoryNavigation
+	public interface IBaseFactoryNavigation
 	{
 		/// <summary>
 		/// Pushes the page into navigation stack.

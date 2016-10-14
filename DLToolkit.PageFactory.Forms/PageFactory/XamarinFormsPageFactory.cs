@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 
 namespace DLToolkit.PageFactory
 {
-    public partial class XamarinFormsPageFactory : IPageFactory
+    public partial class XamarinFormsPageFactory : IBaseFactory
     {
 		int _maxPageCacheItems;
 		readonly Dictionary<Type, Type> _pageModelTypes = new Dictionary<Type, Type>();

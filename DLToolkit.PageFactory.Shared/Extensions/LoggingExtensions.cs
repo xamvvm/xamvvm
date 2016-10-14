@@ -14,7 +14,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="message">Message.</param>
 		public static void LogDebug(this object sender, string message)
 		{
-			PageFactory.Current.Logger.LogDebug(sender, message);
+			XamvvmCore.CurrentFactory.Logger.LogDebug(sender, message);
 		}
 
 		/// <summary>
@@ -24,7 +24,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="message">Message.</param>
 		public static void LogInfo(this object sender, string message)
 		{
-			PageFactory.Current.Logger.LogInfo(sender, message);
+			XamvvmCore.CurrentFactory.Logger.LogInfo(sender, message);
 		}
 
 		/// <summary>
@@ -35,7 +35,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="message">Message.</param>
 		public static void LogError(this object sender, Exception ex = null, string message = null)
 		{
-			PageFactory.Current.Logger.LogError(sender, ex, message);
+			XamvvmCore.CurrentFactory.Logger.LogError(sender, ex, message);
 		}
 	}
 }

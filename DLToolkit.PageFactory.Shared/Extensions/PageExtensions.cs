@@ -15,7 +15,7 @@ namespace DLToolkit.PageFactory
 		/// <typeparam name="TPageModel">The 1st type parameter.</typeparam>
 		public static TPageModel GetPageModel<TPageModel>(this IBasePage<TPageModel> page) where TPageModel : class, IBasePageModel
 		{
-			return PageFactory.Current.GetPageModel(page);
+			return XamvvmCore.CurrentFactory.GetPageModel(page);
 		}
 
 		/// <summary>
@@ -27,7 +27,7 @@ namespace DLToolkit.PageFactory
 		/// <typeparam name="TPageModel">The 1st type parameter.</typeparam>
 		public static IBasePage<TPageModel> SetPageModel<TPageModel>(this IBasePage<TPageModel> page, TPageModel newPageModel) where TPageModel : class, IBasePageModel
 		{
-			PageFactory.Current.SetPageModel(page, newPageModel);
+			XamvvmCore.CurrentFactory.SetPageModel(page, newPageModel);
 
 			return page;
 		}
@@ -58,7 +58,7 @@ namespace DLToolkit.PageFactory
 		/// <typeparam name="TPageModel">The 1st type parameter.</typeparam>
 		public static IBasePage<TPageModel> GetPageFromCache<TPageModel>(this IBasePage<TPageModel> currentPage, TPageModel pageModel = null, string cacheKey = null) where TPageModel : class, IBasePageModel
 		{
-			return PageFactory.Current.GetPageFromCache(pageModel, cacheKey);
+			return XamvvmCore.CurrentFactory.GetPageFromCache(pageModel, cacheKey);
 		}
 
 		/// <summary>
@@ -71,7 +71,7 @@ namespace DLToolkit.PageFactory
 		/// <typeparam name="TPageModel">The 1st type parameter.</typeparam>
 		public static IBasePage<TPageModel> GetPageAsNewInstance<TPageModel>(this IBasePage<IBasePageModel> currentPage, TPageModel pageModel = null) where TPageModel : class, IBasePageModel
 		{
-			return PageFactory.Current.GetPageAsNewInstance(pageModel);
+			return XamvvmCore.CurrentFactory.GetPageAsNewInstance(pageModel);
 		}
 
 		/// <summary>
@@ -83,7 +83,7 @@ namespace DLToolkit.PageFactory
 		/// <typeparam name="TPageModel">The 1st type parameter.</typeparam>
 		public static bool RemovePageTypeFromCache<TPageModel>(this IBasePage<IBasePageModel> currentPage, string cacheKey = null) where TPageModel : class, IBasePageModel
 		{
-			return PageFactory.Current.RemovePageTypeFromCache<TPageModel>(cacheKey);
+			return XamvvmCore.CurrentFactory.RemovePageTypeFromCache<TPageModel>(cacheKey);
 		}
 
 		/// <summary>
@@ -92,7 +92,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="currentPage">Current page.</param>
 		public static void ClearPageCache(this IBasePage<IBasePageModel> currentPage)
 		{
-			PageFactory.Current.ClearPageCache();
+			XamvvmCore.CurrentFactory.ClearPageCache();
 		}
 	}
 }

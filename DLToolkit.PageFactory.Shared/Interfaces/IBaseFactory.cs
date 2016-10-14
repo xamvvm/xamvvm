@@ -7,7 +7,7 @@ namespace DLToolkit.PageFactory
 	/// <summary>
 	/// DLToolkit.PageFactory
 	/// </summary>
-	public interface IPageFactory : IPageFactoryCaching, IPageFactoryNavigation
+	public interface IBaseFactory : IBaseFactoryCaching, IBaseFactoryNavigation
 	{
 		/// <summary>
 		/// Gets or sets the logger.

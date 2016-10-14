@@ -3,7 +3,7 @@ using Xamarin.Forms;
 
 namespace DLToolkit.PageFactory
 {
-    public partial class XamarinFormsPageFactory : IPageFactory
+    public partial class XamarinFormsPageFactory : IBaseFactory
     {
 		IBaseLogger logger;
 		public IBaseLogger Logger

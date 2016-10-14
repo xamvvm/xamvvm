@@ -4,7 +4,7 @@ using Xamarin.Forms;
 
 namespace DLToolkit.PageFactory
 {
-    public partial class XamarinFormsPageFactory : IPageFactoryCaching
+    public partial class XamarinFormsPageFactory : IBaseFactoryCaching
     {
 		public virtual IBasePage<TPageModel> GetPageFromCache<TPageModel>(TPageModel pageModel = null, string cacheKey = null) where TPageModel : class, IBasePageModel
 		{

@@ -16,7 +16,7 @@ namespace DLToolkit.PageFactory
         /// <typeparam name="TPageModel">Page model type.</typeparam>
         public static IBasePage<TPageModel> GetCurrentPage<TPageModel>(this TPageModel pageModel) where TPageModel : class, IBasePageModel
         {
-            return PageFactory.Current.GetPageByModel(pageModel);
+            return XamvvmCore.CurrentFactory.GetPageByModel(pageModel);
         }
 
 		/// <summary>
@@ -30,7 +30,7 @@ namespace DLToolkit.PageFactory
 		/// <typeparam name="TPageModel">The 1st type parameter.</typeparam>
 		public static IBasePage<TPageModel> GetPageFromCache<TPageModel>(this IBasePageModel currentPageModel, TPageModel pageModel = null, string cacheKey = null) where TPageModel : class, IBasePageModel
 		{
-			return PageFactory.Current.GetPageFromCache(pageModel, cacheKey);
+			return XamvvmCore.CurrentFactory.GetPageFromCache(pageModel, cacheKey);
 		}
 
 		/// <summary>
@@ -43,7 +43,7 @@ namespace DLToolkit.PageFactory
 		/// <typeparam name="TPageModel">The 1st type parameter.</typeparam>
 		public static IBasePage<TPageModel> GetPageAsNewInstance<TPageModel>(this IBasePageModel currentPageModel, TPageModel pageModel = null) where TPageModel : class, IBasePageModel
 		{
-			return PageFactory.Current.GetPageAsNewInstance(pageModel);
+			return XamvvmCore.CurrentFactory.GetPageAsNewInstance(pageModel);
 		}
 
 		/// <summary>
@@ -55,7 +55,7 @@ namespace DLToolkit.PageFactory
 		/// <typeparam name="TPageModel">The 1st type parameter.</typeparam>
 		public static bool RemovePageTypeFromCache<TPageModel>(this IBasePageModel currentPageModel, string cacheKey = null) where TPageModel : class, IBasePageModel
 		{
-			return PageFactory.Current.RemovePageTypeFromCache<TPageModel>(cacheKey);
+			return XamvvmCore.CurrentFactory.RemovePageTypeFromCache<TPageModel>(cacheKey);
 		}
 
 		/// <summary>
@@ -64,7 +64,7 @@ namespace DLToolkit.PageFactory
 		/// <param name="currentPageModel">Current page model.</param>
 		public static void ClearPageCache(this IBasePageModel currentPageModel)
 		{
-			PageFactory.Current.ClearPageCache();
+			XamvvmCore.CurrentFactory.ClearPageCache();
 		}
     }
 }

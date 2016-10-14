@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace DLToolkit.PageFactory
 {
-    public partial class XamarinFormsPageFactory : IPageFactoryNavigation
+    public partial class XamarinFormsPageFactory : IBaseFactoryNavigation
     {
 		public async virtual Task<bool> PushPageAsync<TCurrentPageModel, TPageModel>(IBasePage<TCurrentPageModel> currentPage, IBasePage<TPageModel> pageToPush, bool animated = true) where TCurrentPageModel : class, IBasePageModel where TPageModel : class, IBasePageModel
 		{

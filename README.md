@@ -108,7 +108,7 @@ public class DetailPageModel : BasePageModel
 <sub>You don't have to inherit from BasePageModel it's just an included convinience class</sub>
 
 
-Please look into the [Wiki](https://github.com/xamvvm/wiki) for Detailed Information
+Please look into the [Wiki](https://github.com/xamvvm/xamvvm/wiki) for Detailed Information
 
 ## NuGet
 
@@ -118,4 +118,4 @@ Please look into the [Wiki](https://github.com/xamvvm/wiki) for Detailed Informa
 
 ## Example project
 
-https://github.com/xamvvm/tree/master/Examples
+https://github.com/xamvvm/xamvvm/tree/master/Examples

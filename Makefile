@@ -6,7 +6,8 @@ clean:
 	rm -rf */*/obj
 	rm -rf */*/*/bin
 	rm -rf */*/*/obj
-	
+	rm -rf */*/*/*/bin
+	rm -rf */*/*/*/obj	
 nuget:
 
-	nuget pack DLToolkit.PageFactory.Forms.nuspec
+	nuget pack source/Xamvvm.Forms.nuspec

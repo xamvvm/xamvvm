@@ -4,7 +4,7 @@ using Xamarin.Forms;
 
 namespace Xamvvm
 {
-    public partial class XamarinFormsPageFactory : IBaseFactoryCaching
+    public partial class XamvvmFormsFactory : IBaseFactoryCaching
     {
 		public virtual IBasePage<TPageModel> GetPageFromCache<TPageModel>(TPageModel pageModel = null, string cacheKey = null) where TPageModel : class, IBasePageModel
 		{
@@ -68,7 +68,7 @@ namespace Xamvvm
 			{
 				var navEventsPage = page as INavigationRemovingFromCache;
 				if (navEventsPage != null)
-					navEventsPage.PageFactoryRemovingFromCache();
+					navEventsPage.NavigationRemovingFromCache();
 				
 				_pageCache.Remove(key);
 				_pageCacheHits.Remove(key);
@@ -84,7 +84,7 @@ namespace Xamvvm
 			{
 				var navEventsPage = page as INavigationRemovingFromCache;
 				if (navEventsPage != null)
-					navEventsPage.PageFactoryRemovingFromCache();
+					navEventsPage.NavigationRemovingFromCache();
 			}
 
 			_pageCache.Clear();

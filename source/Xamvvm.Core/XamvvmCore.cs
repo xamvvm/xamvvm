@@ -10,7 +10,7 @@ namespace Xamvvm
 		static IBaseFactory current;
 
 		/// <summary>
-		/// Gets the PageFactory instance.
+		/// Gets the Factory instance.
 		/// </summary>
 		/// <value>The factory.</value>
 		public static IBaseFactory CurrentFactory
@@ -27,7 +27,7 @@ namespace Xamvvm
 		}
 
 		/// <summary>
-		/// Initializes PageFactory.
+		/// Initializes Factory.
 		/// </summary>
 		/// <param name="factory">Factory.</param>
 		public static void SetCurrentFactory(IBaseFactory factory)

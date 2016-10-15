@@ -30,16 +30,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Helpers\PFCarouselPage.cs" />
-    <Compile Include="Helpers\PFContentPage.cs" />
-    <Compile Include="Helpers\PFMasterDetailPage.cs" />
-    <Compile Include="Helpers\PFNavigationPage.cs" />
-    <Compile Include="Helpers\PFPage.cs" />
-    <Compile Include="Helpers\PFTabbedPage.cs" />
-    <Compile Include="PageFactory\PageFactory.cs" />
-    <Compile Include="PageFactory\XamarinFormsPageFactory.cs" />
-    <Compile Include="PageFactory\PageFactoryCaching.cs" />
-    <Compile Include="PageFactory\PageFactoryNavigation.cs" />
+    <Compile Include="Factory\Factory.cs" />
+    <Compile Include="Factory\XamvvmFormsFactory.cs" />
+    <Compile Include="Factory\FactoryCaching.cs" />
+    <Compile Include="Factory\FactoryNavigation.cs" />
     <Compile Include="Behaviors\BaseBehavior.cs" />
     <Compile Include="Behaviors\BaseEventToCommandBehavior.cs" />
     <Compile Include="Extensions\ApplicationExtensions.cs" />
@@ -82,8 +76,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="PageFactory\" />
-    <Folder Include="Helpers\" />
+    <Folder Include="Factory\" />
     <Folder Include="Behaviors\" />
     <Folder Include="Extensions\" />
   </ItemGroup>

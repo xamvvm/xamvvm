@@ -3,7 +3,7 @@ using Xamarin.Forms;
 
 namespace Xamvvm
 {
-    public partial class XamarinFormsPageFactory : IBaseFactory
+    public partial class XamvvmFormsFactory : IBaseFactory
     {
 		IBaseLogger logger;
 		public IBaseLogger Logger

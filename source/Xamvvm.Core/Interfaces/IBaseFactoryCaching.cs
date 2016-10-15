@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 
 namespace Xamvvm
 {
 	/// <summary>
-	/// IPageFactory caching.
+	/// IBaseFactory caching.
 	/// </summary>
 	public interface IBaseFactoryCaching
 	{

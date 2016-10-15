@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 
 namespace Xamvvm
 {
 	/// <summary>
-	/// IPageFactory navigation.
+	/// IBaseFactory navigation.
 	/// </summary>
 	public interface IBaseFactoryNavigation
 	{

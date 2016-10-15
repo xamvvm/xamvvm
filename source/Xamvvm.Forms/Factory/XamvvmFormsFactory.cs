@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 
 namespace Xamvvm
 {
-    public partial class XamarinFormsPageFactory : IBaseFactory
+    public partial class XamvvmFormsFactory : IBaseFactory
     {
 		int _maxPageCacheItems;
 		readonly Dictionary<Type, Type> _pageModelTypes = new Dictionary<Type, Type>();
@@ -17,7 +17,7 @@ namespace Xamvvm
 		readonly Dictionary<Type, Func<object>> _pageModelCreation = new Dictionary<Type, Func<object>>();
 		readonly ConditionalWeakTable<IBasePageModel, object> _weakPageCache = new ConditionalWeakTable<IBasePageModel, object>();
 
-		public XamarinFormsPageFactory(Application appInstance, int maxPageCacheItems = 6, bool automaticAssembliesDiscovery = true, params Assembly[] additionalPagesAssemblies)
+		public XamvvmFormsFactory(Application appInstance, int maxPageCacheItems = 6, bool automaticAssembliesDiscovery = true, params Assembly[] additionalPagesAssemblies)
 		{
 			_maxPageCacheItems = maxPageCacheItems;
 			_pageModelTypes.Clear();

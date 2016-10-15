@@ -9,7 +9,7 @@ namespace Examples
 		{
 			InitializeComponent();
 
-			var factory = new XamarinFormsPageFactory(this);
+			var factory = new XamvvmFormsFactory(this);
 			// Register custom navigation (using non default constructor)
 			factory.RegisterView<MainNavigationPageModel, MainNavigationPage>(
 				createPage: () =>

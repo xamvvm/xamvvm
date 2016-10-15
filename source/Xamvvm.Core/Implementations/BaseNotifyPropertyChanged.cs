@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 namespace Xamvvm
 {
 	/// <summary>
-	/// PageFactory IBaseNotifyPropertyChanged implementation.
+	/// xamvvm IBaseNotifyPropertyChanged implementation.
 	/// </summary>
 	public class BaseNotifyPropertyChanged : INotifyPropertyChanged
 	{

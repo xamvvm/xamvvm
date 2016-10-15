@@ -12,7 +12,7 @@ namespace ExampleRxUI
         public App()
         {
             InitializeComponent();
-			var factory = new XFRxUIFactory(this);
+			var factory = new XamvvmFormsRxUIFactory(this);
 			XamvvmCore.SetCurrentFactory(factory);
 
 			MainPage = this.GetPageFromCache<DemoListViewPageModel>() as Page;

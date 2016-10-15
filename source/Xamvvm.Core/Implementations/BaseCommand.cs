@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Windows.Input;
 using System.Diagnostics;
 using System.Linq.Expressions;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Xamvvm
 {
 	/// <summary>
-	/// PageFactory ICommand implementation.
+	/// xamvvm ICommand implementation.
 	/// </summary>
 	public class BaseCommand<T> : IBaseCommand
 	{
@@ -16,7 +16,7 @@ namespace Xamvvm
 		bool _canExecute = true;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="DLToolkit.PageFactory.BaseCommand"/> class.
+		/// Initializes a new instance of the <see cref="Xamvvm.BaseCommand"/> class.
 		/// </summary>
 		/// <param name="execute">Execute.</param>
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
@@ -28,7 +28,7 @@ namespace Xamvvm
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="DLToolkit.PageFactory.BaseCommand"/> class.
+		/// Initializes a new instance of the <see cref="Xamvvm.BaseCommand"/> class.
 		/// </summary>
 		/// <param name="execute">Execute.</param>
 		public BaseCommand(Func<T, Task> execute) : this(execute, null)
@@ -36,7 +36,7 @@ namespace Xamvvm
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="DLToolkit.PageFactory.BaseCommand"/> class.
+		/// Initializes a new instance of the <see cref="Xamvvm.BaseCommand"/> class.
 		/// </summary>
 		/// <param name="execute">Execute.</param>
 		/// <param name="canExecute">Can execute.</param>
@@ -101,7 +101,7 @@ namespace Xamvvm
 	}
 
 	/// <summary>
-	/// PageFactory ICommand implementation.
+	/// xamvvm ICommand implementation.
 	/// </summary>
 	public class BaseCommand : IBaseCommand
 	{
@@ -110,7 +110,7 @@ namespace Xamvvm
 		bool _canExecute = true;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="DLToolkit.PageFactory.BaseCommand"/> class.
+		/// Initializes a new instance of the <see cref="Xamvvm.BaseCommand"/> class.
 		/// </summary>
 		/// <param name="execute">Execute.</param>
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
@@ -122,7 +122,7 @@ namespace Xamvvm
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="DLToolkit.PageFactory.BaseCommand"/> class.
+		/// Initializes a new instance of the <see cref="Xamvvm.BaseCommand"/> class.
 		/// </summary>
 		/// <param name="execute">Execute.</param>
 		public BaseCommand(Func<object, Task> execute) : this(execute, null)
@@ -130,7 +130,7 @@ namespace Xamvvm
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="DLToolkit.PageFactory.BaseCommand"/> class.
+		/// Initializes a new instance of the <see cref="Xamvvm.BaseCommand"/> class.
 		/// </summary>
 		/// <param name="execute">Execute.</param>
 		/// <param name="canExecute">Can execute.</param>

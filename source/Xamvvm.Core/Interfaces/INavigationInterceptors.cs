@@ -18,7 +18,7 @@ namespace Xamvvm
         /// <summary>
         /// Triggered when removing from cache.
         /// </summary>
-        void PageFactoryRemovingFromCache();
+        void NavigationRemovingFromCache();
     }
 
     /// <summary>
@@ -29,7 +29,7 @@ namespace Xamvvm
         /// <summary>
         /// Triggered when pushing. If <c>false</c>returned push is cancelled.
         /// </summary>
-        bool PageFactoryPushing();
+        bool NavigationPushing();
     }
 
     /// <summary>
@@ -40,7 +40,7 @@ namespace Xamvvm
         /// <summary>
         /// Triggered when pushed.
         /// </summary>
-        void PageFactoryPushed();
+        void NavigationPushed();
     }
 
     /// <summary>
@@ -51,7 +51,7 @@ namespace Xamvvm
         /// <summary>
         /// Triggered when popping. If <c>false</c>returned pop is cancelled.
         /// </summary>
-        bool PageFactoryPopping();
+        bool NavigationPopping();
     }
 
     /// <summary>
@@ -62,7 +62,7 @@ namespace Xamvvm
         /// <summary>
         /// Triggered when popped.
         /// </summary>
-        void PageFactoryPopped();
+        void NavigationPopped();
     }
 
     /// <summary>
@@ -73,7 +73,7 @@ namespace Xamvvm
         /// <summary>
         /// Triggered when inserting. If <c>false</c>returned insert is cancelled.
         /// </summary>
-        bool PageFactoryInserting();
+        bool NavigationInserting();
     }
 
     /// <summary>
@@ -84,7 +84,7 @@ namespace Xamvvm
         /// <summary>
         /// Triggered when inserted.
         /// </summary>
-        void PageFactoryInserted();
+        void NavigationInserted();
     }
 
     /// <summary>
@@ -95,7 +95,7 @@ namespace Xamvvm
         /// <summary>
         /// Triggered when removing. If <c>false</c>returned remove is cancelled.
         /// </summary>
-        bool PageFactoryRemoving();
+        bool NavigationRemoving();
     }
 
     /// <summary>
@@ -106,7 +106,7 @@ namespace Xamvvm
         /// <summary>
         /// Triggered when removed.
         /// </summary>
-        void PageFactoryRemoved();
+        void NavigationRemoved();
     }
 }
 

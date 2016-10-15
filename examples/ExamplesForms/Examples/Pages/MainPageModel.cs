@@ -10,7 +10,7 @@ namespace Examples
 	{
 		public MainPageModel()
 		{
-			WelcomeText = "Welcome to PageFactory!";
+			WelcomeText = "Welcome to xamvvm!";
 
 			DetailButtonCommand = new BaseCommand<string>(async (param) =>
 			{

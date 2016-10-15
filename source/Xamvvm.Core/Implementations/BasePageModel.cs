@@ -8,7 +8,7 @@ using System.Diagnostics;
 namespace Xamvvm
 {
     /// <summary>
-    /// PageFactory BasePageModel implementation.
+    /// xamvvm BasePageModel implementation.
     /// </summary>
     public class BasePageModel : BaseNotifyPropertyChanged, INotifyPropertyChanged, IBasePageModel
     {

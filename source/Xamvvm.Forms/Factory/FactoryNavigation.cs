@@ -6,20 +6,20 @@ using System.Linq;
 
 namespace Xamvvm
 {
-    public partial class XamarinFormsPageFactory : IBaseFactoryNavigation
+    public partial class XamvvmFormsFactory : IBaseFactoryNavigation
     {
 		public async virtual Task<bool> PushPageAsync<TCurrentPageModel, TPageModel>(IBasePage<TCurrentPageModel> currentPage, IBasePage<TPageModel> pageToPush, bool animated = true) where TCurrentPageModel : class, IBasePageModel where TPageModel : class, IBasePageModel
 		{
 			var navigation = ((Page)currentPage)?.Navigation;
 			var navEventsPage = pageToPush as INavigationPushing;
-			if (navigation == null || (navEventsPage != null && !navEventsPage.PageFactoryPushing()))
+			if (navigation == null || (navEventsPage != null && !navEventsPage.NavigationPushing()))
 				return false;
 
 			await navigation.PushAsync((Page)pageToPush, animated);
 
 			var navEventsPage2 = pageToPush as INavigationPushed;
 			if (navEventsPage2 != null)
-				navEventsPage2.PageFactoryPushed();
+				navEventsPage2.NavigationPushed();
 
 			return true;
 		}
@@ -28,14 +28,14 @@ namespace Xamvvm
 		{
 			var navigation = ((Page)currentPage)?.Navigation;
 			var navEventsPage = pageToPush as INavigationPushing;
-			if (navigation == null || (navEventsPage != null && !navEventsPage.PageFactoryPushing()))
+			if (navigation == null || (navEventsPage != null && !navEventsPage.NavigationPushing()))
 				return false;
 
 			await navigation.PushModalAsync((Page)pageToPush, animated);
 
 			var navEventsPage2 = pageToPush as INavigationPushed;
 			if (navEventsPage2 != null)
-				navEventsPage2.PageFactoryPushed();
+				navEventsPage2.NavigationPushed();
 
 			return true;
 		}
@@ -44,14 +44,14 @@ namespace Xamvvm
 		{
 			var navigation = ((Page)beforePage)?.Navigation;
 			var navEventsPage = pageToInsert as INavigationInserting;
-			if (navigation == null || (navEventsPage != null && !navEventsPage.PageFactoryInserting()))
+			if (navigation == null || (navEventsPage != null && !navEventsPage.NavigationInserting()))
 				return Task.FromResult(false);
 
 			navigation.InsertPageBefore((Page)pageToInsert, (Page)beforePage);
 
 			var navEventsPage2 = pageToInsert as INavigationInserted;
 			if (navEventsPage2 != null)
-				navEventsPage2.PageFactoryInserted();
+				navEventsPage2.NavigationInserted();
 
 			return Task.FromResult(true);
 		}
@@ -61,14 +61,14 @@ namespace Xamvvm
 			var navigation = ((Page)currentPage)?.Navigation;
 			var navEventsPage = currentPage as INavigationPopping;
 
-			if (navigation == null || (navEventsPage != null && !navEventsPage.PageFactoryPopping()))
+			if (navigation == null || (navEventsPage != null && !navEventsPage.NavigationPopping()))
 				return false;
 
 			await navigation.PopAsync(animated);
 
 			var navEventsPage2 = currentPage as INavigationPopped;
 			if (navEventsPage2 != null)
-				navEventsPage2.PageFactoryPopped();
+				navEventsPage2.NavigationPopped();
 
 			return true;
 		}
@@ -78,14 +78,14 @@ namespace Xamvvm
 			var navigation = ((Page)currentPage)?.Navigation;
 			var navEventsPage = currentPage as INavigationPopping;
 
-			if (navigation == null || (navEventsPage != null && !navEventsPage.PageFactoryPopping()))
+			if (navigation == null || (navEventsPage != null && !navEventsPage.NavigationPopping()))
 				return false;
 
 			await navigation.PopModalAsync(animated);
 
 			var navEventsPage2 = currentPage as INavigationPopped;
 			if (navEventsPage2 != null)
-				navEventsPage2.PageFactoryPopped();
+				navEventsPage2.NavigationPopped();
 
 			return true;
 		}
@@ -94,14 +94,14 @@ namespace Xamvvm
 		{
 			var navigation = ((Page)currentPage)?.Navigation;
 			var navEventsPage = pageToRemove as INavigationRemoving;
-			if (navigation == null || (navEventsPage != null && !navEventsPage.PageFactoryRemoving()))
+			if (navigation == null || (navEventsPage != null && !navEventsPage.NavigationRemoving()))
 				return Task.FromResult(false);
 
 			navigation.RemovePage((Page)pageToRemove);
 
 			var navEventsPage2 = pageToRemove as INavigationRemoved;
 			if (navEventsPage2 != null)
-				navEventsPage2.PageFactoryRemoved();
+				navEventsPage2.NavigationRemoved();
 
 			return Task.FromResult(true);
 		}

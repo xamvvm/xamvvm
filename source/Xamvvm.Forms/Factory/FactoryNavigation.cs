@@ -11,8 +11,12 @@ namespace Xamvvm
 		public async virtual Task<bool> PushPageAsync<TCurrentPageModel, TPageModel>(IBasePage<TCurrentPageModel> currentPage, IBasePage<TPageModel> pageToPush, bool animated = true) where TCurrentPageModel : class, IBasePageModel where TPageModel : class, IBasePageModel
 		{
 			var navigation = ((Page)currentPage)?.Navigation;
-			var navEventsPage = pageToPush as INavigationPushing;
-			if (navigation == null || (navEventsPage != null && !navEventsPage.NavigationPushing()))
+			var navEventsPage = pageToPush as INavigationCanPush;
+			if (navigation == null || (navEventsPage != null && !navEventsPage.NavigationCanPush()))
+				return false;
+
+			var navEventsPageModel = pageToPush.GetPageModel() as INavigationCanPush;
+			if (navEventsPageModel != null && !navEventsPageModel.NavigationCanPush())
 				return false;
 
 			await navigation.PushAsync((Page)pageToPush, animated);
@@ -27,8 +31,12 @@ namespace Xamvvm
 		public async virtual Task<bool> PushModalPageAsync<TCurrentPageModel, TPageModel>(IBasePage<TCurrentPageModel> currentPage, IBasePage<TPageModel> pageToPush, bool animated = true) where TCurrentPageModel : class, IBasePageModel where TPageModel : class, IBasePageModel
 		{
 			var navigation = ((Page)currentPage)?.Navigation;
-			var navEventsPage = pageToPush as INavigationPushing;
-			if (navigation == null || (navEventsPage != null && !navEventsPage.NavigationPushing()))
+			var navEventsPage = pageToPush as INavigationCanPush;
+			if (navigation == null || (navEventsPage != null && !navEventsPage.NavigationCanPush()))
+				return false;
+
+			var navEventsPageModel = pageToPush.GetPageModel() as INavigationCanPush;
+			if (navEventsPageModel != null && !navEventsPageModel.NavigationCanPush())
 				return false;
 
 			await navigation.PushModalAsync((Page)pageToPush, animated);
@@ -43,8 +51,12 @@ namespace Xamvvm
 		public virtual Task<bool> InsertPageBeforeAsync<TPageModel, TBeforePageModel>(IBasePage<TPageModel> pageToInsert, IBasePage<TBeforePageModel> beforePage) where TPageModel : class, IBasePageModel where TBeforePageModel : class, IBasePageModel
 		{
 			var navigation = ((Page)beforePage)?.Navigation;
-			var navEventsPage = pageToInsert as INavigationInserting;
-			if (navigation == null || (navEventsPage != null && !navEventsPage.NavigationInserting()))
+			var navEventsPage = pageToInsert as INavigationCanInsert;
+			if (navigation == null || (navEventsPage != null && !navEventsPage.NavigationCanInsert()))
+				return Task.FromResult(false);
+
+			var navEventsPageModel = pageToInsert.GetPageModel() as INavigationCanInsert;
+			if (navEventsPageModel != null && !navEventsPageModel.NavigationCanInsert())
 				return Task.FromResult(false);
 
 			navigation.InsertPageBefore((Page)pageToInsert, (Page)beforePage);
@@ -59,9 +71,13 @@ namespace Xamvvm
 		public async virtual Task<bool> PopPageAsync<TCurrentPageModel>(IBasePage<TCurrentPageModel> currentPage, bool animated = true) where TCurrentPageModel : class, IBasePageModel
 		{
 			var navigation = ((Page)currentPage)?.Navigation;
-			var navEventsPage = currentPage as INavigationPopping;
+			var navEventsPage = currentPage as INavigationCanPop;
 
-			if (navigation == null || (navEventsPage != null && !navEventsPage.NavigationPopping()))
+			if (navigation == null || (navEventsPage != null && !navEventsPage.NavigationCanPop()))
+				return false;
+
+			var navEventsPageModel = currentPage.GetPageModel() as INavigationCanPop;
+			if (navEventsPageModel != null && !navEventsPageModel.NavigationCanPop())
 				return false;
 
 			await navigation.PopAsync(animated);
@@ -76,9 +92,13 @@ namespace Xamvvm
 		public async virtual Task<bool> PopModalPageAsync<TCurrentPageModel>(IBasePage<TCurrentPageModel> currentPage, bool animated = true) where TCurrentPageModel : class, IBasePageModel
 		{
 			var navigation = ((Page)currentPage)?.Navigation;
-			var navEventsPage = currentPage as INavigationPopping;
+			var navEventsPage = currentPage as INavigationCanPop;
 
-			if (navigation == null || (navEventsPage != null && !navEventsPage.NavigationPopping()))
+			if (navigation == null || (navEventsPage != null && !navEventsPage.NavigationCanPop()))
+				return false;
+
+			var navEventsPageModel = currentPage.GetPageModel() as INavigationCanPop;
+			if (navEventsPageModel != null && !navEventsPageModel.NavigationCanPop())
 				return false;
 
 			await navigation.PopModalAsync(animated);
@@ -93,8 +113,12 @@ namespace Xamvvm
 		public virtual Task<bool> RemovePageAsync<TCurrentPageModel, TPageModel>(IBasePage<TCurrentPageModel> currentPage, IBasePage<TPageModel> pageToRemove) where TCurrentPageModel : class, IBasePageModel where TPageModel : class, IBasePageModel
 		{
 			var navigation = ((Page)currentPage)?.Navigation;
-			var navEventsPage = pageToRemove as INavigationRemoving;
-			if (navigation == null || (navEventsPage != null && !navEventsPage.NavigationRemoving()))
+			var navEventsPage = pageToRemove as INavigationCanRemove;
+			if (navigation == null || (navEventsPage != null && !navEventsPage.NavigationCanRemove()))
+				return Task.FromResult(false);
+
+			var navEventsPageModel = pageToRemove.GetPageModel() as INavigationCanRemove;
+			if (navEventsPageModel != null && !navEventsPageModel.NavigationCanRemove())
 				return Task.FromResult(false);
 
 			navigation.RemovePage((Page)pageToRemove);

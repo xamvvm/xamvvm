@@ -3,10 +3,10 @@
 namespace Xamvvm
 {
 	/// <summary>
-	/// IBasePage navigation events.
+	/// IBasePage / IBasePageModel navigation events.
 	/// </summary>
-    public interface INavigationInterceptors : INavigationRemovingFromCache, INavigationPushing, INavigationPushed, 
-        INavigationPopping, INavigationPopped, INavigationInserting, INavigationInserted, INavigationRemoving, INavigationRemoved
+    public interface INavigationInterceptors : INavigationRemovingFromCache, INavigationCanPush, INavigationPushed, 
+        INavigationCanPop, INavigationPopped, INavigationCanInsert, INavigationInserted, INavigationCanRemove, INavigationRemoved
 	{
 	}
 
@@ -24,12 +24,12 @@ namespace Xamvvm
     /// <summary>
     /// INavigationPushing.
     /// </summary>
-    public interface INavigationPushing
+    public interface INavigationCanPush
     {
         /// <summary>
         /// Triggered when pushing. If <c>false</c>returned push is cancelled.
         /// </summary>
-        bool NavigationPushing();
+        bool NavigationCanPush();
     }
 
     /// <summary>
@@ -46,12 +46,12 @@ namespace Xamvvm
     /// <summary>
     /// INavigationPopping.
     /// </summary>
-    public interface INavigationPopping
+    public interface INavigationCanPop
     {
         /// <summary>
         /// Triggered when popping. If <c>false</c>returned pop is cancelled.
         /// </summary>
-        bool NavigationPopping();
+        bool NavigationCanPop();
     }
 
     /// <summary>
@@ -68,12 +68,12 @@ namespace Xamvvm
     /// <summary>
     /// INavigationInserting.
     /// </summary>
-    public interface INavigationInserting
+    public interface INavigationCanInsert
     {
         /// <summary>
         /// Triggered when inserting. If <c>false</c>returned insert is cancelled.
         /// </summary>
-        bool NavigationInserting();
+        bool NavigationCanInsert();
     }
 
     /// <summary>
@@ -90,12 +90,12 @@ namespace Xamvvm
     /// <summary>
     /// INavigationRemoving.
     /// </summary>
-    public interface INavigationRemoving
+    public interface INavigationCanRemove
     {
         /// <summary>
         /// Triggered when removing. If <c>false</c>returned remove is cancelled.
         /// </summary>
-        bool NavigationRemoving();
+        bool NavigationCanRemove();
     }
 
     /// <summary>

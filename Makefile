@@ -8,6 +8,9 @@ clean:
 	rm -rf */*/*/obj
 	rm -rf */*/*/*/bin
 	rm -rf */*/*/*/obj	
-nuget:
+	
+packages:
 
+	nuget pack source/Xamvvm.Core.nuspec
 	nuget pack source/Xamvvm.Forms.nuspec
+	nuget pack source/Xamvvm.Mock.nuspec

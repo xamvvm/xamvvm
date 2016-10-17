@@ -4,7 +4,7 @@
 
 # **xamvvm**
 
-### Simple, lightweight MVVM Framework for Xamarin.Forms with fluent API
+### Simple, fast and lightweight MVVM Framework for Xamarin.Forms with fluent API
 
 ## Features
 

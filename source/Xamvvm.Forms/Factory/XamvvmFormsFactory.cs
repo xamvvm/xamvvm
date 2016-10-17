@@ -20,11 +20,6 @@ namespace Xamvvm
 		public XamvvmFormsFactory(Application appInstance, int maxPageCacheItems = 6, bool automaticAssembliesDiscovery = true, params Assembly[] additionalPagesAssemblies)
 		{
 			_maxPageCacheItems = maxPageCacheItems;
-			_pageModelTypes.Clear();
-			_pageCache.Clear();
-			_pageModelCreation.Clear();
-			_pageCreation.Clear();
-
 			var pagesAssemblies = additionalPagesAssemblies.ToList();
 
 			if (automaticAssembliesDiscovery)

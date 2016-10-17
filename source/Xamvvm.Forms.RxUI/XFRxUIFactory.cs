@@ -9,7 +9,7 @@ using Xamarin.Forms;
 namespace Xamvvm
 {
 
-	public class XamvvmFormsRxUIFactory : XamarinFormsPageFactory
+	public class XamvvmFormsRxUIFactory : XamvvmFormsFactory
 	{
 		public XamvvmFormsRxUIFactory(Application appInstance, int maxPageCacheItems = 6, bool automaticAssembliesDiscovery = true, params Assembly[] additionalPagesAssemblies) : base(appInstance, maxPageCacheItems, automaticAssembliesDiscovery, additionalPagesAssemblies)
 		{

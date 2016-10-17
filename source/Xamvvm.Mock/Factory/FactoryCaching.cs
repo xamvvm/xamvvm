@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Linq;
-using Xamarin.Forms;
-
 namespace Xamvvm
 {
-    public partial class XamvvmFormsFactory : IBaseFactoryCaching
-    {
+	public partial class XamvvmMockFactory : IBaseFactory
+	{
 		public virtual IBasePage<TPageModel> GetPageFromCache<TPageModel>(TPageModel pageModel = null, string cacheKey = null) where TPageModel : class, IBasePageModel
 		{
 			var pageModelType = typeof(TPageModel);
@@ -13,7 +10,6 @@ namespace Xamvvm
 
 			if (_pageCache.ContainsKey(key))
 			{
-				IncreaseCacheHits(key);
 				var cachedPage = _pageCache[key] as IBasePage<TPageModel>;
 
 				if (pageModel != null)
@@ -23,16 +19,14 @@ namespace Xamvvm
 			}
 
 			var page = GetPageAsNewInstance(pageModel);
-			RemoveUnusedPagesFromCache();
 			_pageCache.Add(key, page);
-			IncreaseCacheHits(key);
 			return page;
 		}
 
 		public virtual IBasePage<TPageModel> GetPageAsNewInstance<TPageModel>(TPageModel pageModel = null) where TPageModel : class, IBasePageModel
 		{
 			var pageModelType = typeof(TPageModel);
-			var pageType = GetPageType(pageModelType);
+
 			IBasePage<TPageModel> page;
 			Func<object> pageCreationFunc;
 			if (_pageCreation.TryGetValue(pageModelType, out pageCreationFunc))
@@ -40,7 +34,7 @@ namespace Xamvvm
 				page = pageCreationFunc() as IBasePage<TPageModel>;
 			}
 			else
-				page = Activator.CreateInstance(pageType) as IBasePage<TPageModel>;
+				page = new MockPage<TPageModel>();
 
 			if (pageModel != null)
 			{
@@ -69,9 +63,9 @@ namespace Xamvvm
 				var navEventsPage = page as INavigationRemovingFromCache;
 				if (navEventsPage != null)
 					navEventsPage.NavigationRemovingFromCache();
-				
+
 				_pageCache.Remove(key);
-				_pageCacheHits.Remove(key);
+
 				return true;
 			}
 
@@ -88,38 +82,6 @@ namespace Xamvvm
 			}
 
 			_pageCache.Clear();
-			_pageCacheHits.Clear();
-		}
-
-		internal void RemoveUnusedPagesFromCache()
-		{
-			var ordered = _pageCacheHits
-				.OrderByDescending(v => v.Value)
-				.Skip(_maxPageCacheItems);
-
-			foreach (var item in ordered)
-			{
-				_pageCache.Remove(item.Key);
-				_pageCacheHits.Remove(item.Key);
-			}
-		}
-
-		internal void IncreaseCacheHits(Tuple<Type, string> key)
-		{
-			int count;
-			if (_pageCacheHits.TryGetValue(key, out count))
-			{
-				_pageCacheHits[key] = count + 1;
-			}
-			else
-			{
-				var minValue = _pageCacheHits.Values
-					.OrderByDescending(v => v)
-					.LastOrDefault();
-
-				_pageCacheHits.Add(key, minValue == 0 ? 1 : minValue);
-			}
 		}
 	}
 }
-

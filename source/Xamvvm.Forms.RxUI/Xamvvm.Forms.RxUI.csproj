@@ -47,7 +47,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="XFRxUIFactory.cs" />
+    <Compile Include="XamvvmFormsRxUIFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

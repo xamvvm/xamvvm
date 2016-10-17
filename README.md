@@ -1,5 +1,7 @@
  [![PayPayl donate button](http://img.shields.io/paypal/donate.png?color=green)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=T54TSWGPZGNDY "Donate to this project using Paypal") [![Bitcoin donate button](http://img.shields.io/bitcoin/donate.png?color=green)](https://blockchain.info/address/16CvewT3QyAc5ATTVNHQ2EomxLQPXxyKQ7 "Donate to this project using Bitcoin")
 
+![](http://res.cloudinary.com/escamoteur/image/upload/c_scale,w_150/v1476538753/xamvvm_czapim.png)
+
 # **xamvvm**
 
 ### Simple, lightweight MVVM Framework for Xamarin.Forms with fluent API

@@ -116,9 +116,9 @@ Please look into the [Wiki](https://github.com/xamvvm/xamvvm/wiki) for Detailed 
 ## NuGet
 
 - [Xamvvm.Forms](https://www.nuget.org/packages/Xamvvm.Forms/) - Xamarin.Forms
-- [Xamvvm.Forms.RxUI](https://www.nuget.org/packages/Xamvvm.Forms/) - Xamarin.Forms.RxUI
-- [Xamvvm.Mock](https://www.nuget.org/packages/Xamvvm.Forms/) - Unit tests
-- [Xamvvm.Core](https://www.nuget.org/packages/Xamvvm.Forms/) - Platform independent
+- [Xamvvm.Forms.RxUI](https://www.nuget.org/packages/Xamvvm.Forms.RxUI/) - Xamarin.Forms.RxUI
+- [Xamvvm.Mock](https://www.nuget.org/packages/Xamvvm.Mock/) - Unit tests
+- [Xamvvm.Core](https://www.nuget.org/packages/Xamvvm.Core/) - Platform independent
 
 ## Example project
 

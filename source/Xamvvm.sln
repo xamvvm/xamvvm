@@ -9,7 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamvvm.Forms", "Xamvvm.Form
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6F14E403-8875-436E-9A30-EE03D9F4BE8B}"
 	ProjectSection(SolutionItems) = preProject
+		Xamvvm.Core.nuspec = Xamvvm.Core.nuspec
 		Xamvvm.Forms.nuspec = Xamvvm.Forms.nuspec
+		Xamvvm.Forms.RxUI.nuspec = Xamvvm.Forms.RxUI.nuspec
+		Xamvvm.Mock.nuspec = Xamvvm.Mock.nuspec
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{BB3F8074-2150-4C01-A68B-53A9F9EE9752}"

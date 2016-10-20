@@ -58,6 +58,44 @@ namespace Xamvvm
 			return page;
 		}
 
+		public IBasePage<IBasePageModel> GetPageFromCache(Type pageModelType, string cacheKey = null)
+		{
+			var key = Tuple.Create(pageModelType, cacheKey);
+
+			if (_pageCache.ContainsKey(key))
+			{
+				IncreaseCacheHits(key);
+				return _pageCache[key] as IBasePage<IBasePageModel>;
+			}
+
+			var page = GetPageAsNewInstance(pageModelType);
+			RemoveUnusedPagesFromCache();
+			_pageCache.Add(key, page);
+			IncreaseCacheHits(key);
+			return page;
+		}
+
+		public IBasePage<IBasePageModel> GetPageAsNewInstance(Type pageModelType)
+		{
+			var pageType = GetPageType(pageModelType);
+			IBasePage<IBasePageModel> page;
+			Func<object> pageCreationFunc;
+			if (_pageCreation.TryGetValue(pageModelType, out pageCreationFunc))
+			{
+				page = pageCreationFunc() as IBasePage<IBasePageModel>;
+			}
+			else
+				page = Activator.CreateInstance(pageType) as IBasePage<IBasePageModel>;
+
+			Func<object> pageModelCreationFunc;
+			if (_pageModelCreation.TryGetValue(pageModelType, out pageModelCreationFunc))
+				SetPageModel(page, pageModelCreationFunc() as IBasePageModel);
+			else
+				SetPageModel(page, Activator.CreateInstance(pageModelType) as IBasePageModel);
+
+			return page;
+		}
+
 		public virtual bool RemovePageTypeFromCache<TPageModel>(string cacheKey = null) where TPageModel : class, IBasePageModel
 		{
 			var pageModelType = typeof(TPageModel);

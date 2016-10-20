@@ -92,42 +92,73 @@ namespace Xamvvm
             return default(T);
         }
 
+		/// <summary>
+		/// Called when page is being removed from cache.
+		/// </summary>
 		public virtual void NavigationRemovingFromCache()
 		{
 		}
 
+		/// <summary>
+		/// Determines if page can be pushed
+		/// </summary>
+		/// <returns><c>true</c>, if can ve pushed, <c>false</c> otherwise.</returns>
 		public virtual bool NavigationCanPush()
 		{
 			return true;
 		}
 
+		/// <summary>
+		/// Called after page is pushed to navigation
+		/// </summary>
 		public virtual void NavigationPushed()
 		{
 		}
 
+		/// <summary>
+		/// Determines if page can be popped
+		/// </summary>
+		/// <returns><c>true</c>, if can be popped, <c>false</c> otherwise.</returns>
 		public virtual bool NavigationCanPop()
 		{
 			return true;
 		}
 
+		/// <summary>
+		/// Called after page is popped from navigation
+		/// </summary>
 		public virtual void NavigationPopped()
 		{
 		}
 
+		/// <summary>
+		/// Determines if page can be inserted
+		/// </summary>
+		/// <returns><c>true</c>, if can be inserted, <c>false</c> otherwise.</returns>
 		public virtual bool NavigationCanInsert()
 		{
 			return true;
 		}
 
+		/// <summary>
+		/// Called after page is inserted to navigation
+		/// </summary>
 		public virtual void NavigationInserted()
 		{
 		}
 
+		/// <summary>
+		/// Determines if page can be removed
+		/// </summary>
+		/// <returns><c>true</c>, if can be removed, <c>false</c> otherwise.</returns>
 		public virtual bool NavigationCanRemove()
 		{
 			return true;
 		}
 
+		/// <summary>
+		/// Called after page is removed from navigation
+		/// </summary>
 		public virtual void NavigationRemoved()
 		{
 		}

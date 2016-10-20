@@ -13,8 +13,19 @@ namespace Xamvvm
 		/// Optionally provide a page model (else will be set automatically)
 		/// </summary>
 		/// <returns>The page from cache.</returns>
+		/// <param name="pageModel">Page model.</param>
+		/// <param name="cacheKey">Cache key.</param>
 		/// <typeparam name="TPageModel">Page model type.</typeparam>
 		IBasePage<TPageModel> GetPageFromCache<TPageModel>(TPageModel pageModel = null, string cacheKey = null) where TPageModel : class, IBasePageModel;
+
+		/// <summary>
+		/// Gets the page from cache. Creates a new page instances if not exists.
+		/// Optionally provide a page model (else will be set automatically)
+		/// </summary>
+		/// <returns>The page from cache.</returns>
+		/// <param name="pageModelType">Page model type.</param>
+		/// <param name="cacheKey">Cache key.</param>
+		IBasePage<IBasePageModel> GetPageFromCache(Type pageModelType, string cacheKey = null);
 
 		/// <summary>
 		/// Gets the page as new instance.
@@ -24,6 +35,14 @@ namespace Xamvvm
 		/// <param name="pageModel">Page model.</param>
 		/// <typeparam name="TPageModel">The 1st type parameter.</typeparam>
         IBasePage<TPageModel> GetPageAsNewInstance<TPageModel>(TPageModel pageModel = null) where TPageModel : class, IBasePageModel;
+
+		/// <summary>
+		/// Gets the page as new instance.
+		/// Optionally provide a page model (else will be set automatically)
+		/// </summary>
+		/// <returns>The page as new instance.</returns>
+		/// <param name="pageModelType">Page model type.</param>
+		IBasePage<IBasePageModel> GetPageAsNewInstance(Type pageModelType);
 
 		/// <summary>
 		/// Removes the page from cache.

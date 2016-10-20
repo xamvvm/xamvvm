@@ -34,6 +34,18 @@ namespace Xamvvm
 		}
 
 		/// <summary>
+		/// Gets the page from cache. Creates a new page instances if not exists.
+		/// </summary>
+		/// <returns>The page from cache.</returns>
+		/// <param name="currentPageModel">Current page model.</param>
+		/// <param name="pageModelType">Page model type.</param>
+		/// <param name="cacheKey">Cache key.</param>
+		public static IBasePage<IBasePageModel> GetPageFromCache(this IBasePageModel currentPageModel, Type pageModelType, string cacheKey = null)
+		{
+			return XamvvmCore.CurrentFactory.GetPageFromCache(pageModelType, cacheKey);
+		}
+
+		/// <summary>
 		/// Gets the page as new instance.
 		/// Optionally provide a page model (else will be set automatically)
 		/// </summary>
@@ -44,6 +56,17 @@ namespace Xamvvm
 		public static IBasePage<TPageModel> GetPageAsNewInstance<TPageModel>(this IBasePageModel currentPageModel, TPageModel pageModel = null) where TPageModel : class, IBasePageModel
 		{
 			return XamvvmCore.CurrentFactory.GetPageAsNewInstance(pageModel);
+		}
+
+		/// <summary>
+		/// Gets the page as new instance.
+		/// </summary>
+		/// <returns>The page as new instance.</returns>
+		/// <param name="currentPageModel">Current page model.</param>
+		/// <param name="pageModelType">Page model type.</param>
+		public static IBasePage<IBasePageModel> GetPageAsNewInstance(this IBasePageModel currentPageModel, Type pageModelType)
+		{
+			return XamvvmCore.CurrentFactory.GetPageAsNewInstance(pageModelType);
 		}
 
 		/// <summary>

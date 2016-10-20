@@ -56,9 +56,21 @@ namespace Xamvvm
 		/// <param name="currentPage">Current page.</param>
 		/// <param name="cacheKey">Cache key.</param>
 		/// <typeparam name="TPageModel">The 1st type parameter.</typeparam>
-		public static IBasePage<TPageModel> GetPageFromCache<TPageModel>(this IBasePage<TPageModel> currentPage, TPageModel pageModel = null, string cacheKey = null) where TPageModel : class, IBasePageModel
+		public static IBasePage<TPageModel> GetPageFromCache<TPageModel>(this IBasePage<IBasePageModel> currentPage, TPageModel pageModel = null, string cacheKey = null) where TPageModel : class, IBasePageModel
 		{
 			return XamvvmCore.CurrentFactory.GetPageFromCache(pageModel, cacheKey);
+		}
+
+		/// <summary>
+		/// Gets the page from cache. Creates a new page instances if not exists.
+		/// </summary>
+		/// <returns>The page from cache.</returns>
+		/// <param name="currentPage">Current page.</param>
+		/// <param name="pageModelType">Page model type.</param>
+		/// <param name="cacheKey">Cache key.</param>
+		public static IBasePage<IBasePageModel> GetPageFromCache(this IBasePage<IBasePageModel> currentPage, Type pageModelType, string cacheKey = null)
+		{
+			return XamvvmCore.CurrentFactory.GetPageFromCache(pageModelType);
 		}
 
 		/// <summary>
@@ -72,6 +84,17 @@ namespace Xamvvm
 		public static IBasePage<TPageModel> GetPageAsNewInstance<TPageModel>(this IBasePage<IBasePageModel> currentPage, TPageModel pageModel = null) where TPageModel : class, IBasePageModel
 		{
 			return XamvvmCore.CurrentFactory.GetPageAsNewInstance(pageModel);
+		}
+
+		/// <summary>
+		/// Gets the page as new instance.
+		/// </summary>
+		/// <returns>The page as new instance.</returns>
+		/// <param name="currentPage">Current page.</param>
+		/// <param name="pageModelType">Page model type.</param>
+		public static IBasePage<IBasePageModel> GetPageAsNewInstance(this IBasePage<IBasePageModel> currentPage, Type pageModelType)
+		{
+			return XamvvmCore.CurrentFactory.GetPageAsNewInstance(pageModelType);
 		}
 
 		/// <summary>

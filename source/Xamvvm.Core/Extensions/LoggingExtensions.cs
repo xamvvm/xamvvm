@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Xamvvm
 {
@@ -14,7 +14,7 @@ namespace Xamvvm
 		/// <param name="message">Message.</param>
 		public static void LogDebug(this object sender, string message)
 		{
-			XamvvmCore.CurrentFactory.Logger.LogDebug(sender, message);
+			XamvvmCore.Logger.LogDebug(sender, message);
 		}
 
 		/// <summary>
@@ -24,7 +24,7 @@ namespace Xamvvm
 		/// <param name="message">Message.</param>
 		public static void LogInfo(this object sender, string message)
 		{
-			XamvvmCore.CurrentFactory.Logger.LogInfo(sender, message);
+			XamvvmCore.Logger.LogInfo(sender, message);
 		}
 
 		/// <summary>
@@ -35,7 +35,7 @@ namespace Xamvvm
 		/// <param name="message">Message.</param>
 		public static void LogError(this object sender, Exception ex = null, string message = null)
 		{
-			XamvvmCore.CurrentFactory.Logger.LogError(sender, ex, message);
+			XamvvmCore.Logger.LogError(sender, ex, message);
 		}
 	}
 }

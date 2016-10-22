@@ -9,11 +9,6 @@ namespace Xamvvm
 	/// </summary>
 	public interface IBaseFactory : IBaseFactoryCaching, IBaseFactoryNavigation
 	{
-		/// <summary>
-		/// Gets or sets the logger.
-		/// </summary>
-		/// <value>The logger.</value>
-		IBaseLogger Logger { get; set; }
 
 		/// <summary>
 		/// Gets the page by model.

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Xamvvm
 {
@@ -9,11 +9,19 @@ namespace Xamvvm
 	{ 
 		static IBaseFactory current;
 
-		/// <summary>
-		/// Gets the Factory instance.
-		/// </summary>
-		/// <value>The factory.</value>
-		public static IBaseFactory CurrentFactory
+        /// <summary>
+        /// Gets or sets the logger.
+        /// </summary>
+        /// <value>The logger.</value>
+        public static IBaseLogger Logger { get; set; }
+
+
+
+        /// <summary>
+        /// Gets the Factory instance.
+        /// </summary>
+        /// <value>The factory.</value>
+        public static IBaseFactory CurrentFactory
 		{
 			get 
 			{
@@ -34,6 +42,10 @@ namespace Xamvvm
 		{
 			current = factory;
 		}
-	}
+
+
+
+
+    }
 }
 

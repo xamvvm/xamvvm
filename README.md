@@ -1,4 +1,5 @@
-# ![xamvvm](http://res.cloudinary.com/escamoteur/image/upload/c_scale,w_150/v1476723686/xamvvm2_ufjcqq.png) Simple, fast and lightweight MVVM Framework for Xamarin.Forms with fluent API
+# ![xamvvm](http://res.cloudinary.com/escamoteur/image/upload/c_scale,w_150/v1476723686/xamvvm2_ufjcqq.png) 
+Simple, fast and lightweight MVVM Framework for Xamarin.Forms with fluent API
 
 ## Features
 
@@ -120,4 +121,4 @@ Please look into the [Wiki](https://github.com/xamvvm/xamvvm/wiki) for Detailed 
 
 ## Example project
 
-https://github.com/xamvvm/xamvvm/tree/master/Examples
+https://github.com/xamvvm/xamvvm/tree/master/examples

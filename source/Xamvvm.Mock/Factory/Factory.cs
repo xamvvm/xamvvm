@@ -3,22 +3,6 @@ namespace Xamvvm
 {
 	public partial class XamvvmMockFactory : IBaseFactory
 	{
-		IBaseLogger logger;
-		public IBaseLogger Logger
-		{
-			get
-			{
-				if (logger == null)
-					logger = new BaseLogger();
-
-				return logger;
-			}
-
-			set
-			{
-				logger = value;
-			}
-		}
 
 		public virtual IBasePage<TPageModel> GetPageByModel<TPageModel>(TPageModel pageModel) where TPageModel : class, IBasePageModel
 		{
@@ -37,6 +21,9 @@ namespace Xamvvm
 		{
 			((MockPage<TPageModel>)page).BindingContext = newPageModel;
 			AddToWeakCacheIfNotExists(page, newPageModel);
+            LastAction = XammvvmAction.PageModelChanged;
+		    TargetPageModel = newPageModel;
+		    LastActionSuccess = true;
 		}
 	}
 }

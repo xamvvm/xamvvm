@@ -10,7 +10,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>ExamplesRxUI.iOS</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>ExamplesRxUI.iOS</AssemblyName>
+    <AssemblyName>ExamplesRxUIiOS</AssemblyName>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>

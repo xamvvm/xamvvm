@@ -93,6 +93,8 @@ namespace Xamvvm
 
 		public virtual bool RemovePageTypeFromCache<TPageModel>(string cacheKey = null) where TPageModel : class, IBasePageModel
 		{
+            LastAction = XammvvmAction.PageRemovedFromCache;
+
 			var pageModelType = typeof(TPageModel);
 			var key = Tuple.Create(pageModelType, cacheKey);
 
@@ -105,15 +107,22 @@ namespace Xamvvm
 
 				_pageCache.Remove(key);
 
+			    TargetPageModel = (page as IBasePage<TPageModel>).GetPageModel();
+			    LastActionSuccess = true;
+
 				return true;
 			}
 
+		    LastActionSuccess = false;
 			return false;
 		}
 
 		public virtual void ClearPageCache()
 		{
-			foreach (var page in _pageCache.Values)
+		    TargetPageModel = null;
+            LastAction = XammvvmAction.CacheCleared;
+
+            foreach (var page in _pageCache.Values)
 			{
 				var navEventsPage = page as INavigationRemovingFromCache;
 				if (navEventsPage != null)
@@ -121,6 +130,8 @@ namespace Xamvvm
 			}
 
 			_pageCache.Clear();
+
+		    LastActionSuccess = true;
 		}
 	}
 }

@@ -1,29 +1,17 @@
-﻿using System;
+using System;
 namespace Xamvvm
 {
 	public partial class XamvvmMockFactory : IBaseFactory
 	{
-		IBaseLogger logger;
-		public IBaseLogger Logger
-		{
-			get
-			{
-				if (logger == null)
-					logger = new BaseLogger();
-
-				return logger;
-			}
-
-			set
-			{
-				logger = value;
-			}
-		}
 
 		public virtual IBasePage<TPageModel> GetPageByModel<TPageModel>(TPageModel pageModel) where TPageModel : class, IBasePageModel
 		{
 			object page = null;
 			_weakPageCache.TryGetValue(pageModel, out page);
+		    if (page == null)
+		    {
+		        return  new MockPage<TPageModel>();
+		    }
 			return page as IBasePage<TPageModel>;
 		}
 
@@ -37,6 +25,9 @@ namespace Xamvvm
 		{
 			((MockPage<TPageModel>)page).BindingContext = newPageModel;
 			AddToWeakCacheIfNotExists(page, newPageModel);
+            LastAction = XammvvmAction.PageModelChanged;
+		    TargetPageModel = newPageModel;
+		    LastActionSuccess = true;
 		}
 	}
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 namespace Xamvvm
 {
 	public partial class XamvvmMockFactory : IBaseFactory
@@ -8,6 +8,10 @@ namespace Xamvvm
 		{
 			object page = null;
 			_weakPageCache.TryGetValue(pageModel, out page);
+		    if (page == null)
+		    {
+		        return  new MockPage<TPageModel>();
+		    }
 			return page as IBasePage<TPageModel>;
 		}
 

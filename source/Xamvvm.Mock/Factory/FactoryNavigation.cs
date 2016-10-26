@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 
 namespace Xamvvm
@@ -7,8 +7,8 @@ namespace Xamvvm
 	{
 		public  virtual async Task<bool> PushPageAsync<TCurrentPageModel, TPageModel>(IBasePage<TCurrentPageModel> currentPage, IBasePage<TPageModel> pageToPush, bool animated = true) where TCurrentPageModel : class, IBasePageModel where TPageModel : class, IBasePageModel
 		{
-		    TargetPageModel = pageToPush.GetPageModel();
             LastAction = XammvvmAction.PagePushed;
+            TargetPageModel = pageToPush.GetPageModel();
 
             var navEventsPage = pageToPush as INavigationCanPush;
 		    if (navEventsPage != null && !navEventsPage.NavigationCanPush())
@@ -31,7 +31,8 @@ namespace Xamvvm
 			if (navEventsPage2 != null)
 				navEventsPage2.NavigationPushed();
 
-		    LastActionSuccess = true;
+            LastAction = XammvvmAction.PagePushed;
+            LastActionSuccess = true;
 			return true;
 		}
 

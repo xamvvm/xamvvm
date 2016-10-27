@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using Xamarin.Forms;
 
 namespace Xamvvm
@@ -9,8 +10,17 @@ namespace Xamvvm
 		public virtual IBasePage<TPageModel> GetPageFromCache<TPageModel>(TPageModel pageModel = null, string cacheKey = null) where TPageModel : class, IBasePageModel
 		{
 			var pageModelType = typeof(TPageModel);
-			var key = Tuple.Create(pageModelType, cacheKey);
+			var pageType = GetPageType(pageModelType);
 
+			// check for DisableCacheAttribute
+			var noCachePageModelAttr = pageModelType.GetTypeInfo().GetCustomAttribute<DisableCacheAttribute>();
+			var noCachePageAttr = pageType.GetTypeInfo().GetCustomAttribute<DisableCacheAttribute>();
+			if (noCachePageModelAttr != null || noCachePageAttr != null)
+			{
+				return GetPageAsNewInstance(pageModel);
+			}
+
+			var key = Tuple.Create(pageModelType, cacheKey);
 			if (_pageCache.ContainsKey(key))
 			{
 				IncreaseCacheHits(key);

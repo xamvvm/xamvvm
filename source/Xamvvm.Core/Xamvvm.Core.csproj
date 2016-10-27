@@ -50,11 +50,13 @@
     <Compile Include="Extensions\LoggingExtensions.cs" />
     <Compile Include="Interfaces\IBaseLogger.cs" />
     <Compile Include="Implementations\BaseLogger.cs" />
+    <Compile Include="Attributes\DisableCacheAttribute.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Interfaces\" />
     <Folder Include="Extensions\" />
     <Folder Include="Implementations\" />
+    <Folder Include="Attributes\" />
   </ItemGroup>
 </Project>

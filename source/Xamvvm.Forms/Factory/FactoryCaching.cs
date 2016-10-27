@@ -33,9 +33,14 @@ namespace Xamvvm
 			}
 
 			var page = GetPageAsNewInstance(pageModel);
-			RemoveUnusedPagesFromCache();
-			_pageCache.Add(key, page);
-			IncreaseCacheHits(key);
+
+			if (_maxPageCacheItems > 0)
+			{
+				RemoveUnusedPagesFromCache();
+				_pageCache.Add(key, page);
+				IncreaseCacheHits(key);
+			}
+
 			return page;
 		}
 
@@ -88,9 +93,14 @@ namespace Xamvvm
 			}
 
 			var page = GetPageAsNewInstance(pageModelType);
-			RemoveUnusedPagesFromCache();
-			_pageCache.Add(key, page);
-			IncreaseCacheHits(key);
+
+			if (_maxPageCacheItems > 0)
+			{
+				RemoveUnusedPagesFromCache();
+				_pageCache.Add(key, page);
+				IncreaseCacheHits(key);
+			}
+
 			return page;
 		}
 
@@ -150,6 +160,9 @@ namespace Xamvvm
 
 		internal void RemoveUnusedPagesFromCache()
 		{
+			if (_maxPageCacheItems <= 0)
+				return;
+
 			var ordered = _pageCacheHits
 				.OrderByDescending(v => v.Value)
 				.Skip(_maxPageCacheItems);

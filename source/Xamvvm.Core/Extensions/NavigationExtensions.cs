@@ -59,6 +59,82 @@ namespace Xamvvm
 
 			return Task.FromResult(false);
 		}
+
+		/// <summary>
+		/// Pushes the modal cached page as current navigation stack.
+		/// </summary>
+		/// <returns>The page from cache async.</returns>
+		/// <param name="currentPageModel">Current page model.</param>
+		/// <param name="executeOnPageModel">Execute on page model.</param>
+		/// <param name="cacheKey">Cache key.</param>
+		/// <param name="animated">If set to <c>true</c> animated.</param>
+		/// <typeparam name="TPageModel">The 1st type parameter.</typeparam>
+		public static Task<bool> PushModalPageFromCacheAsync<TPageModel>(this IBasePageModel currentPageModel, Action<TPageModel> executeOnPageModel = null, string cacheKey = null, bool animated = true) where TPageModel : class, IBasePageModel
+		{
+			var currentPage = XamvvmCore.CurrentFactory.GetPageByModel(currentPageModel);
+
+			if (currentPage != null)
+			{
+				var pageToPush = XamvvmCore.CurrentFactory.GetPageFromCache<TPageModel>(cacheKey: cacheKey);
+
+				if (executeOnPageModel != null)
+					pageToPush.ExecuteOnPageModel(executeOnPageModel);
+
+				return XamvvmCore.CurrentFactory.PushModalPageAsync(currentPage, pageToPush, animated);
+			}
+
+			return Task.FromResult(false);
+		}
+
+		/// <summary>
+		/// Pushs the page as new instance into current navigation stack.
+		/// </summary>
+		/// <returns>The page as new instance async.</returns>
+		/// <param name="currentPageModel">Current page model.</param>
+		/// <param name="executeOnPageModel">Execute on page model.</param>
+		/// <param name="animated">If set to <c>true</c> animated.</param>
+		/// <typeparam name="TPageModel">The 1st type parameter.</typeparam>
+		public static Task<bool> PushPageAsNewInstanceAsync<TPageModel>(this IBasePageModel currentPageModel, Action<TPageModel> executeOnPageModel = null, bool animated = true) where TPageModel : class, IBasePageModel
+		{
+			var currentPage = XamvvmCore.CurrentFactory.GetPageByModel(currentPageModel);
+
+			if (currentPage != null)
+			{
+				var pageToPush = XamvvmCore.CurrentFactory.GetPageAsNewInstance<TPageModel>();
+
+				if (executeOnPageModel != null)
+					pageToPush.ExecuteOnPageModel(executeOnPageModel);
+
+				return XamvvmCore.CurrentFactory.PushPageAsync(currentPage, pageToPush, animated);
+			}
+
+			return Task.FromResult(false);
+		}
+
+		/// <summary>
+		/// Pushs the page as new instance into current navigation stack.
+		/// </summary>
+		/// <returns>The page as new instance async.</returns>
+		/// <param name="currentPageModel">Current page model.</param>
+		/// <param name="executeOnPageModel">Execute on page model.</param>
+		/// <param name="animated">If set to <c>true</c> animated.</param>
+		/// <typeparam name="TPageModel">The 1st type parameter.</typeparam>
+		public static Task<bool> PushModalPageAsNewInstanceAsync<TPageModel>(this IBasePageModel currentPageModel, Action<TPageModel> executeOnPageModel = null, bool animated = true) where TPageModel : class, IBasePageModel
+		{
+			var currentPage = XamvvmCore.CurrentFactory.GetPageByModel(currentPageModel);
+
+			if (currentPage != null)
+			{
+				var pageToPush = XamvvmCore.CurrentFactory.GetPageAsNewInstance<TPageModel>();
+
+				if (executeOnPageModel != null)
+					pageToPush.ExecuteOnPageModel(executeOnPageModel);
+
+				return XamvvmCore.CurrentFactory.PushModalPageAsync(currentPage, pageToPush, animated);
+			}
+
+			return Task.FromResult(false);
+		}
  
 		/// <summary>
 		/// Pushes the modal page into current navigation stack.
@@ -79,32 +155,6 @@ namespace Xamvvm
 				if (executeOnPageModel != null)
 					pageToPush.ExecuteOnPageModel(executeOnPageModel);
 				
-				return XamvvmCore.CurrentFactory.PushModalPageAsync(currentPage, pageToPush, animated);
-			}
-
-			return Task.FromResult(false);
-		}
-
-		/// <summary>
-		/// Pushes the modal cached page into current navigation stack.
-		/// </summary>
-		/// <returns>The page from cache async.</returns>
-		/// <param name="currentPageModel">Current page model.</param>
-		/// <param name="executeOnPageModel">Execute on page model.</param>
-		/// <param name="cacheKey">Cache key.</param>
-		/// <param name="animated">If set to <c>true</c> animated.</param>
-		/// <typeparam name="TPageModel">The 1st type parameter.</typeparam>
-		public static Task<bool> PushModalPageFromCacheAsync<TPageModel>(this IBasePageModel currentPageModel, Action<TPageModel> executeOnPageModel = null, string cacheKey = null, bool animated = true) where TPageModel : class, IBasePageModel
-		{
-			var currentPage = XamvvmCore.CurrentFactory.GetPageByModel(currentPageModel);
-
-			if (currentPage != null)
-			{
-				var pageToPush = XamvvmCore.CurrentFactory.GetPageFromCache<TPageModel>(cacheKey: cacheKey);
-
-				if (executeOnPageModel != null)
-					pageToPush.ExecuteOnPageModel(executeOnPageModel);
-
 				return XamvvmCore.CurrentFactory.PushModalPageAsync(currentPage, pageToPush, animated);
 			}
 

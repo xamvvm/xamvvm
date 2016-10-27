@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Reflection;
+
 namespace Xamvvm
 {
 	public partial class XamvvmMockFactory : IBaseFactory
@@ -6,8 +8,17 @@ namespace Xamvvm
 		public virtual IBasePage<TPageModel> GetPageFromCache<TPageModel>(TPageModel pageModel = null, string cacheKey = null) where TPageModel : class, IBasePageModel
 		{
 			var pageModelType = typeof(TPageModel);
-			var key = Tuple.Create(pageModelType, cacheKey);
+			var pageType = typeof(MockPage<>);
 
+			// check for DisableCacheAttribute
+			var noCachePageModelAttr = pageModelType.GetTypeInfo().GetCustomAttribute<DisableCacheAttribute>();
+			var noCachePageAttr = pageType.GetTypeInfo().GetCustomAttribute<DisableCacheAttribute>();
+			if (noCachePageModelAttr != null || noCachePageAttr != null)
+			{
+				return GetPageAsNewInstance(pageModel);
+			}
+
+			var key = Tuple.Create(pageModelType, cacheKey);
 			if (_pageCache.ContainsKey(key))
 			{
 				var cachedPage = _pageCache[key] as IBasePage<TPageModel>;
@@ -54,8 +65,16 @@ namespace Xamvvm
 
 		public IBasePage<IBasePageModel> GetPageFromCache(Type pageModelType, string cacheKey = null)
 		{
-			var key = Tuple.Create(pageModelType, cacheKey);
+			// check for DisableCacheAttribute
+			var pageType = typeof(MockPage<>);
+			var noCachePageModelAttr = pageModelType.GetTypeInfo().GetCustomAttribute<DisableCacheAttribute>();
+			var noCachePageAttr = pageType.GetTypeInfo().GetCustomAttribute<DisableCacheAttribute>();
+			if (noCachePageModelAttr != null || noCachePageAttr != null)
+			{
+				return GetPageAsNewInstance(pageModelType);
+			}
 
+			var key = Tuple.Create(pageModelType, cacheKey);
 			if (_pageCache.ContainsKey(key))
 			{
 				return _pageCache[key] as IBasePage<IBasePageModel>;

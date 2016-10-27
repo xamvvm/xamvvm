@@ -70,6 +70,15 @@ namespace Xamvvm
 
 		public IBasePage<IBasePageModel> GetPageFromCache(Type pageModelType, string cacheKey = null)
 		{
+			// check for DisableCacheAttribute
+			var pageType = GetPageType(pageModelType);
+			var noCachePageModelAttr = pageModelType.GetTypeInfo().GetCustomAttribute<DisableCacheAttribute>();
+			var noCachePageAttr = pageType.GetTypeInfo().GetCustomAttribute<DisableCacheAttribute>();
+			if (noCachePageModelAttr != null || noCachePageAttr != null)
+			{
+				return GetPageAsNewInstance(pageModelType);
+			}
+
 			var key = Tuple.Create(pageModelType, cacheKey);
 
 			if (_pageCache.ContainsKey(key))

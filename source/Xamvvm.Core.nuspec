@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Xamvvm.Core</id>
-    <version>1.0.0-alpha2</version>
+    <version>1.0.0-RC1</version>
     <authors>Daniel Luberda, Thomas Burkhart</authors>
     <owners>Daniel Luberda</owners>
     <licenseUrl>https://github.com/xamvvm/xamvvm/blob/master/LICENSE</licenseUrl>

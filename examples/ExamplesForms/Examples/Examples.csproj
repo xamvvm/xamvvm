@@ -48,7 +48,7 @@
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\MainNavigationPage.cs" />
+    <Compile Include="Pages\MainNavigationPageModel.cs" />
     <Compile Include="Pages\DetailPage.xaml.cs">
       <DependentUpon>DetailPage.xaml</DependentUpon>
     </Compile>

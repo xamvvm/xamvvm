@@ -13,8 +13,8 @@ namespace Xamvvm
 			var pageType = GetPageType(pageModelType);
 
 			// check for DisableCacheAttribute
-			var noCachePageModelAttr = pageModelType.GetTypeInfo().GetCustomAttribute<DisableCacheAttribute>();
-			var noCachePageAttr = pageType.GetTypeInfo().GetCustomAttribute<DisableCacheAttribute>();
+			var noCachePageModelAttr = pageModelType?.GetTypeInfo()?.GetCustomAttribute<DisableCacheAttribute>();
+			var noCachePageAttr = pageType?.GetTypeInfo()?.GetCustomAttribute<DisableCacheAttribute>();
 			if (noCachePageModelAttr != null || noCachePageAttr != null)
 			{
 				return GetPageAsNewInstance(pageModel);

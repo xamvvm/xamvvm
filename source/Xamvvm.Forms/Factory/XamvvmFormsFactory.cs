@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace Xamvvm
 {
@@ -74,7 +75,13 @@ namespace Xamvvm
 			}
 		}
 
-		public virtual void RegisterView<TPageModel, TPage>(Func<IBasePageModel> createPageModel = null, Func<object> createPage = null) where TPageModel : class, IBasePageModel where TPage : class
+		[Obsolete("Use RegisterPage")]
+		public virtual void RegisterView<TPageModel, TPage>(Func<TPageModel> createPageModel = null, Func<IBasePage<TPageModel>> createPage = null) where TPageModel : class, IBasePageModel where TPage : class, IBasePage<IBasePageModel>
+		{
+			RegisterPage(createPageModel, createPage);
+		}
+
+		public virtual void RegisterPage<TPageModel>(Func<TPageModel> createPageModel = null, Func<IBasePage<TPageModel>> createPage = null) where TPageModel : class, IBasePageModel
 		{
 			if (createPageModel != null)
 			{
@@ -95,6 +102,70 @@ namespace Xamvvm
 			}
 		}
 
+		public virtual void RegisterNavigation<TPageModel>(Func<IBasePage<IBasePageModel>> initialPage = null, Func<TPageModel> createNavModel = null, Func<IBasePage<IBasePageModel>, IBasePage<TPageModel>> createNav = null) where TPageModel : class, IBasePageModel
+		{
+			if (createNavModel != null)
+			{
+				Func<object> found = null;
+				if (_pageModelCreation.TryGetValue(typeof(TPageModel), out found))
+					_pageModelCreation[typeof(TPageModel)] = createNavModel;
+				else
+					_pageModelCreation.Add(typeof(TPageModel), createNavModel);
+			}
+
+			if (createNav == null)
+			{
+				var pageModelType = typeof(TPageModel);
+				var pageType = GetPageType(pageModelType);
+
+				if (pageType == null)
+				{
+					if (initialPage == null)
+						createNav = new Func<IBasePage<IBasePageModel>, IBasePage<TPageModel>>(
+							(page) => new BaseNavigationPage<TPageModel>());
+					else
+						createNav = new Func<IBasePage<IBasePageModel>, IBasePage<TPageModel>>(
+							(page) => new BaseNavigationPage<TPageModel>((Page)page));
+				}
+				else
+				{
+					if (initialPage == null)
+						createNav = new Func<IBasePage<IBasePageModel>, IBasePage<TPageModel>>(
+							(page) => Activator.CreateInstance(pageType) as IBasePage<TPageModel>);
+					else
+						createNav = new Func<IBasePage<IBasePageModel>, IBasePage<TPageModel>>(
+							(page) => Activator.CreateInstance(pageType, page) as IBasePage<TPageModel>);
+				}
+			}
+
+			var createNavWithPages = new Func<IBasePage<TPageModel>>(() =>
+			{
+				var page = initialPage?.Invoke();
+				return createNav(page);
+			});
+
+			Func<object> foundPageCreation = null;
+			if (_pageCreation.TryGetValue(typeof(TPageModel), out foundPageCreation))
+				_pageCreation[typeof(TPageModel)] = createNavWithPages;
+			else
+				_pageCreation.Add(typeof(TPageModel), createNavWithPages);
+		}
+
+		public virtual void RegisterTabbedPage<TPageModel>(Func<IEnumerable<IBasePage<IBasePageModel>>> createSubPages, Func<TPageModel> createNavModel = null, Func<IBasePage<TPageModel>> createNav = null) where TPageModel : class, IBasePageModel
+		{
+			throw new NotImplementedException();
+		}
+
+		public virtual void RegisterCarouselPage<TPageModel>(Func<IEnumerable<IBasePage<IBasePageModel>>> createSubPages, Func<TPageModel> createNavModel = null, Func<IBasePage<TPageModel>> createNav = null) where TPageModel : class, IBasePageModel
+		{
+			throw new NotImplementedException();
+		}
+
+		public virtual void RegisterMasterDetail<TPageModel>(Func<IBasePage<IBasePageModel>> createMasterPage, Func<IBasePage<IBasePageModel>> createDetailPage, Func<TPageModel> createNavModel = null, Func<IBasePage<TPageModel>> createNav = null) where TPageModel : class, IBasePageModel
+		{
+			throw new NotImplementedException();
+		}
+
 		internal void AddToWeakCacheIfNotExists<TPageModel>(IBasePage<TPageModel> page, TPageModel pageModel) where TPageModel : class, IBasePageModel
 		{
 			if (pageModel == null)
@@ -111,8 +182,7 @@ namespace Xamvvm
 			if (_pageModelTypes.TryGetValue(pageModelType, out pageType))
             	return pageType;
 
-            throw new KeyNotFoundException(
-                string.Format("Page definition for {0} PageModel could not be found", pageModelType.ToString()));
+			return null;
         }
 
 		internal Type GetPageModelType(IBasePage<IBasePageModel> page)

@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using System.Collections.Generic;
+using Xamarin.Forms;
 using Xamvvm;
 
 namespace Examples
@@ -10,17 +11,8 @@ namespace Examples
 			InitializeComponent();
 
 			var factory = new XamvvmFormsFactory(this);
-			// Register custom navigation (using non default constructor)
-			factory.RegisterView<MainNavigationPageModel, MainNavigationPage>(
-				createPage: () =>
-				{
-					var mainPage = this.GetPageFromCache<MainPageModel>();
-					var navPage = new MainNavigationPage(mainPage as Page);
-					return navPage ;
-				});
-
+			factory.RegisterNavigation<MainNavigationPageModel>(() => this.GetPageFromCache<MainPageModel>());
 			XamvvmCore.SetCurrentFactory(factory);
-
 			MainPage = this.GetPageFromCache<MainNavigationPageModel>() as NavigationPage;
 		}
 

@@ -39,3 +39,5 @@ Thumbs.db
 
 #dotCover
 *.dotCover
+
+examples/ExampleUnitTests.Droid/Resources/Resource.Designer.cs

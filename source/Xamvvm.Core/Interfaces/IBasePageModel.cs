@@ -6,7 +6,7 @@ namespace Xamvvm
 	/// <summary>
 	/// Base page model.
 	/// </summary>
-	public interface IBasePageModel : INotifyPropertyChanged
+	public interface IBasePageModel
 	{
 	}
 }

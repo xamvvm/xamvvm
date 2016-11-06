@@ -4,9 +4,10 @@ using System.Runtime.CompilerServices;
 using ReactiveUI;
 using Xamvvm;
 
+
 namespace ExampleRxUI
 {
-	public class DemoListViewPageModel : ReactiveObject, IBasePageModel
+	public class DemoListViewPageModel : BasePageModelRxUI
     {
 		public DemoListViewPageModel()
 		{

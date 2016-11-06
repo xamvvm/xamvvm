@@ -1,5 +1,4 @@
 using System.Collections.ObjectModel;
-using System.Windows.Input;
 using Xamvvm;
 
 namespace Examples
@@ -7,10 +6,10 @@ namespace Examples
     public class DemoListViewPageModel : BasePageModel
     {
         public ObservableCollection<DogsItemViewModel> DogViewModelList
-		{
-			get { return GetField<ObservableCollection<DogsItemViewModel>>(); }
-			set { SetField(value); }
-		}
+        {
+            get { return GetField<ObservableCollection<DogsItemViewModel>>(); }
+            set { SetField(value); }
+        }
 
         public DemoListViewPageModel()
         {
@@ -24,37 +23,20 @@ namespace Examples
     }
 
     // Should be something that makes a bit of sense, so why not dogs
-public class DogsItemViewModel : BaseModel
-{
-    private Dog DogObject;
-    ICommand AddToCartCommand;
-
-    public DogsItemViewModel(Dog theDog)
-	{
-	    DogObject = theDog;
-
-        AddToCartCommand = new Xamarin.Forms.Command(AddToCart);
-	}
-
-	public string Name => DogObject.Name;
-	public string Race => DogObject.Race.ToUpper();
-
-    public bool IsChecked { get; set; }
-
-
-	void AddToCart()
-	{
-	    WebService.Instance.AddToCart(DogObject);  // Whatever this will do ;-) 
-	}
-}
-
-
-    
-    public class Dog : BaseModel
+    public class DogsItemViewModel : BaseModel
     {
-        public string Name { get; set}
+        string name;
+        public string Name
+        {
+            get { return name; }
+            set { SetField(ref name, value); }
+        }
 
-        public string Race { get; set; }
+        string race;
+        public string Race
+        {
+            get { return race; }
+            set { SetField(ref race, value); }
+        }
     }
-
 }

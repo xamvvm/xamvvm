@@ -119,6 +119,10 @@ Please look into the [Wiki](https://github.com/xamvvm/xamvvm/wiki) for Detailed 
 - [Xamvvm.Mock](https://www.nuget.org/packages/Xamvvm.Mock/) - Unit tests
 - [Xamvvm.Core](https://www.nuget.org/packages/Xamvvm.Core/) - Platform independent
 
+## Support
+Please ask questions in [this issue](https://github.com/xamvvm/xamvvm/issues/16)
+We also have a channel in the xamarin slack channel **#xamvvm** (invitation https://xamarinchat.herokuapp.com/)
+
 ## Example project
 
 https://github.com/xamvvm/xamvvm/tree/master/examples

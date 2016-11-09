@@ -89,6 +89,10 @@ namespace Xamvvm
 		{
 			XamvvmCore.CurrentFactory.ClearPageCache();
 		}
+
+
+
+
     }
 }
 

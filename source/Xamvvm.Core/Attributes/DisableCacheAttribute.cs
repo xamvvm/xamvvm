@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 
 namespace Xamvvm
 {
-	public class DisableCacheAttribute : Attribute
+    [AttributeUsage(AttributeTargets.Class)]
+    public class DisableCacheAttribute : Attribute
 	{
 	}
 }

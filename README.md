@@ -61,8 +61,7 @@ await this.PopPageAsync();
 ```
 
 
-All a page has to do is derive from IBasePage<PageModelType> with the PageModelType this Page should be linked to.
-Matching or above example calls the used classes would like this.
+All a page has to do is derive from IBasePage<PageModelType> with the PageModelType this Page should be linked to.For the above example calls the used classes would like this.
 
 ```C#
 public partial class DetailPage : ContentPage, IBasePage<DetailPageModel>

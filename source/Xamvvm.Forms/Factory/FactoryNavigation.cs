@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using Xamarin.Forms;
 using System.Threading.Tasks;
@@ -144,7 +144,7 @@ namespace Xamvvm
 			return true;
 		}
 
-		public virtual Task<bool> SetNewRootAndResetAsync<TCurrentPageModel, TPageModel>(IBasePage<TCurrentPageModel> currentPage, IBasePage<TPageModel> newRootPage, bool clearCache = true) where TCurrentPageModel : class, IBasePageModel where TPageModel : class, IBasePageModel
+		public virtual Task<bool> SetNewRootAndResetAsync<TPageModel>(IBasePage<TPageModel> newRootPage, bool clearCache = true)  where TPageModel : class, IBasePageModel
 		{
 			if (clearCache)
 				ClearPageCache();
@@ -153,6 +153,17 @@ namespace Xamvvm
 
 			return Task.FromResult(true);
 		}
+
+        public virtual Task<bool> SetNewRootAndResetAsync<TPageModelOfNewRoot>(bool clearCache = true) where TPageModelOfNewRoot : class, IBasePageModel
+        {
+            if (clearCache)
+                ClearPageCache();
+
+            Application.Current.MainPage = (Page) GetPageFromCache<TPageModelOfNewRoot>();
+
+            return Task.FromResult(true);
+        }
+
     }
 }
 

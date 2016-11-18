@@ -103,16 +103,16 @@ namespace Xamvvm
 		}
 
 
-		public virtual void RegisterNavigation<TNavPageModel, TInitalPageModel>() 	where TNavPageModel : class, IBasePageModel 
+		public virtual void RegisterNavigationPage<TNavPageModel, TInitalPageModel>() 	where TNavPageModel : class, IBasePageModel 
 																					where TInitalPageModel : class, IBasePageModel
 		{
-				RegisterNavigation<TNavPageModel>( () => GetPageFromCache<TNavPageModel>(),
+				RegisterNavigationPage<TNavPageModel>( () => GetPageFromCache<TNavPageModel>(),
 									null,
 									null);
 		}
 
 
-		public virtual void RegisterNavigation<TNavPageModel>(Func<IBasePage<IBasePageModel>> initialPage = null, 
+		public virtual void RegisterNavigationPage<TNavPageModel>(Func<IBasePage<IBasePageModel>> initialPage = null, 
                                                            Func<TNavPageModel> createNavModel = null, 
                                                            Func<IBasePage<IBasePageModel>, IBasePage<TNavPageModel>> createNav = null) where TNavPageModel : class, IBasePageModel
 		{

@@ -209,9 +209,9 @@ namespace Xamvvm
 				_pageCreation.Add(typeof(TContainerPageModel), createMultWithPages);
 		}
 
-		public virtual void RegisterTabbedPage<TTabbedPageModel>(IEnumerable<Type> createSubPageModelTypes) where TTabbedPageModel : class, IBasePageModel
+		public virtual void RegisterTabbedPage<TTabbedPageModel>(IEnumerable<Type> subPageModelTypes) where TTabbedPageModel : class, IBasePageModel
 		{
-			var createSubPages = new Func<IEnumerable<IBasePage<IBasePageModel>>>(() => createSubPageModelTypes.Select( t => GetPageFromCache(t)) );
+			var createSubPages = new Func<IEnumerable<IBasePage<IBasePageModel>>>(() => subPageModelTypes.Select( t => GetPageFromCache(t)) );
 
 			RegisterMultiPage<TTabbedPageModel, TabbedPage, Page>(createSubPages, null, null);
 		} 

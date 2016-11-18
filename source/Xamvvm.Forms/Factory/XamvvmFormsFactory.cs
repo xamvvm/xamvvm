@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Xamarin.Forms;
 using System.Collections.Generic;
 using System.Linq;
@@ -102,71 +102,89 @@ namespace Xamvvm
 			}
 		}
 
-		public virtual void RegisterNavigation<TPageModel>(Func<IBasePage<IBasePageModel>> initialPage = null, Func<TPageModel> createNavModel = null, Func<IBasePage<IBasePageModel>, IBasePage<TPageModel>> createNav = null) where TPageModel : class, IBasePageModel
+
+		public virtual void RegisterNavigation<TNavPageModel, TInitalPageModel>() 	where TNavPageModel : class, IBasePageModel 
+																					where TInitalPageModel : class, IBasePageModel
+		{
+				RegisterNavigation<TNavPageModel>( () => GetPageFromCache<TNavPageModel>(),
+									null,
+									null);
+		}
+
+
+		public virtual void RegisterNavigation<TNavPageModel>(Func<IBasePage<IBasePageModel>> initialPage = null, 
+                                                           Func<TNavPageModel> createNavModel = null, 
+                                                           Func<IBasePage<IBasePageModel>, IBasePage<TNavPageModel>> createNav = null) where TNavPageModel : class, IBasePageModel
 		{
 			if (createNavModel != null)
 			{
 				Func<object> found = null;
-				if (_pageModelCreation.TryGetValue(typeof(TPageModel), out found))
-					_pageModelCreation[typeof(TPageModel)] = createNavModel;
+				if (_pageModelCreation.TryGetValue(typeof(TNavPageModel), out found))
+					_pageModelCreation[typeof(TNavPageModel)] = createNavModel;
 				else
-					_pageModelCreation.Add(typeof(TPageModel), createNavModel);
+					_pageModelCreation.Add(typeof(TNavPageModel), createNavModel);
 			}
 
 			if (createNav == null)
 			{
-				var pageModelType = typeof(TPageModel);
+				var pageModelType = typeof(TNavPageModel);
 				var pageType = GetPageType(pageModelType);
 
 				if (initialPage == null)
-					createNav = new Func<IBasePage<IBasePageModel>, IBasePage<TPageModel>>(
+					createNav = new Func<IBasePage<IBasePageModel>, IBasePage<TNavPageModel>>(
 						(page) => pageType == null ? 
-							new BaseNavigationPage<TPageModel>() : Activator.CreateInstance(pageType) as IBasePage<TPageModel>);
+							new BaseNavigationPage<TNavPageModel>() : Activator.CreateInstance(pageType) as IBasePage<TNavPageModel>);
 				else
-					createNav = new Func<IBasePage<IBasePageModel>, IBasePage<TPageModel>>(
+					createNav = new Func<IBasePage<IBasePageModel>, IBasePage<TNavPageModel>>(
 						(page) => pageType == null ? 
-							new BaseNavigationPage<TPageModel>((Page)page) : Activator.CreateInstance(pageType, page) as IBasePage<TPageModel>);
+							new BaseNavigationPage<TNavPageModel>((Page)page) : Activator.CreateInstance(pageType, page) as IBasePage<TNavPageModel>);
 			}
 
-			var createNavWithPage = new Func<IBasePage<TPageModel>>(() =>
+			var createNavWithPage = new Func<IBasePage<TNavPageModel>>(() =>
 			{
 				var page = initialPage?.Invoke();
 				return createNav(page);
 			});
 
 			Func<object> foundPageCreation = null;
-			if (_pageCreation.TryGetValue(typeof(TPageModel), out foundPageCreation))
-				_pageCreation[typeof(TPageModel)] = createNavWithPage;
+			if (_pageCreation.TryGetValue(typeof(TNavPageModel), out foundPageCreation))
+				_pageCreation[typeof(TNavPageModel)] = createNavWithPage;
 			else
-				_pageCreation.Add(typeof(TPageModel), createNavWithPage);
+				_pageCreation.Add(typeof(TNavPageModel), createNavWithPage);
 		}
 
-		public virtual void RegisterMultiPage<TPageModel, TFormsPageType, TFormsSubPageType>(Func<IEnumerable<IBasePage<IBasePageModel>>> createSubPages, Func<TPageModel> createMultModel = null, Func<IEnumerable<IBasePage<IBasePageModel>>, IBasePage<TPageModel>> createMult = null) where TPageModel : class, IBasePageModel where TFormsPageType : MultiPage<TFormsSubPageType>, new() where TFormsSubPageType: Page
+		public virtual void RegisterMultiPage<TContainerPageModel, TFormsContainerPageType, TFormsSubPageType>(
+													Func<IEnumerable<IBasePage<IBasePageModel>>> createSubPages, 
+													Func<TContainerPageModel> createMultModel = null, 
+													Func<IEnumerable<IBasePage<IBasePageModel>>, IBasePage<TContainerPageModel>> createMult = null) 
+															where TContainerPageModel : class, IBasePageModel 
+															where TFormsContainerPageType : MultiPage<TFormsSubPageType>, new() 
+															where TFormsSubPageType: Page
 		{
 			if (createMultModel != null)
 			{
 				Func<object> found = null;
-				if (_pageModelCreation.TryGetValue(typeof(TPageModel), out found))
-					_pageModelCreation[typeof(TPageModel)] = createMultModel;
+				if (_pageModelCreation.TryGetValue(typeof(TContainerPageModel), out found))
+					_pageModelCreation[typeof(TContainerPageModel)] = createMultModel;
 				else
-					_pageModelCreation.Add(typeof(TPageModel), createMultModel);
+					_pageModelCreation.Add(typeof(TContainerPageModel), createMultModel);
 			}
 
 			if (createMult == null)
 			{
-				var pageModelType = typeof(TPageModel);
+				var pageModelType = typeof(TContainerPageModel);
 				var pageType = GetPageType(pageModelType);
 
 				if (createSubPages == null)
-					createMult = new Func<IEnumerable<IBasePage<IBasePageModel>>, IBasePage<TPageModel>>(
+					createMult = new Func<IEnumerable<IBasePage<IBasePageModel>>, IBasePage<TContainerPageModel>>(
 						(pages) => pageType == null ? 
-							new TFormsPageType() as IBasePage<TPageModel> : Activator.CreateInstance(pageType) as IBasePage<TPageModel>);
+							new TFormsContainerPageType() as IBasePage<TContainerPageModel> : Activator.CreateInstance(pageType) as IBasePage<TContainerPageModel>);
 				else
-					createMult = new Func<IEnumerable<IBasePage<IBasePageModel>>, IBasePage<TPageModel>>(
+					createMult = new Func<IEnumerable<IBasePage<IBasePageModel>>, IBasePage<TContainerPageModel>>(
 						(pages) =>
 						{
 							var multiPage = pageType == null ?
-								new TFormsPageType() as IBasePage<TPageModel> : Activator.CreateInstance(pageType) as IBasePage<TPageModel>;
+								new TFormsContainerPageType() as IBasePage<TContainerPageModel> : Activator.CreateInstance(pageType) as IBasePage<TContainerPageModel>;
 							var multiPageXam = (TabbedPage)multiPage;
 
 							foreach (var page in pages)
@@ -178,22 +196,32 @@ namespace Xamvvm
 						});
 			}
 
-			var createMultWithPages = new Func<IBasePage<TPageModel>>(() =>
+			var createMultWithPages = new Func<IBasePage<TContainerPageModel>>(() =>
 			{
 				var pages = createSubPages?.Invoke();
 				return createMult(pages);
 			});
 
 			Func<object> foundPageCreation = null;
-			if (_pageCreation.TryGetValue(typeof(TPageModel), out foundPageCreation))
-				_pageCreation[typeof(TPageModel)] = createMultWithPages;
+			if (_pageCreation.TryGetValue(typeof(TContainerPageModel), out foundPageCreation))
+				_pageCreation[typeof(TContainerPageModel)] = createMultWithPages;
 			else
-				_pageCreation.Add(typeof(TPageModel), createMultWithPages);
+				_pageCreation.Add(typeof(TContainerPageModel), createMultWithPages);
 		}
 
-		public virtual void RegisterTabbedPage<TPageModel>(Func<IEnumerable<IBasePage<IBasePageModel>>> createSubPages, Func<TPageModel> createTabModel = null, Func<IEnumerable<IBasePage<IBasePageModel>>, IBasePage<TPageModel>> createTab = null) where TPageModel : class, IBasePageModel
+		public virtual void RegisterTabbedPage<TTabbedPageModel>(IEnumerable<Type> createSubPageModelTypes) where TTabbedPageModel : class, IBasePageModel
 		{
-			RegisterMultiPage<TPageModel, TabbedPage, Page>(createSubPages, createTabModel, createTab);
+			var createSubPages = new Func<IEnumerable<IBasePage<IBasePageModel>>>(() => createSubPageModelTypes.Select( t => GetPageFromCache(t)) );
+
+			RegisterMultiPage<TTabbedPageModel, TabbedPage, Page>(createSubPages, null, null);
+		} 
+
+
+		public virtual void RegisterTabbedPage<TTabbedPageModel>(Func<IEnumerable<IBasePage<IBasePageModel>>> createSubPages, 
+                                                           		 Func<TTabbedPageModel> createTabModel = null, 
+                                                           		 Func<IEnumerable<IBasePage<IBasePageModel>>, IBasePage<TTabbedPageModel>> createTabPage = null) where TTabbedPageModel : class, IBasePageModel
+		{
+			RegisterMultiPage<TTabbedPageModel, TabbedPage, Page>(createSubPages, createTabModel, createTabPage);
 		}
 
 		public virtual void RegisterCarouselPage<TPageModel>(Func<IEnumerable<IBasePage<IBasePageModel>>> createSubPages, Func<TPageModel> createCarModel = null, Func<IEnumerable<IBasePage<IBasePageModel>>, IBasePage<TPageModel>> createCar = null) where TPageModel : class, IBasePageModel

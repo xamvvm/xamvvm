@@ -1,15 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 using ReactiveUI;
 using Xamarin.Forms;
 
 namespace Xamvvm
 {
 
-	public class XamvvmFormsRxUIFactory : XamvvmFormsFactory
+    public class XamvvmFormsRxUIFactory : XamvvmFormsFactory
 	{
 		public XamvvmFormsRxUIFactory(Application appInstance, int maxPageCacheItems = 6, bool automaticAssembliesDiscovery = true, params Assembly[] additionalPagesAssemblies) : base(appInstance, maxPageCacheItems, automaticAssembliesDiscovery, additionalPagesAssemblies)
 		{

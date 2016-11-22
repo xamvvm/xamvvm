@@ -12,28 +12,26 @@ namespace Examples
 		{
 			WelcomeText = "Welcome to xamvvm!";
 
-			DetailButtonCommand = new BaseCommand<string>(async (param) =>
-			{
-				var pageToPush = this.GetPageFromCache<DetailPageModel>();
+			DetailButtonCommand = BaseCommand.FromTask<string>((param) => DetailButtonCommandExecute(param));
+			DemoListButtonCommand = BaseCommand.FromTask((param) => this.PushPageFromCacheAsync<DemoListViewPageModel>());
+		}
 
-				if (param == "red")
-				{
-					await this.PushPageAsync(pageToPush, (v) => v.Init("red", Color.Red));
-				}
-				else if (param == "green")
-				{
-					await this.PushPageAsync(pageToPush, (v) => v.Init("green", Color.Green));
-				}
-				else if (param == "blue")
-				{
-					await this.PushPageAsync(pageToPush, (v) => v.Init("blue", Color.Blue));
-				}
-			});
+		async Task DetailButtonCommandExecute(string param)
+		{
+			var pageToPush = this.GetPageFromCache<DetailPageModel>();
 
-			DemoListButtonCommand = new BaseCommand<string>(async (param) =>
+			if (param == "red")
 			{
-				await this.PushPageFromCacheAsync<DemoListViewPageModel>();
-			});
+				await this.PushPageAsync(pageToPush, (v) => v.Init("red", Color.Red));
+			}
+			else if (param == "green")
+			{
+				await this.PushPageAsync(pageToPush, (v) => v.Init("green", Color.Green));
+			}
+			else if (param == "blue")
+			{
+				await this.PushPageAsync(pageToPush, (v) => v.Init("blue", Color.Blue));
+			}
 		}
 
 		public string WelcomeText

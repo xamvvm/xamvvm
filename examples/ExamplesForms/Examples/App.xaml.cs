@@ -11,7 +11,7 @@ namespace Examples
 			InitializeComponent();
 
 			var factory = new XamvvmFormsFactory(this);
-			factory.RegisterNavigation<MainNavigationPageModel>(() => this.GetPageFromCache<MainPageModel>());
+			factory.RegisterNavigationPage<MainNavigationPageModel>(() => this.GetPageFromCache<MainPageModel>());
 			XamvvmCore.SetCurrentFactory(factory);
 			MainPage = this.GetPageFromCache<MainNavigationPageModel>() as NavigationPage;
 		}

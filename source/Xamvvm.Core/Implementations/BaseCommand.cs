@@ -105,6 +105,42 @@ namespace Xamvvm
 	/// </summary>
 	public class BaseCommand : IBaseCommand
 	{
+		/// <summary>
+		/// Creates command from the task.
+		/// </summary>
+		/// <returns>The task.</returns>
+		/// <param name="task">Task.</param>
+		/// <param name="canExecute">Can execute.</param>
+		public static BaseCommand FromTask(Task task, Func<bool> canExecute = null)
+		{
+			return new BaseCommand((arg) => task, canExecute);
+		}
+
+		/// <summary>
+		/// Creates command from the func.
+		/// </summary>
+		/// <returns>The func.</returns>
+		/// <param name="taskFunc">Task func.</param>
+		/// <param name="canExecute">Can execute.</param>
+		/// <typeparam name="TParam">The 1st type parameter.</typeparam>
+		public static BaseCommand<TParam> FromFunc<TParam>(Func<TParam, Task> taskFunc, Func<TParam, bool> canExecute = null)
+		{
+			return new BaseCommand<TParam>((arg) => taskFunc?.Invoke(arg), canExecute);
+		}
+
+		/// <summary>
+		/// Creates command from the action.
+		/// </summary>
+		/// <returns>The action.</returns>
+		/// <param name="action">Action.</param>
+		/// <param name="canExecute">Can execute.</param>
+		public static BaseCommand FromAction(Action<object> action, Func<bool> canExecute = null)
+		{
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+			return new BaseCommand(async(arg) => action(arg), canExecute);
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+		}
+
 		readonly Func<object, Task> _execute;
 		readonly Func<bool> _canExecuteFunc;
 		bool _canExecute = true;

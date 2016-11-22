@@ -200,7 +200,7 @@ namespace Xamvvm
 			return true;
 		}
 
-		public virtual Task<bool> SetNewRootAndResetAsync<TCurrentPageModel, TPageModel>(IBasePage<TCurrentPageModel> currentPage, IBasePage<TPageModel> newRootPage, bool clearCache = true) where TCurrentPageModel : class, IBasePageModel where TPageModel : class, IBasePageModel
+		public virtual Task<bool> SetNewRootAndResetAsync<TPageModel>(IBasePage<TPageModel> newRootPage, bool clearCache = true)  where TPageModel : class, IBasePageModel
 		{
 
             TargetPageModel = newRootPage.GetPageModel();
@@ -212,5 +212,19 @@ namespace Xamvvm
             LastActionSuccess = true;
 			return Task.FromResult(true);
 		}
-	}
+
+        public virtual Task<bool> SetNewRootAndResetAsync<TPageModelOfNewRoot>(bool clearCache = true) where TPageModelOfNewRoot : class, IBasePageModel
+        {
+            TargetPageModel = XamvvmCore.CurrentFactory.GetPageFromCache<TPageModelOfNewRoot>().GetPageModel();
+
+            if (clearCache)
+                ClearPageCache();
+
+            LastAction = XammvvmAction.SetNewRootAndReset;
+            LastActionSuccess = true;
+            return Task.FromResult(true);
+        }
+
+
+    }
 }

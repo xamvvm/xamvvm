@@ -230,6 +230,17 @@ namespace Xamvvm
 
 			return Task.FromResult(false);
         }
+
+
+        /// <summary>
+        /// Sets the new root and resets based on PageModel
+        /// </summary>
+        /// <param name="currentPageModel">Current page model.</param>
+        public static Task<bool> SetNewRootAndResetAsync<TNewRootPageModel>(this IBasePageModel currentPageModel, bool clearCache = true) where TNewRootPageModel : class, IBasePageModel
+        {
+            return XamvvmCore.CurrentFactory.SetNewRootAndResetAsync<TNewRootPageModel>(clearCache);
+        }
+
     }
 }
 

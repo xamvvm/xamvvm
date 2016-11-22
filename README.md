@@ -61,8 +61,7 @@ await this.PopPageAsync();
 ```
 
 
-All a page has to do is derive from IBasePage<PageModelType> with the PageModelType this Page should be linked to.
-Matching or above example calls the used classes would like this.
+All a page has to do is derive from IBasePage<PageModelType> with the PageModelType this Page should be linked to.For the above example calls the used classes would like this.
 
 ```C#
 public partial class DetailPage : ContentPage, IBasePage<DetailPageModel>
@@ -86,7 +85,7 @@ public partial class DetailPage : ContentPage, IBasePage<DetailPageModel>
 ```
 
 ```C#
-public class DetailPageModel : BasePageModel
+public class DetailPageModel : IBasePageModel
 {
 	public void Init(string text, Color color)
 	{
@@ -118,6 +117,10 @@ Please look into the [Wiki](https://github.com/xamvvm/xamvvm/wiki) for Detailed 
 - [Xamvvm.Forms.RxUI](https://www.nuget.org/packages/Xamvvm.Forms.RxUI/) - Xamarin.Forms.RxUI
 - [Xamvvm.Mock](https://www.nuget.org/packages/Xamvvm.Mock/) - Unit tests
 - [Xamvvm.Core](https://www.nuget.org/packages/Xamvvm.Core/) - Platform independent
+
+## Support
+Please ask questions in [this issue](https://github.com/xamvvm/xamvvm/issues/16)
+We also have a channel in the xamarin slack channel **#xamvvm** (invitation https://xamarinchat.herokuapp.com/)
 
 ## Example project
 

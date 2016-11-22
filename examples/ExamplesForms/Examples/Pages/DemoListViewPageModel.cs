@@ -6,10 +6,10 @@ namespace Examples
     public class DemoListViewPageModel : BasePageModel
     {
         public ObservableCollection<DogsItemViewModel> DogViewModelList
-		{
-			get { return GetField<ObservableCollection<DogsItemViewModel>>(); }
-			set { SetField(value); }
-		}
+        {
+            get { return GetField<ObservableCollection<DogsItemViewModel>>(); }
+            set { SetField(value); }
+        }
 
         public DemoListViewPageModel()
         {
@@ -23,20 +23,20 @@ namespace Examples
     }
 
     // Should be something that makes a bit of sense, so why not dogs
-	public class DogsItemViewModel : BaseModel
+    public class DogsItemViewModel : BaseModel
     {
-		string name;
-		public string Name
-		{
-			get { return name; }
-			set { SetField(ref name, value); }
-		}
+        string name;
+        public string Name
+        {
+            get { return name; }
+            set { SetField(ref name, value); }
+        }
 
-		string race;
-		public string Race
-		{
-			get { return race; }
-			set { SetField(ref race, value); }
-		}
-	}
+        string race;
+        public string Race
+        {
+            get { return race; }
+            set { SetField(ref race, value); }
+        }
+    }
 }

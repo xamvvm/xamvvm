@@ -41,3 +41,5 @@ Thumbs.db
 *.dotCover
 
 examples/ExampleUnitTests.Droid/Resources/Resource.Designer.cs
+
+source/.droidres/.xamvvm.droidres.db

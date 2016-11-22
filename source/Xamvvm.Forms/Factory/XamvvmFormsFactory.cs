@@ -75,12 +75,6 @@ namespace Xamvvm
 			}
 		}
 
-		[Obsolete("Use RegisterPage")]
-		public virtual void RegisterView<TPageModel, TPage>(Func<TPageModel> createPageModel = null, Func<IBasePage<TPageModel>> createPage = null) where TPageModel : class, IBasePageModel where TPage : class, IBasePage<IBasePageModel>
-		{
-			RegisterPage(createPageModel, createPage);
-		}
-
 		public virtual void RegisterPage<TPageModel>(Func<TPageModel> createPageModel = null, Func<IBasePage<TPageModel>> createPage = null) where TPageModel : class, IBasePageModel
 		{
 			if (createPageModel != null)
@@ -103,12 +97,12 @@ namespace Xamvvm
 		}
 
 
-		public virtual void RegisterNavigationPage<TNavPageModel, TInitalPageModel>() 	where TNavPageModel : class, IBasePageModel 
+		public virtual void RegisterNavigationPage<TNavPageModel, TInitalPageModel>(bool initialPageFromCache = true) 	
+																					where TNavPageModel : class, IBasePageModel 
 																					where TInitalPageModel : class, IBasePageModel
 		{
-				RegisterNavigationPage<TNavPageModel>( () => GetPageFromCache<TNavPageModel>(),
-									null,
-									null);
+			RegisterNavigationPage<TNavPageModel>(() => 
+				initialPageFromCache ? GetPageFromCache<TNavPageModel>() : GetPageAsNewInstance<TNavPageModel>(), null, null);
 		}
 
 
@@ -209,9 +203,10 @@ namespace Xamvvm
 				_pageCreation.Add(typeof(TContainerPageModel), createMultWithPages);
 		}
 
-		public virtual void RegisterTabbedPage<TTabbedPageModel>(IEnumerable<Type> subPageModelTypes) where TTabbedPageModel : class, IBasePageModel
+		public virtual void RegisterTabbedPage<TTabbedPageModel>(IEnumerable<Type> subPageModelTypes, bool subPagesFromCache = true) where TTabbedPageModel : class, IBasePageModel
 		{
-			var createSubPages = new Func<IEnumerable<IBasePage<IBasePageModel>>>(() => subPageModelTypes.Select( t => GetPageFromCache(t)) );
+			var createSubPages = new Func<IEnumerable<IBasePage<IBasePageModel>>>(
+				() => subPageModelTypes.Select( t => subPagesFromCache ? GetPageFromCache(t) : GetPageAsNewInstance(t)) );
 
 			RegisterMultiPage<TTabbedPageModel, TabbedPage, Page>(createSubPages, null, null);
 		} 
@@ -224,9 +219,25 @@ namespace Xamvvm
 			RegisterMultiPage<TTabbedPageModel, TabbedPage, Page>(createSubPages, createTabModel, createTabPage);
 		}
 
+		public virtual void RegisterCarouselPage<TPageModel>(IEnumerable<Type> subPageModelTypes, bool subPagesFromCache = true) where TPageModel : class, IBasePageModel
+		{
+			var createSubPages = new Func<IEnumerable<IBasePage<IBasePageModel>>>(
+				() => subPageModelTypes.Select(t => subPagesFromCache ? GetPageFromCache(t) : GetPageAsNewInstance(t)));
+
+			RegisterMultiPage<TPageModel, CarouselPage, ContentPage>(createSubPages, null, null);
+		}
+
 		public virtual void RegisterCarouselPage<TPageModel>(Func<IEnumerable<IBasePage<IBasePageModel>>> createSubPages, Func<TPageModel> createCarModel = null, Func<IEnumerable<IBasePage<IBasePageModel>>, IBasePage<TPageModel>> createCar = null) where TPageModel : class, IBasePageModel
 		{
 			RegisterMultiPage<TPageModel, CarouselPage, ContentPage>(createSubPages, createCarModel, createCar);
+		}
+
+		public virtual void RegisterMasterDetail<TPageModel, TMasterPageModel, TDetailPageModel>(bool masterFromCache = true, bool detailFromCache = true) 
+			where TPageModel : class, IBasePageModel where TMasterPageModel : class, IBasePageModel where TDetailPageModel : class, IBasePageModel
+		{
+			RegisterMasterDetail<TPageModel>(
+				() => masterFromCache ? GetPageFromCache<TMasterPageModel>() : GetPageAsNewInstance<TMasterPageModel>(),
+				() => detailFromCache ? GetPageFromCache<TDetailPageModel>() : GetPageAsNewInstance<TDetailPageModel>());
 		}
 
 		public virtual void RegisterMasterDetail<TPageModel>(Func<IBasePage<IBasePageModel>> createMasterPage, Func<IBasePage<IBasePageModel>> createDetailPage, Func<TPageModel> createMasDetModel = null, Func<IBasePage<IBasePageModel>, IBasePage<IBasePageModel>, IBasePage<TPageModel>> createMasDet = null) where TPageModel : class, IBasePageModel

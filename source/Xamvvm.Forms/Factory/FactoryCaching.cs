@@ -54,8 +54,14 @@ namespace Xamvvm
 			{
 				page = pageCreationFunc() as IBasePage<TPageModel>;
 			}
-			else
+			else 
+			{ 
+				if(pageType == null) 
+				{
+					throw new InvalidOperationException($"No page associated with {typeof(TPageModel).Name}");
+				}
 				page = Activator.CreateInstance(pageType) as IBasePage<TPageModel>;
+			}
 
 			if (pageModel != null)
 			{
@@ -113,8 +119,14 @@ namespace Xamvvm
 			{
 				page = pageCreationFunc() as IBasePage<IBasePageModel>;
 			}
-			else
+			else 
+			{
+				if (pageType == null) 
+				{
+					throw new InvalidOperationException($"No page associated with {pageModelType.Name}");
+				}
 				page = Activator.CreateInstance(pageType) as IBasePage<IBasePageModel>;
+			}
 
 			Func<object> pageModelCreationFunc;
 			if (_pageModelCreation.TryGetValue(pageModelType, out pageModelCreationFunc))

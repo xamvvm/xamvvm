@@ -48,6 +48,14 @@ namespace Xamvvm
 			return true;
 		}
 
+		/// <summary>
+		/// Inserts  a page before another one in the current navigation stack.
+		/// </summary>
+		/// <returns>sucess as bool</returns>
+		/// <param name="pageToInsert">Page that will get inserted.</param>
+		/// <param name="beforePage"> defines the place where in the stack ( before 'beforePage' ) it will be inserted.</param>
+		/// <typeparam name="TCurrentPageModel">The 1st type parameter.</typeparam>
+		/// <typeparam name="TPageModel">The 2nd type parameter.</typeparam>
 		public virtual Task<bool> InsertPageBeforeAsync<TPageModel, TBeforePageModel>(IBasePage<TPageModel> pageToInsert, IBasePage<TBeforePageModel> beforePage) where TPageModel : class, IBasePageModel where TBeforePageModel : class, IBasePageModel
 		{
 			var navigation = ((Page)beforePage)?.Navigation;

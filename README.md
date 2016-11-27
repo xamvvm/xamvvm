@@ -23,7 +23,7 @@
 You have to create an instance of a IBaseFactory implementation and set it as the current factory to use
 
 ```C#
-var factory = new XamarinFormsPageFactory(this);
+var factory = new XamvvmFormsPageFactory(this);
 XamvvmCore.SetCurrentFactory(factory);
 ```
 

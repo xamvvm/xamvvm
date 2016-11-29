@@ -136,6 +136,11 @@ namespace Xamvvm
 				var navEventsPage = page as INavigationRemovingFromCache;
 				if (navEventsPage != null)
 					navEventsPage.NavigationRemovingFromCache();
+
+				var pageModel = (page as IBasePage<TPageModel>)?.GetPageModel();
+				if(pageModel != null) {
+					(pageModel as IDisposable)?.Dispose();
+				}
 				
 				_pageCache.Remove(key);
 				_pageCacheHits.Remove(key);

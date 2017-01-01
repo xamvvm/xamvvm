@@ -1,0 +1,42 @@
+os: Visual Studio 2015
+configuration: Release
+platform: Any CPU
+
+build_script:
+ - cmd: .\MakefileAll.bat
+  
+before_build:
+- ps: >-
+    $nuspec1 = "source\Xamvvm.Core.nuspec"
+    $nuspec2 = "source\Xamvvm.Forms.nuspec"
+    $nuspec3 = "source\Xamvvm.Forms.RxUI.nuspec"
+    $nuspec4 = "source\Xamvvm.Mock.nuspec"
+
+    $nuspec1template = "source\Xamvvm.Core.nuspec.template"
+    $nuspec2template = "source\Xamvvm.Forms.nuspec.template"
+    $nuspec3template = "source\Xamvvm.Forms.RxUI.nuspec.template"
+    $nuspec4template = "source\Xamvvm.Mock.nuspec.template"    
+
+    $version = $env:appveyor_build_version
+    $branch = $env:appveyor_repo_branch
+    $baseversion = $version.SubString(0, $version.LastIndexOf("."))
+
+    If ($env:appveyor_repo_tag -ine "true") {
+        
+        $version = ("{0}-pre-{1}" -f $baseversion, $env:appveyor_build_number)
+    }
+    Else {
+        $version = $baseversion    
+    }
+
+    If ($branch -ine "master") {
+        $version = ("{0}-{1}" -f $version, $branch.Replace("_", "-")).SubString(0, 20)
+    }
+          
+    (Get-Content $nuspec1template).replace('@version', $version) | Set-Content $nuspec1
+    (Get-Content $nuspec2template).replace('@version', $version) | Set-Content $nuspec2    
+    (Get-Content $nuspec3template).replace('@version', $version) | Set-Content $nuspec3
+    (Get-Content $nuspec4template).replace('@version', $version) | Set-Content $nuspec4  
+  
+artifacts:
+ - path: Xamvvm.*.nupkg

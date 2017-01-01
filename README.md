@@ -3,7 +3,8 @@
 
 |         Xamvvm.Core         |             Xamvvm.Forms             |         Xamvvm.Forms.RxUI          |          Xamvvm.Mock (Unit Tests)         |
 |:-------------------------------------:|:-------------------------------------:|:---------------------------------:|:---------------------------------:|
-|    [![NuGet][core-img]][core-link]    |   [![NuGet][forms-img]][forms-link]   |  [![NuGet][rx-img]][rx-link]  | [![NuGet][mock-img]][mock-link] |               |
+|    [![NuGet][core-img]][core-link]    |   [![NuGet][forms-img]][forms-link]   |  [![NuGet][rx-img]][rx-link]  | [![NuGet][mock-img]][mock-link] |
+|    [![NuGet][precore-img]][precore-link]    |   [![NuGet][preforms-img]][preforms-link]   |  [![NuGet][prerx-img]][prerx-link]  | [![NuGet][premock-img]][premock-link] |                |
 
 ## Features
 
@@ -125,6 +126,7 @@ https://github.com/xamvvm/xamvvm/tree/master/examples
 
 [ci-img]: https://img.shields.io/appveyor/ci/daniel-luberda/xamvvm.svg
 [ci-link]: https://ci.appveyor.com/project/daniel-luberda/xamvvm
+
 [core-img]: https://img.shields.io/nuget/v/Xamvvm.Core.svg
 [core-link]: https://www.nuget.org/packages/Xamvvm.Core
 [forms-img]: https://img.shields.io/nuget/v/Xamvvm.Forms.svg
@@ -133,3 +135,12 @@ https://github.com/xamvvm/xamvvm/tree/master/examples
 [rx-link]: https://www.nuget.org/packages/Xamvvm.Forms.RxUI
 [mock-img]: https://img.shields.io/nuget/v/Xamvvm.Mock.svg
 [mock-link]: https://www.nuget.org/packages/Xamvvm.Mock
+
+[precore-img]: https://img.shields.io/nuget/vpre/Xamvvm.Core.svg
+[precore-link]: https://www.nuget.org/packages/Xamvvm.Core/prerelease
+[preforms-img]: https://img.shields.io/nuget/vpre/Xamvvm.Forms.svg
+[preforms-link]: https://www.nuget.org/packages/Xamvvm.Forms/prerelease
+[prerx-img]: https://img.shields.io/nuget/vpre/Xamvvm.Forms.RxUI.svg
+[prerx-link]: https://www.nuget.org/packages/Xamvvm.Forms.RxUI/prerelease
+[premock-img]: https://img.shields.io/nuget/vpre/Xamvvm.Mock.svg
+[premock-link]: https://www.nuget.org/packages/Xamvvm.Mock

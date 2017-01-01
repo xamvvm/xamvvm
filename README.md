@@ -1,5 +1,9 @@
 # ![xamvvm](http://res.cloudinary.com/escamoteur/image/upload/c_scale,w_150/v1476723686/xamvvm2_ufjcqq.png) 
-# Simple, fast and lightweight MVVM Framework for Xamarin.Forms with fluent API
+# Simple, fast and lightweight MVVM Framework for Xamarin.Forms with fluent API [![AppVeyor][ci-img]][ci-link]
+
+|         Xamvvm.Core         |             Xamvvm.Forms             |         Xamvvm.Forms.RxUI          |          Xamvvm.Mock (Unit Tests)         |
+|:-------------------------------------:|:-------------------------------------:|:---------------------------------:|:---------------------------------:|
+|    [![NuGet][core-img]][core-link]    |   [![NuGet][forms-img]][forms-link]   |  [![NuGet][rx-img]][rx-link]  | [![NuGet][mock-img]][mock-link] |               |
 
 ## Features
 
@@ -111,13 +115,6 @@ public class DetailPageModel : IBasePageModel
 
 Please look into the [Wiki](https://github.com/xamvvm/xamvvm/wiki) for Detailed Information
 
-## NuGet
-
-- [Xamvvm.Forms](https://www.nuget.org/packages/Xamvvm.Forms/) - Xamarin.Forms
-- [Xamvvm.Forms.RxUI](https://www.nuget.org/packages/Xamvvm.Forms.RxUI/) - Xamarin.Forms.RxUI
-- [Xamvvm.Mock](https://www.nuget.org/packages/Xamvvm.Mock/) - Unit tests
-- [Xamvvm.Core](https://www.nuget.org/packages/Xamvvm.Core/) - Platform independent
-
 ## Support
 Please ask questions in [this issue](https://github.com/xamvvm/xamvvm/issues/16)
 We also have a channel in the xamarin slack channel **#xamvvm** (invitation https://xamarinchat.herokuapp.com/)
@@ -125,3 +122,14 @@ We also have a channel in the xamarin slack channel **#xamvvm** (invitation http
 ## Example project
 
 https://github.com/xamvvm/xamvvm/tree/master/examples
+
+[ci-img]: https://img.shields.io/appveyor/ci/daniel-luberda/xamvvm.svg
+[ci-link]: https://ci.appveyor.com/project/daniel-luberda/xamvvm
+[core-img]: https://img.shields.io/nuget/v/Xamvvm.Core.svg
+[core-link]: https://www.nuget.org/packages/Xamvvm.Core
+[forms-img]: https://img.shields.io/nuget/v/Xamvvm.Forms.svg
+[forms-link]: https://www.nuget.org/packages/Xamvvm.Forms
+[rx-img]: https://img.shields.io/nuget/v/Xamvvm.Forms.RxUI.svg
+[rx-link]: https://www.nuget.org/packages/Xamvvm.Forms.RxUI
+[mock-img]: https://img.shields.io/nuget/v/Xamvvm.Mock.svg
+[mock-link]: https://www.nuget.org/packages/Xamvvm.Mock

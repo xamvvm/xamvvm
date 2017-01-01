@@ -71,11 +71,9 @@ namespace Xamvvm
 		/// Sets the new root and resets.
 		/// </summary>
 		/// <returns>The new root and reset async.</returns>
-		/// <param name="currentPage">Current page.</param>
 		/// <param name="newRootPage">New root page.</param>
 		/// <param name="clearCache">If set to <c>true</c> clear cache.</param>
-		/// <typeparam name="TCurrentPageModel">The 1st type parameter.</typeparam>
-		/// <typeparam name="TPageModel">The 2nd type parameter.</typeparam>
+		/// <typeparam name="TPageModelOfNewRoot">New root type.</typeparam>
 		Task<bool> SetNewRootAndResetAsync<TPageModelOfNewRoot>(IBasePage<TPageModelOfNewRoot> newRootPage, bool clearCache = true) where TPageModelOfNewRoot : class, IBasePageModel;
 
 

@@ -11,8 +11,8 @@ set buildargs=/p:Configuration="%config%" /p:Platform="%platform%" /p:NoWarn="%w
 
 echo Restoring NuGets...
 
-nuget restore source/Xamvvm.Forms/packages.config
-nuget restore source/Xamvvm.Forms.RxUI/packages.config
+nuget restore source/Xamvvm.Forms/packages.config -solutiondirectory source/
+nuget restore source/Xamvvm.Forms.RxUI/packages.config -solutiondirectory source/
 
 echo Building Xamvvm...
 

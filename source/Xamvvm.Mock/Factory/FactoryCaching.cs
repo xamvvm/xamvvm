@@ -5,7 +5,7 @@ namespace Xamvvm
 {
 	public partial class XamvvmMockFactory : IBaseFactory
 	{
-		public virtual IBasePage<TPageModel> GetPageFromCache<TPageModel>(TPageModel pageModel = null, string cacheKey = null) where TPageModel : class, IBasePageModel
+		public virtual IBasePage<TPageModel> GetPageFromCache<TPageModel>(TPageModel setPageModel = null, string cacheKey = null) where TPageModel : class, IBasePageModel
 		{
 			var pageModelType = typeof(TPageModel);
 			var pageType = typeof(MockPage<>);
@@ -15,7 +15,7 @@ namespace Xamvvm
 			var noCachePageAttr = pageType.GetTypeInfo().GetCustomAttribute<DisableCacheAttribute>();
 			if (noCachePageModelAttr != null || noCachePageAttr != null)
 			{
-				return GetPageAsNewInstance(pageModel);
+				return GetPageAsNewInstance(setPageModel);
 			}
 
 			var key = Tuple.Create(pageModelType, cacheKey);
@@ -23,18 +23,18 @@ namespace Xamvvm
 			{
 				var cachedPage = _pageCache[key] as IBasePage<TPageModel>;
 
-				if (pageModel != null)
-					SetPageModel(cachedPage, pageModel);
+				if (setPageModel != null)
+					SetPageModel(cachedPage, setPageModel);
 
 				return cachedPage;
 			}
 
-			var page = GetPageAsNewInstance(pageModel);
+			var page = GetPageAsNewInstance(setPageModel);
 			_pageCache.Add(key, page);
 			return page;
 		}
 
-		public virtual IBasePage<TPageModel> GetPageAsNewInstance<TPageModel>(TPageModel pageModel = null) where TPageModel : class, IBasePageModel
+		public virtual IBasePage<TPageModel> GetPageAsNewInstance<TPageModel>(TPageModel setPageModel = null) where TPageModel : class, IBasePageModel
 		{
 			var pageModelType = typeof(TPageModel);
 
@@ -47,9 +47,9 @@ namespace Xamvvm
 			else
 				page = new MockPage<TPageModel>();
 
-			if (pageModel != null)
+			if (setPageModel != null)
 			{
-				SetPageModel(page, pageModel);
+				SetPageModel(page, setPageModel);
 			}
 			else
 			{

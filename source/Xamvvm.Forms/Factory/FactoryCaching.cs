@@ -34,14 +34,6 @@ namespace Xamvvm
 
 			var page = GetPageAsNewInstance(pageModel);
 
-            // no longer needed because we add it to the cache above
-			//if (_maxPageCacheItems > 0)
-			//{
-			//	RemoveUnusedPagesFromCache();
-			//	_pageCache.Add(key, page);
-			//	IncreaseCacheHits(key);
-			//}
-
 			return page;
 		}
 

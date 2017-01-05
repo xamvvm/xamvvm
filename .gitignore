@@ -45,3 +45,5 @@ examples/ExampleUnitTests.Droid/Resources/Resource.Designer.cs
 source/.droidres/.xamvvm.droidres.db
 
 examples/ExampleUnitTests.Droid/Resources/Resource.Designer.cs
+
+examples/ExamplesForms/Droid/Resources/Resource.designer.cs

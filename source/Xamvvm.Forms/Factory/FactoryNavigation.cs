@@ -25,6 +25,10 @@ namespace Xamvvm
 			if (navEventsPage2 != null)
 				navEventsPage2.NavigationPushed();
 
+			var navEventsPageModel2 = pageToPush.GetPageModel() as INavigationPushed;
+			if (navEventsPageModel2 != null)
+				navEventsPageModel2.NavigationPushed();
+
 			return true;
 		}
 
@@ -41,9 +45,14 @@ namespace Xamvvm
 
 			await navigation.PushModalAsync((Page)pageToPush, animated);
 
+
 			var navEventsPage2 = pageToPush as INavigationPushed;
 			if (navEventsPage2 != null)
 				navEventsPage2.NavigationPushed();
+
+			var navEventsPageModel2 = pageToPush.GetPageModel() as INavigationPushed;
+			if (navEventsPageModel2 != null)
+				navEventsPageModel2.NavigationPushed();
 
 			return true;
 		}
@@ -64,6 +73,10 @@ namespace Xamvvm
 			var navEventsPage2 = pageToInsert as INavigationInserted;
 			if (navEventsPage2 != null)
 				navEventsPage2.NavigationInserted();
+
+			var navEventsPageModel2 = pageToInsert.GetPageModel() as INavigationInserted;
+			if (navEventsPageModel2 != null)
+				navEventsPageModel2.NavigationInserted();
 
 			return Task.FromResult(true);
 		}
@@ -86,6 +99,10 @@ namespace Xamvvm
 			if (navEventsPage2 != null)
 				navEventsPage2.NavigationPopped();
 
+			var navEventsPageModel2 = currentPage.GetPageModel() as INavigationPopped;
+			if (navEventsPageModel2 != null)
+				navEventsPageModel2.NavigationPopped();
+
 			return true;
 		}
 
@@ -107,6 +124,10 @@ namespace Xamvvm
 			if (navEventsPage2 != null)
 				navEventsPage2.NavigationPopped();
 
+			var navEventsPageModel2 = currentPage.GetPageModel() as INavigationPopped;
+			if (navEventsPageModel2 != null)
+				navEventsPageModel2.NavigationPopped();
+
 			return true;
 		}
 
@@ -126,6 +147,10 @@ namespace Xamvvm
 			var navEventsPage2 = pageToRemove as INavigationRemoved;
 			if (navEventsPage2 != null)
 				navEventsPage2.NavigationRemoved();
+
+			var navEventsPageModel2 = pageToRemove.GetPageModel() as INavigationRemoved;
+			if (navEventsPageModel2 != null)
+				navEventsPageModel2.NavigationRemoved();
 
 			return Task.FromResult(true);
 		}

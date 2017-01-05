@@ -34,12 +34,13 @@ namespace Xamvvm
 
 			var page = GetPageAsNewInstance(pageModel);
 
-			if (_maxPageCacheItems > 0)
-			{
-				RemoveUnusedPagesFromCache();
-				_pageCache.Add(key, page);
-				IncreaseCacheHits(key);
-			}
+            // no longer needed because we add it to the cache above
+			//if (_maxPageCacheItems > 0)
+			//{
+			//	RemoveUnusedPagesFromCache();
+			//	_pageCache.Add(key, page);
+			//	IncreaseCacheHits(key);
+			//}
 
 			return page;
 		}
@@ -57,7 +58,23 @@ namespace Xamvvm
 			else
 				page = Activator.CreateInstance(pageType) as IBasePage<TPageModel>;
 
-			if (pageModel != null)
+            // cache key is always null because we specifically requested that it be a new instance
+            string cacheKey = null;
+            var key = Tuple.Create(pageModelType, cacheKey);
+            // if it already exists, remove it since we are creating /registering a new instance
+            if(_pageCache.ContainsKey(key))
+            {
+                _pageCache.Remove(key);
+            }
+            // also add it to the cache just for kicks
+            if (_maxPageCacheItems > 0)
+            {
+                RemoveUnusedPagesFromCache();
+                _pageCache.Add(key, page);
+                IncreaseCacheHits(key);
+            }
+
+            if (pageModel != null)
 			{
 				SetPageModel(page, pageModel);
 			}

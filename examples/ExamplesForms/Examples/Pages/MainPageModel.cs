@@ -16,6 +16,12 @@ namespace Examples
 			DemoListButtonCommand = BaseCommand.FromTask((param) => this.PushPageFromCacheAsync<DemoListViewPageModel>());
 		}
 
+        public async Task OnNavigatedTo()
+        {
+            this.WelcomeText = "Welcome from App Launch!";
+        }
+
+
 		async Task DetailButtonCommandExecute(string param)
 		{
 			var pageToPush = this.GetPageFromCache<DetailPageModel>();

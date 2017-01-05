@@ -14,6 +14,12 @@ namespace Examples
 			factory.RegisterNavigationPage<MainNavigationPageModel>(() => this.GetPageFromCache<MainPageModel>());
 			XamvvmCore.SetCurrentFactory(factory);
 			MainPage = this.GetPageFromCache<MainNavigationPageModel>() as NavigationPage;
+            // grab the start page
+            var startPage = this.GetPageFromCache<MainPageModel>();
+            // grab it's page model
+            var startPageModel = startPage.GetPageModel<MainPageModel>();
+            // invoke some initialization logic
+            startPageModel.OnNavigatedTo();
 		}
 
 		protected override void OnStart()

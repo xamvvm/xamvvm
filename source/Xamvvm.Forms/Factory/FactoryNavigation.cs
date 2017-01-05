@@ -21,7 +21,7 @@ namespace Xamvvm
 
 			await navigation.PushAsync((Page)pageToPush, animated);
 
-			var navEventsPage2 = pageToPush as INavigationPushed;
+			var navEventsPage2 = navEventsPageModel as INavigationPushed;
 			if (navEventsPage2 != null)
 				navEventsPage2.NavigationPushed();
 

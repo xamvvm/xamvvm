@@ -49,3 +49,6 @@ examples/ExampleUnitTests.Droid/Resources/Resource.Designer.cs
 examples/ExamplesFormsRxUI/ExamplesRxUI.UWP/project.lock.json
 
 source/UpgradeLog.htm
+
+examples/ExamplesForms/Droid/Resources/Resource.designer.cs
+

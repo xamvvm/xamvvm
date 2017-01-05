@@ -95,8 +95,7 @@ namespace Xamvvm
 					_pageCreation.Add(typeof(TPageModel), createPage);
 			}
 		}
-
-
+        
 		public virtual void RegisterNavigationPage<TNavPageModel, TInitalPageModel>(bool initialPageFromCache = true) 	
 																					where TNavPageModel : class, IBasePageModel 
 																					where TInitalPageModel : class, IBasePageModel
@@ -105,12 +104,19 @@ namespace Xamvvm
 				initialPageFromCache ? GetPageFromCache<TNavPageModel>() : GetPageAsNewInstance<TNavPageModel>(), null, null);
 		}
 
-
+        /// <summary>
+        /// Used to register the initial navigation page model
+        /// </summary>
+        /// <typeparam name="TNavPageModel">Page Model for the navigation page</typeparam>
+        /// <param name="initialPage">Page Model for the initial page to navigate to</param>
+        /// <param name="createNavModel">TBD, defaults to null</param>
+        /// <param name="createNav">TBD, defaults to null</param>
 		public virtual void RegisterNavigationPage<TNavPageModel>(Func<IBasePage<IBasePageModel>> initialPage = null, 
                                                            Func<TNavPageModel> createNavModel = null, 
                                                            Func<IBasePage<IBasePageModel>, IBasePage<TNavPageModel>> createNav = null) where TNavPageModel : class, IBasePageModel
 		{
-			if (createNavModel != null)
+            // This defaults to null, when is it used?
+            if (createNavModel != null)
 			{
 				Func<object> found = null;
 				if (_pageModelCreation.TryGetValue(typeof(TNavPageModel), out found))
@@ -119,6 +125,7 @@ namespace Xamvvm
 					_pageModelCreation.Add(typeof(TNavPageModel), createNavModel);
 			}
 
+            // This defaults to null, when is it used?
 			if (createNav == null)
 			{
 				var pageModelType = typeof(TNavPageModel);
@@ -133,10 +140,12 @@ namespace Xamvvm
 						(page) => pageType == null ? 
 							new BaseNavigationPage<TNavPageModel>((Page)page) : Activator.CreateInstance(pageType, page) as IBasePage<TNavPageModel>);
 			}
-
+            
+            // this creates a new lambda function that will be later invoked
 			var createNavWithPage = new Func<IBasePage<TNavPageModel>>(() =>
 			{
-				var page = initialPage?.Invoke();
+                // Take the initial page and invoke it. The page is passed in as a lambda expression that returns something of type IBasePage<T>
+                var page = initialPage?.Invoke();
 				return createNav(page);
 			});
 

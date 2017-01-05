@@ -52,3 +52,7 @@ source/UpgradeLog.htm
 
 examples/ExamplesForms/Droid/Resources/Resource.designer.cs
 
+
+source/.vs/Xamvvm.sqlite
+
+source/.vs/config/applicationhost.config

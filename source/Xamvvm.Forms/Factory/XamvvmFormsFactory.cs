@@ -101,7 +101,7 @@ namespace Xamvvm
 																					where TInitalPageModel : class, IBasePageModel
 		{
 			RegisterNavigationPage<TNavPageModel>(() => 
-				initialPageFromCache ? GetPageFromCache<TNavPageModel>() : GetPageAsNewInstance<TNavPageModel>(), null, null);
+				initialPageFromCache ? GetPageFromCache<TInitalPageModel>() : GetPageAsNewInstance<TInitalPageModel>(), null, null);
 		}
 
         /// <summary>

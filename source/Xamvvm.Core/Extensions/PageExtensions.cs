@@ -52,13 +52,13 @@ namespace Xamvvm
 		/// Optionally provide a page model (else will be set automatically)
 		/// </summary>
 		/// <returns>The page from cache.</returns>
-		/// <param name="pageModel">Page model.</param>
+		/// <param name="setPageModel">Page model.</param>
 		/// <param name="currentPage">Current page.</param>
 		/// <param name="cacheKey">Cache key.</param>
 		/// <typeparam name="TPageModel">The 1st type parameter.</typeparam>
-		public static IBasePage<TPageModel> GetPageFromCache<TPageModel>(this IBasePage<IBasePageModel> currentPage, TPageModel pageModel = null, string cacheKey = null) where TPageModel : class, IBasePageModel
+		public static IBasePage<TPageModel> GetPageFromCache<TPageModel>(this IBasePage<IBasePageModel> currentPage, TPageModel setPageModel = null, string cacheKey = null) where TPageModel : class, IBasePageModel
 		{
-			return XamvvmCore.CurrentFactory.GetPageFromCache(pageModel, cacheKey);
+			return XamvvmCore.CurrentFactory.GetPageFromCache(setPageModel, cacheKey);
 		}
 
 		/// <summary>
@@ -78,12 +78,12 @@ namespace Xamvvm
 		/// Optionally provide a page model (else will be set automatically)
 		/// </summary>
 		/// <returns>The page as new instance.</returns>
-		/// <param name="pageModel">Page model.</param>
+		/// <param name="setPageModel">Page model.</param>
 		/// <param name="currentPage">Current page.</param>
 		/// <typeparam name="TPageModel">The 1st type parameter.</typeparam>
-		public static IBasePage<TPageModel> GetPageAsNewInstance<TPageModel>(this IBasePage<IBasePageModel> currentPage, TPageModel pageModel = null) where TPageModel : class, IBasePageModel
+		public static IBasePage<TPageModel> GetPageAsNewInstance<TPageModel>(this IBasePage<IBasePageModel> currentPage, TPageModel setPageModel = null) where TPageModel : class, IBasePageModel
 		{
-			return XamvvmCore.CurrentFactory.GetPageAsNewInstance(pageModel);
+			return XamvvmCore.CurrentFactory.GetPageAsNewInstance(setPageModel);
 		}
 
 		/// <summary>

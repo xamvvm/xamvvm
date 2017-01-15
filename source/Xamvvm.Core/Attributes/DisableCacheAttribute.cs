@@ -2,7 +2,10 @@ using System;
 
 namespace Xamvvm
 {
-    [AttributeUsage(AttributeTargets.Class)]
+	/// <summary>
+	/// Disable cache attribute.
+	/// </summary>
+	[AttributeUsage(AttributeTargets.Class)]
     public class DisableCacheAttribute : Attribute
 	{
 	}

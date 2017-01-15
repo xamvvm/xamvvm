@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Xamvvm.Forms.RxUI</id>
-    <version>1.0.0-RC1</version>
+    <version>@version</version>
     <authors>Daniel Luberda, Thomas Burkhart</authors>
     <owners>Daniel Luberda</owners>
     <licenseUrl>https://github.com/xamvvm/xamvvm/blob/master/LICENSE</licenseUrl>
@@ -21,9 +21,9 @@
     </dependencies>
   </metadata>
   <files>
-	<file src="Xamvvm.Forms.RxUI/bin/Release/Xamvvm.Forms.RxUI.dll" target="lib/portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Xamvvm.Forms.RxUI.dll" />
-	<file src="Xamvvm.Forms/bin/Release/Xamvvm.Forms.dll" target="lib/portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Xamvvm.Forms.dll" />
-	<file src="Xamvvm.Core/bin/Release/Xamvvm.Core.dll" target="lib/portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Xamvvm.Core.dll" />
-	<file src="Xamvvm.Core/bin/Release/Xamvvm.Core.xml" target="lib/portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10/Xamvvm.Core.xml" />
+	<file src="Xamvvm.Forms.RxUI\bin\Release\Xamvvm.Forms.RxUI.dll" target="lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamvvm.Forms.RxUI.dll" />
+	<file src="Xamvvm.Forms\bin\Release\Xamvvm.Forms.dll" target="lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamvvm.Forms.dll" />
+	<file src="Xamvvm.Core\bin\Release\Xamvvm.Core.dll" target="lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamvvm.Core.dll" />
+	<file src="Xamvvm.Core\bin\Release\Xamvvm.Core.xml" target="lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamvvm.Core.xml" />
 </files>
 </package>

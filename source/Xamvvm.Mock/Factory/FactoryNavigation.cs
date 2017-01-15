@@ -31,6 +31,10 @@ namespace Xamvvm
 			if (navEventsPage2 != null)
 				navEventsPage2.NavigationPushed();
 
+			var navEventsPageModel2 = pageToPush.GetPageModel() as INavigationPushed;
+			if (navEventsPageModel2 != null)
+				navEventsPageModel2.NavigationPushed();
+
             LastAction = XammvvmAction.PagePushed;
             LastActionSuccess = true;
 			return true;
@@ -62,6 +66,10 @@ namespace Xamvvm
 			if (navEventsPage2 != null)
 				navEventsPage2.NavigationPushed();
 
+			var navEventsPageModel2 = pageToPush.GetPageModel() as INavigationPushed;
+			if (navEventsPageModel2 != null)
+				navEventsPageModel2.NavigationPushed();
+
             LastActionSuccess = true;
             return true;
 		}
@@ -88,6 +96,10 @@ namespace Xamvvm
             var navEventsPage2 = pageToInsert as INavigationInserted;
 			if (navEventsPage2 != null)
 				navEventsPage2.NavigationInserted();
+
+			var navEventsPageModel2 = pageToInsert.GetPageModel() as INavigationInserted;
+			if (navEventsPageModel2 != null)
+				navEventsPageModel2.NavigationInserted();
 
 		    LastActionSuccess = true;
 			return Task.FromResult(true);
@@ -120,6 +132,10 @@ namespace Xamvvm
 			var navEventsPage2 = currentPage as INavigationPopped;
 			if (navEventsPage2 != null)
 				navEventsPage2.NavigationPopped();
+
+			var navEventsPageModel2 = currentPage.GetPageModel() as INavigationPopped;
+			if (navEventsPageModel2 != null)
+				navEventsPageModel2.NavigationPopped();
 
 		    LastActionSuccess = true;
 			return true;
@@ -155,6 +171,10 @@ namespace Xamvvm
                 return false;
             }
 
+			var navEventsPageModel2 = currentPage.GetPageModel() as INavigationPopped;
+			if (navEventsPageModel2 != null)
+				navEventsPageModel2.NavigationPopped();
+
 		    LastActionSuccess = true;
             return true;
 		}
@@ -181,6 +201,10 @@ namespace Xamvvm
             var navEventsPage2 = pageToRemove as INavigationRemoved;
 			if (navEventsPage2 != null)
 				navEventsPage2.NavigationRemoved();
+
+			var navEventsPageModel2 = pageToRemove.GetPageModel() as INavigationRemoved;
+			if (navEventsPageModel2 != null)
+				navEventsPageModel2.NavigationRemoved();
 
 		    LastActionSuccess = true;
 			return Task.FromResult(true);

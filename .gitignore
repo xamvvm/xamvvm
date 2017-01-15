@@ -41,4 +41,18 @@ Thumbs.db
 *.dotCover
 
 examples/ExampleUnitTests.Droid/Resources/Resource.Designer.cs
-/examples/ExamplesFormsRxUI/ExamplesRxUI.UWP/project.lock.json
+
+source/.droidres/.xamvvm.droidres.db
+
+examples/ExampleUnitTests.Droid/Resources/Resource.Designer.cs
+
+examples/ExamplesFormsRxUI/ExamplesRxUI.UWP/project.lock.json
+
+source/UpgradeLog.htm
+
+examples/ExamplesForms/Droid/Resources/Resource.designer.cs
+
+
+source/.vs/Xamvvm.sqlite
+
+source/.vs/config/applicationhost.config

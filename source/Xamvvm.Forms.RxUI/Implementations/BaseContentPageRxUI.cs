@@ -9,7 +9,7 @@ using Xamarin.Forms;
 
 namespace Xamvvm
 {
-    public class BaseContentPageRxUI<TPageModel> : ReactiveContentPage<TPageModel>,  IBasePageRxUI<TPageModel> where TPageModel : BasePageModelRxUI
+    public class BaseContentPageRxUI<TPageModel> : ReactiveContentPage<TPageModel>,  IBasePage<TPageModel> where TPageModel : BasePageModelRxUI
     {
     }
 }

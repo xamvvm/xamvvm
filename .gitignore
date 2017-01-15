@@ -41,3 +41,4 @@ Thumbs.db
 *.dotCover
 
 examples/ExampleUnitTests.Droid/Resources/Resource.Designer.cs
+/examples/ExamplesFormsRxUI/ExamplesRxUI.UWP/project.lock.json

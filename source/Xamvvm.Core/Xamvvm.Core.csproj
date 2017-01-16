@@ -52,6 +52,10 @@
     <Compile Include="Interfaces\IBaseLogger.cs" />
     <Compile Include="Implementations\BaseLogger.cs" />
     <Compile Include="Attributes\DisableCacheAttribute.cs" />
+    <Compile Include="IoC\TinyIoC.cs" />
+    <Compile Include="IoC\XamvvmIoC.cs" />
+    <Compile Include="IoC\IXamvvmIoC.cs" />
+    <Compile Include="IoC\SimpleXamvvmIoC.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -59,5 +63,6 @@
     <Folder Include="Extensions\" />
     <Folder Include="Implementations\" />
     <Folder Include="Attributes\" />
+    <Folder Include="IoC\" />
   </ItemGroup>
 </Project>

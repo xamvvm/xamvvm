@@ -55,7 +55,7 @@ namespace Xamvvm
 				page = pageCreationFunc() as IBasePage<TPageModel>;
 			}
 			else
-				page = Activator.CreateInstance(pageType) as IBasePage<TPageModel>;
+				page = XamvvmIoC.Resolve(pageType) as IBasePage<TPageModel>;
 
 			if (setPageModel != null)
 			{
@@ -67,7 +67,7 @@ namespace Xamvvm
 				if (_pageModelCreation.TryGetValue(pageModelType, out pageModelCreationFunc))
 					SetPageModel(page, pageModelCreationFunc() as TPageModel);
 				else
-					SetPageModel(page, Activator.CreateInstance<TPageModel>());
+					SetPageModel(page, XamvvmIoC.Resolve<TPageModel>());
 			}
 
 			return page;
@@ -114,13 +114,13 @@ namespace Xamvvm
 				page = pageCreationFunc() as IBasePage<IBasePageModel>;
 			}
 			else
-				page = Activator.CreateInstance(pageType) as IBasePage<IBasePageModel>;
+				page = XamvvmIoC.Resolve(pageType) as IBasePage<IBasePageModel>;
 
 			Func<object> pageModelCreationFunc;
 			if (_pageModelCreation.TryGetValue(pageModelType, out pageModelCreationFunc))
 				SetPageModel(page, pageModelCreationFunc() as IBasePageModel);
 			else
-				SetPageModel(page, Activator.CreateInstance(pageModelType) as IBasePageModel);
+				SetPageModel(page, XamvvmIoC.Resolve(pageModelType) as IBasePageModel);
 
 			return page;
 		}

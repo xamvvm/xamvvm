@@ -134,7 +134,7 @@ namespace Xamvvm
 				if (initialPage == null)
 					createNav = new Func<IBasePage<IBasePageModel>, IBasePage<TNavPageModel>>(
 						(page) => pageType == null ? 
-							new BaseNavigationPage<TNavPageModel>() : Activator.CreateInstance(pageType) as IBasePage<TNavPageModel>);
+						new BaseNavigationPage<TNavPageModel>() : XamvvmIoC.Resolve(pageType) as IBasePage<TNavPageModel>);
 				else
 					createNav = new Func<IBasePage<IBasePageModel>, IBasePage<TNavPageModel>>(
 						(page) => pageType == null ? 
@@ -181,13 +181,13 @@ namespace Xamvvm
 				if (createSubPages == null)
 					createMult = new Func<IEnumerable<IBasePage<IBasePageModel>>, IBasePage<TContainerPageModel>>(
 						(pages) => pageType == null ? 
-							new TFormsContainerPageType() as IBasePage<TContainerPageModel> : Activator.CreateInstance(pageType) as IBasePage<TContainerPageModel>);
+							new TFormsContainerPageType() as IBasePage<TContainerPageModel> : XamvvmIoC.Resolve(pageType) as IBasePage<TContainerPageModel>);
 				else
 					createMult = new Func<IEnumerable<IBasePage<IBasePageModel>>, IBasePage<TContainerPageModel>>(
 						(pages) =>
 						{
 							var multiPage = pageType == null ?
-								new TFormsContainerPageType() as IBasePage<TContainerPageModel> : Activator.CreateInstance(pageType) as IBasePage<TContainerPageModel>;
+								new TFormsContainerPageType() as IBasePage<TContainerPageModel> : XamvvmIoC.Resolve(pageType) as IBasePage<TContainerPageModel>;
 							var multiPageXam = (TabbedPage)multiPage;
 
 							foreach (var page in pages)
@@ -269,7 +269,7 @@ namespace Xamvvm
 					(master, detail) =>
 					{
 						var masdetPage = pageType == null ? 
-							new BaseMasterDetailPage<TPageModel>() : Activator.CreateInstance(pageType) as IBasePage<TPageModel>;
+							new BaseMasterDetailPage<TPageModel>() : XamvvmIoC.Resolve(pageType) as IBasePage<TPageModel>;
 						var masdetPageXam = (MasterDetailPage)masdetPage;
 						masdetPageXam.Master = master as Page;
 						masdetPageXam.Detail = detail as Page;

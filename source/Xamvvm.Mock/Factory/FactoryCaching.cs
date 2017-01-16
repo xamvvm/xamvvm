@@ -57,7 +57,7 @@ namespace Xamvvm
 				if (_pageModelCreation.TryGetValue(pageModelType, out pageModelCreationFunc))
 					SetPageModel(page, pageModelCreationFunc() as TPageModel);
 				else
-					SetPageModel(page, Activator.CreateInstance<TPageModel>());
+					SetPageModel(page, XamvvmIoC.Resolve<TPageModel>());
 			}
 
 			return page;
@@ -98,14 +98,14 @@ namespace Xamvvm
 				var pageType = typeof(MockPage<>);
 				Type[] typeArgs = { pageModelType };
 				var pageGenericType = pageType.MakeGenericType(typeArgs);
-				page = Activator.CreateInstance(pageGenericType) as IBasePage<IBasePageModel>;
+				page = XamvvmIoC.Resolve(pageGenericType) as IBasePage<IBasePageModel>;
 			}
 
 			Func<object> pageModelCreationFunc;
 			if (_pageModelCreation.TryGetValue(pageModelType, out pageModelCreationFunc))
 				SetPageModel(page, pageModelCreationFunc() as IBasePageModel);
 			else
-				SetPageModel(page, Activator.CreateInstance(pageModelType) as IBasePageModel);
+				SetPageModel(page, XamvvmIoC.Resolve(pageModelType) as IBasePageModel);
 
 			return page;
 		}

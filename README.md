@@ -56,6 +56,7 @@ You can pass an int action too that is executed on the Pagemodel before displayi
 await this.PushPageAsync(pageToPush, (pm) => pm.Init("blue", Color.Blue));
 
 // OR even shorter way:
+var pageToPush = this.GetPageFromCache<DetailPageModel>();
 this.PushPageFromCache<DetailPageModel>((pm) => pm.Init("blue", Color.Blue));
 ```
 

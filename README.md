@@ -40,7 +40,7 @@ The PageFactory will scan your assemblies at start up and link Pages and PageMod
 
 ## PageModel first navigation
 
-All pushing and popping is always done from the PagewModel an not from Pages
+All pushing and popping is always done from the PageModel and not from Pages
 
 ```C#
 var pageToPush = this.GetPageFromCache<DetailPageModel>();

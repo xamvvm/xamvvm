@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,8 +10,7 @@ using Xamarin.Forms;
 
 namespace Xamvvm
 {
-    public class BaseNavigationPageRxUI<TPageModel> : ReactiveNavigationPage<TPageModel>, IBasePageRxUI<TPageModel>
-        where TPageModel : BasePageModelRxUI
+    public class BaseNavigationPageRxUI<TPageModel> : ReactiveNavigationPage<TPageModel>, IBasePageRxUI<TPageModel> where TPageModel : class, IBasePageModel, INotifyPropertyChanged
     {
     }
 }

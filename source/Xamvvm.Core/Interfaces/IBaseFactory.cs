@@ -33,6 +33,18 @@ namespace Xamvvm
 		/// <param name="newPageModel">New page model.</param>
 		/// <typeparam name="TPageModel">Page model type.</typeparam>
         void SetPageModel<TPageModel>(IBasePage<TPageModel> page, TPageModel newPageModel) where TPageModel : class, IBasePageModel;
+
+		/// <summary>
+		/// Gets the current page.
+		/// </summary>
+		/// <value>The current page.</value>
+		IBasePage<IBasePageModel> CurrentPage { get; }
+
+		/// <summary>
+		/// Gets the current page model.
+		/// </summary>
+		/// <value>The current page model.</value>
+		IBasePageModel CurrentPageModel { get; }
 	}
 }
 

@@ -29,5 +29,11 @@ namespace Xamvvm
 		    TargetPageModel = newPageModel;
 		    LastActionSuccess = true;
 		}
+
+		//TODO
+		public IBasePage<IBasePageModel> CurrentPage { get { throw new NotImplementedException(); } }
+
+		//TODO
+		public IBasePageModel CurrentPageModel { get { throw new NotImplementedException(); } }
 	}
 }

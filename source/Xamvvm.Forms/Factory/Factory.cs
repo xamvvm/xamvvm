@@ -40,6 +40,12 @@ namespace Xamvvm
 			((Page)page).BindingContext = newPageModel;
 			AddToWeakCacheIfNotExists(page, newPageModel);
 		}
+
+		//TODO
+		public IBasePage<IBasePageModel> CurrentPage { get; protected set; }
+
+		//TODO
+		public IBasePageModel CurrentPageModel { get; protected set; }
     }
 }
 

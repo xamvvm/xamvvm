@@ -15,7 +15,29 @@ namespace Xamvvm
         /// <value>The logger.</value>
         public static IBaseLogger Logger { get; set; }
 
+		/// <summary>
+		/// Gets the current page.
+		/// </summary>
+		/// <value>The current page.</value>
+		public static IBasePage<IBasePageModel> CurrentPage
+		{
+			get
+			{
+				return CurrentFactory.CurrentPage;
+			}
+		}
 
+		/// <summary>
+		/// Gets the current page model.
+		/// </summary>
+		/// <value>The current page model.</value>
+		public static IBasePageModel CurrentPageModel
+		{
+			get
+			{
+				return CurrentFactory.CurrentPageModel;
+			}
+		}
 
         /// <summary>
         /// Gets the Factory instance.

@@ -4,7 +4,7 @@ namespace Xamvvm
 {
 	public static class XamvvmIoC
 	{
-		internal static IXamvvmIoC Instance { get; set; } = new SimpleXamvvmIoC();
+		public static IXamvvmIoC Instance { get; set; } = new SimpleXamvvmIoC();
 
 		public static void RegisterMultiInstance<RegisterType, RegisterImplementation>() where RegisterType : class where RegisterImplementation : class, RegisterType
 		{

@@ -28,7 +28,7 @@
 You have to create an instance of a IBaseFactory implementation and set it as the current factory to use
 
 ```C#
-var factory = new XamvvmFormsPageFactory(this);
+var factory = new XamvvmFormsFactory(this);
 XamvvmCore.SetCurrentFactory(factory);
 ```
 

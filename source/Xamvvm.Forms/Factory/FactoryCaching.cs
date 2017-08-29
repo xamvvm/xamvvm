@@ -48,6 +48,10 @@ namespace Xamvvm
 		{
 			var pageModelType = typeof(TPageModel);
 			var pageType = GetPageType(pageModelType);
+		    if (pageType == null)
+		    {
+		        throw new NoPageForPageModelRegisteredException("No Page Registered for Type: " + pageModelType);
+		    }
 			IBasePage<TPageModel> page;
 			Func<object> pageCreationFunc;
 			if (_pageCreation.TryGetValue(pageModelType, out pageCreationFunc))

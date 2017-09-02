@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ExtensionModel>
+	<Runtime>
+	</Runtime>
+
+
+    <Extension path="/MonoDevelop/Ide/FileTemplates">
+
+        <FileTemplate id="CustomContentPage"
+                      file="ItemTemplates/CustomContentPage.xft.xml" />
+        <FileTemplate id="CustomContentView"
+                      file="ItemTemplates/CustomContentView.xft.xml" />
+    </Extension>	
+</ExtensionModel>

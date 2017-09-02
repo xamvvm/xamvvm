@@ -10,7 +10,7 @@ namespace Xamvvm
     /// <summary>
     /// xamvvm BasePageModel implementation.
     /// </summary>
-	public class BasePageModel : BaseNotifyPropertyChanged, INotifyPropertyChanged, IBasePageModel, INavigationInterceptors
+	public class BasePageModel : BaseNotifyPropertyChanged, INotifyPropertyChanged, IBasePageModel, INavigationInterceptors, IPageVisibilityChange
     {
         private readonly object syncRoot = new object();
 
@@ -162,6 +162,20 @@ namespace Xamvvm
 		public virtual void NavigationRemoved()
 		{
 		}
-	}
+
+        /// <summary>
+        /// Called when page is appearing.
+        /// </summary>
+        public virtual void OnAppearing()
+        {
+        }
+
+        /// <summary>
+        /// Called when page is disappearing.
+        /// </summary>
+        public virtual void OnDisappearing()
+        {
+        }
+    }
 }
 

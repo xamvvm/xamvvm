@@ -37,9 +37,44 @@ namespace Xamvvm
 
 		public virtual void SetPageModel<TPageModel>(IBasePage<TPageModel> page, TPageModel newPageModel) where TPageModel : class, IBasePageModel
 		{
-			((Page)page).BindingContext = newPageModel;
+            var formsPage = (Page)page;
+
+            var oldVisChange = formsPage.BindingContext as IPageVisibilityChange;
+            if (oldVisChange != null)
+            {
+                formsPage.Appearing -= FormsPage_Appearing;
+                formsPage.Disappearing -= FormsPage_Disappearing;
+            }
+
+			formsPage.BindingContext = newPageModel;
+
+            var newVisChange = newPageModel as IPageVisibilityChange;
+            if (newVisChange != null)
+            {
+                formsPage.Appearing += FormsPage_Appearing;
+                formsPage.Disappearing += FormsPage_Disappearing;
+            }
+
 			AddToWeakCacheIfNotExists(page, newPageModel);
 		}
+
+        void FormsPage_Appearing(object sender, EventArgs e)
+        {
+            var model = ((sender as Page).BindingContext as IPageVisibilityChange);
+            if (model != null)
+            {
+                model.OnAppearing();
+            }
+        }
+
+        void FormsPage_Disappearing(object sender, EventArgs e)
+        {
+            var model = ((sender as Page).BindingContext as IPageVisibilityChange);
+            if (model != null)
+            {
+                model.OnDisappearing();
+            }
+        }
     }
 }
 

@@ -57,6 +57,7 @@
     <Compile Include="IoC\IXamvvmIoC.cs" />
     <Compile Include="IoC\SimpleXamvvmIoC.cs" />
     <Compile Include="Exceptions\NoPageForPageModelRegisteredException.cs" />
+    <Compile Include="Interfaces\IPageVisibilityChange.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>

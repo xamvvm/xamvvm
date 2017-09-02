@@ -143,7 +143,7 @@ namespace Xamvvm
 				            (page) => pageType == null ?
 				                new BaseNavigationPage<TNavPageModel>((Page)page) : Activator.CreateInstance(pageType, page) as IBasePage<TNavPageModel>);
 				    }
-                    catch (MissingMemberException e)
+                    catch (MissingMemberException)
                     {
                         throw new MissingMemberException(pageType + " is missing a constructor that accepts a child page as parameter");
                     }

@@ -56,6 +56,7 @@
     <Compile Include="IoC\XamvvmIoC.cs" />
     <Compile Include="IoC\IXamvvmIoC.cs" />
     <Compile Include="IoC\SimpleXamvvmIoC.cs" />
+    <Compile Include="Exceptions\NoPageForPageModelRegisteredException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -64,5 +65,6 @@
     <Folder Include="Implementations\" />
     <Folder Include="Attributes\" />
     <Folder Include="IoC\" />
+    <Folder Include="Exceptions\" />
   </ItemGroup>
 </Project>

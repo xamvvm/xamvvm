@@ -136,9 +136,17 @@ namespace Xamvvm
 						(page) => pageType == null ? 
 						new BaseNavigationPage<TNavPageModel>() : XamvvmIoC.Resolve(pageType) as IBasePage<TNavPageModel>);
 				else
-					createNav = new Func<IBasePage<IBasePageModel>, IBasePage<TNavPageModel>>(
-						(page) => pageType == null ? 
-							new BaseNavigationPage<TNavPageModel>((Page)page) : Activator.CreateInstance(pageType, page) as IBasePage<TNavPageModel>);
+				    try
+				    {
+
+				        createNav = new Func<IBasePage<IBasePageModel>, IBasePage<TNavPageModel>>(
+				            (page) => pageType == null ?
+				                new BaseNavigationPage<TNavPageModel>((Page)page) : Activator.CreateInstance(pageType, page) as IBasePage<TNavPageModel>);
+				    }
+                    catch (MissingMemberException e)
+                    {
+                        throw new MissingMemberException(pageType + " is missing a constructor that accepts a child page as parameter");
+                    }
 			}
             
             // this creates a new lambda function that will be later invoked

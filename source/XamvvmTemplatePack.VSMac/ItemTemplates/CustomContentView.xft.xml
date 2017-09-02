@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Template>   
+    <TemplateConfiguration>
+        <_Name>Xamvvm ContentView</_Name>
+        <Icon>md-xml-file-icon</Icon>
+        <_Category>Xamvvm</_Category>
+        <LanguageName>C#</LanguageName>
+        <_Description>Creates a Xamarin.Forms ContentView using Xamvm template</_Description>
+    </TemplateConfiguration>
+    
+    <TemplateFiles>
+        <File name="${Name}.xaml" 
+              DefaultExtension=".xaml" 
+              AddStandardHeader="False" 
+              BuildAction="EmbeddedResource"
+              CustomTool="MSBuild:UpdateDesignTimeXaml"
+              src="CustomContentView.xaml"/>
+        <File name="${Name}.xaml.cs" 
+              DependsOn="${Name}.xaml" 
+              AddStandardHeader="True"
+              src="CustomContentView.xaml.cs"/>
+        <File name="${Name}Model.cs"  
+              AddStandardHeader="True"
+              src="CustomContentViewModel.cs"/>     
+    </TemplateFiles>    
+</Template>

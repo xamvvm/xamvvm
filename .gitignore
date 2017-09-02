@@ -58,3 +58,5 @@ source/.vs/Xamvvm.sqlite
 source/.vs/config/applicationhost.config
 
 examples/ExamplesFormsRxUI/ExamplesRxUI.Droid/Resources/Resource.Designer.cs
+
+source/Tools/RealmWeaver.Fody.dll

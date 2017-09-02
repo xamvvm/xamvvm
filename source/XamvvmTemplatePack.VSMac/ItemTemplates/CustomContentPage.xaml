@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<local:CustomContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:${Namespace};assembly=${Namespace}" xmlns:xamvvm="clr-namespace:Xamvvm;assembly=Xamvvm.Forms" xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms" xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations" x:Class="${Namespace}.${Name}" BindingContext="{x:Static local:ModelLocator.${Name}Model}">
+	<ContentPage.Content>
+		<Label Text="${Name}">
+		</Label>
+	</ContentPage.Content>
+</local:CustomContentPage>

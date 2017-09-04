@@ -48,20 +48,37 @@ namespace Xamvvm
 		{
 			var pageModelType = typeof(TPageModel);
 			var pageType = GetPageType(pageModelType);
-		    if (pageType == null)
-		    {
-		        throw new NoPageForPageModelRegisteredException("No Page Registered for Type: " + pageModelType);
-		    }
+
 			IBasePage<TPageModel> page;
 			Func<object> pageCreationFunc;
-			if (_pageCreation.TryGetValue(pageModelType, out pageCreationFunc))
-			{
-				page = pageCreationFunc() as IBasePage<TPageModel>;
-			}
-			else
-				page = XamvvmIoC.Resolve(pageType) as IBasePage<TPageModel>;
+		    _pageCreation.TryGetValue(pageModelType, out pageCreationFunc);
 
-			if (setPageModel != null)
+            // first check if we have a registered PageCreation method for this pageModelType
+            if (pageCreationFunc != null)
+		    {                
+		        page = pageCreationFunc() as IBasePage<TPageModel>;
+		    }
+		    else
+		    {
+                // if not check if it failed because there was no registered PageType
+                // we cannot check this earlier because for NavgationPages we allow PageModels of the NavigationPage not having a custom NavigationPage type
+                // in this case we register a default creation method, but we won't register a pageType
+                // !!!!!!!!! Not sure if this is the correct way to do it
+		        if (pageType == null)
+		        {
+		            throw new NoPageForPageModelRegisteredException("No PageType Registered for PageModel type: " + pageModelType);
+		        }
+		        page = XamvvmIoC.Resolve(pageType) as IBasePage<TPageModel>;
+
+		        if (page == null)
+		        {
+		            throw new NoPageForPageModelRegisteredException("PageType not registered in IOC: " + pageType);
+		        }
+
+
+            }
+
+            if (setPageModel != null)
 			{
 				SetPageModel(page, setPageModel);
 			}

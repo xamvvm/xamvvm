@@ -2,7 +2,7 @@
 
 namespace Xamvvm
 {
-    public class NoPageForPageModelRegisteredException : Exception
+    public class NoPageForPageModelRegisteredException : XamvvmException
     {
         public NoPageForPageModelRegisteredException(string message) : base(message)
         {

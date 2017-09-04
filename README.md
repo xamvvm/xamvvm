@@ -91,7 +91,7 @@ public partial class DetailPage : ContentPage, IBasePage<DetailPageModel>
 ```
 
 ```C#
-public class DetailPageModel : IBasePageModel
+public class DetailPageModel : BasePageModel
 {
 	public void Init(string text, Color color)
 	{

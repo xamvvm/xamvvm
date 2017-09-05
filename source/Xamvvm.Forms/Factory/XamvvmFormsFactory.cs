@@ -37,24 +37,7 @@ namespace Xamvvm
 					if (found != default(Type))
 					{
 						var pageType = pageTypeInfo.AsType();
-
-						//var pageParameterlessCtors = (pageTypeInfo.DeclaredConstructors
-						//	.Where(c => c.IsPublic && c.GetParameters().Length == 0));
-
-						//if (!pageParameterlessCtors.Any())
-						//	throw new Exception(string.Format("Page {0} must have a public parameterless constructor", pageType));
-
 						var pageModelType = found.GenericTypeArguments.First();
-
-						//var pageModelTypeInfo = pageModelType.GetTypeInfo();
-						//var parameterlessCtors = (pageModelTypeInfo.DeclaredConstructors
-						//	.Where(c => c.IsPublic && c.GetParameters().Length == 0));
-
-						//if (!parameterlessCtors.Any())
-						//{
-						//	throw new Exception(string.Format("PageModel {0} must have a public parameterless constructor",
-						//									  pageModelType, pageType));
-						//}
 
 						if (!_pageModelTypes.ContainsKey(pageModelType))
 						{
@@ -129,24 +112,26 @@ namespace Xamvvm
 			if (createNav == null)
 			{
 				var pageModelType = typeof(TNavPageModel);
-				var pageType = GetPageType(pageModelType);
+				var pageType = GetPageType(pageModelType) ?? typeof(BaseNavigationPage<TNavPageModel>);
+                _pageModelTypes[pageModelType] = pageType;
 
-				if (initialPage == null)
-					createNav = new Func<IBasePage<IBasePageModel>, IBasePage<TNavPageModel>>(
-						(page) => pageType == null ? 
-						new BaseNavigationPage<TNavPageModel>() : XamvvmIoC.Resolve(pageType) as IBasePage<TNavPageModel>);
-				else
-				    try
-				    {
-
-				        createNav = new Func<IBasePage<IBasePageModel>, IBasePage<TNavPageModel>>(
-				            (page) => pageType == null ?
-				                new BaseNavigationPage<TNavPageModel>((Page)page) : Activator.CreateInstance(pageType, page) as IBasePage<TNavPageModel>);
-				    }
+                if (initialPage == null)
+                {
+                    createNav = new Func<IBasePage<IBasePageModel>, IBasePage<TNavPageModel>>(
+                        (page) => XamvvmIoC.Resolve(pageType) as IBasePage<TNavPageModel>);
+                }
+                else
+                {
+                    try
+                    {
+                        createNav = new Func<IBasePage<IBasePageModel>, IBasePage<TNavPageModel>>(
+                            (page) => Activator.CreateInstance(pageType, page) as IBasePage<TNavPageModel>);
+                    }
                     catch (MissingMemberException)
                     {
                         throw new MissingMemberException(pageType + " is missing a constructor that accepts a child page as parameter");
                     }
+                }
 			}
             
             // this creates a new lambda function that will be later invoked
@@ -184,27 +169,30 @@ namespace Xamvvm
 			if (createMult == null)
 			{
 				var pageModelType = typeof(TContainerPageModel);
-				var pageType = GetPageType(pageModelType);
+                var pageType = GetPageType(pageModelType) ?? typeof(TFormsContainerPageType);
+                _pageModelTypes[pageModelType] = pageType;
 
-				if (createSubPages == null)
-					createMult = new Func<IEnumerable<IBasePage<IBasePageModel>>, IBasePage<TContainerPageModel>>(
-						(pages) => pageType == null ? 
-							new TFormsContainerPageType() as IBasePage<TContainerPageModel> : XamvvmIoC.Resolve(pageType) as IBasePage<TContainerPageModel>);
-				else
-					createMult = new Func<IEnumerable<IBasePage<IBasePageModel>>, IBasePage<TContainerPageModel>>(
-						(pages) =>
-						{
-							var multiPage = pageType == null ?
-								new TFormsContainerPageType() as IBasePage<TContainerPageModel> : XamvvmIoC.Resolve(pageType) as IBasePage<TContainerPageModel>;
-							var multiPageXam = (TabbedPage)multiPage;
+                if (createSubPages == null)
+                {
+                    createMult = new Func<IEnumerable<IBasePage<IBasePageModel>>, IBasePage<TContainerPageModel>>(
+                        (pages) => XamvvmIoC.Resolve(pageType) as IBasePage<TContainerPageModel>);
+                }
+                else
+                {
+                    createMult = new Func<IEnumerable<IBasePage<IBasePageModel>>, IBasePage<TContainerPageModel>>(
+                        (pages) =>
+                        {
+                            var multiPage = XamvvmIoC.Resolve(pageType) as IBasePage<TContainerPageModel>;
+                            var multiPageXam = (TabbedPage)multiPage;
 
-							foreach (var page in pages)
-							{
-								multiPageXam.Children.Add((Page)page);
-							}
+                            foreach (var page in pages)
+                            {
+                                multiPageXam.Children.Add((Page)page);
+                            }
 
-							return multiPage;
-						});
+                            return multiPage;
+                        });
+                }
 			}
 
 			var createMultWithPages = new Func<IBasePage<TContainerPageModel>>(() =>
@@ -271,13 +259,13 @@ namespace Xamvvm
 			if (createMasDet == null)
 			{
 				var pageModelType = typeof(TPageModel);
-				var pageType = GetPageType(pageModelType);
+                var pageType = GetPageType(pageModelType) ?? typeof(BaseMasterDetailPage<TPageModel>);
+                _pageModelTypes[pageModelType] = pageType;
 
 				createMasDet = new Func<IBasePage<IBasePageModel>, IBasePage<IBasePageModel>, IBasePage<TPageModel>>(
 					(master, detail) =>
 					{
-						var masdetPage = pageType == null ? 
-							new BaseMasterDetailPage<TPageModel>() : XamvvmIoC.Resolve(pageType) as IBasePage<TPageModel>;
+						var masdetPage = XamvvmIoC.Resolve(pageType) as IBasePage<TPageModel>;
 						var masdetPageXam = (MasterDetailPage)masdetPage;
 						masdetPageXam.Master = master as Page;
 						masdetPageXam.Detail = detail as Page;

@@ -74,8 +74,6 @@ namespace Xamvvm
 		        {
 		            throw new NoPageForPageModelRegisteredException("PageType not registered in IOC: " + pageType);
 		        }
-
-
             }
 
             if (setPageModel != null)

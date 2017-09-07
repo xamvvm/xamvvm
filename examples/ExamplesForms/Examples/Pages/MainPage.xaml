@@ -15,6 +15,9 @@
 
             <Label Text="MasterDetail:"/>
             <Button Text="MasterDetail" Command="{Binding MasterDetailButtonCommand}"/>
+
+            <Label Text="NavigationView:"/>
+            <Button Text="NavigationView" Command="{Binding NavigationViewButtonCommand}"/>
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

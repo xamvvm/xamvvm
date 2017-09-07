@@ -19,6 +19,11 @@ namespace Examples
             {
                 await this.PushPageFromCacheAsync<SampleMasterDetailPageModel>();
             });
+
+            NavigationViewButtonCommand = new BaseCommand(async (arg) =>
+            {
+                await this.PushPageFromCacheAsync<SampleNavigationViewPageModel>();
+            });
 		}
 
 		async Task DetailButtonCommandExecute(string param)
@@ -58,6 +63,12 @@ namespace Examples
 		}
 
         public ICommand MasterDetailButtonCommand
+        {
+            get { return GetField<ICommand>(); }
+            set { SetField(value); }
+        }
+
+        public ICommand NavigationViewButtonCommand
         {
             get { return GetField<ICommand>(); }
             set { SetField(value); }

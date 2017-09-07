@@ -12,6 +12,7 @@ namespace Xamvvm
     {
 		int _maxPageCacheItems;
 		readonly Dictionary<Type, Type> _pageModelTypes = new Dictionary<Type, Type>();
+        readonly Dictionary<Type, Type> _viewModelTypes = new Dictionary<Type, Type>();
 		readonly Dictionary<Tuple<Type, string>, int> _pageCacheHits = new Dictionary<Tuple<Type, string>, int>();
 		readonly Dictionary<Tuple<Type, string>, object> _pageCache = new Dictionary<Tuple<Type, string>, object>();
 		readonly Dictionary<Type, Func<object>> _pageCreation = new Dictionary<Type, Func<object>>();
@@ -54,6 +55,30 @@ namespace Xamvvm
 							}
 						}
 					}
+
+                    var foundView = pageTypeInfo.ImplementedInterfaces.FirstOrDefault(t => t.IsConstructedGenericType &&
+                        t.GetGenericTypeDefinition() == typeof(IBaseView<>));
+
+                    if (foundView != default(Type))
+                    {
+                        var viewType = pageTypeInfo.AsType();
+                        var viewModelType = foundView.GenericTypeArguments.First();
+
+                        if (!_viewModelTypes.ContainsKey(viewModelType))
+                        {
+                            _viewModelTypes.Add(viewModelType, viewType);
+                        }
+                        else
+                        {
+                            var oldPageType = _viewModelTypes[viewModelType];
+
+                            if (pageTypeInfo.IsSubclassOf(oldPageType))
+                            {
+                                _viewModelTypes.Remove(viewModelType);
+                                _viewModelTypes.Add(viewModelType, viewType);
+                            }
+                        }
+                    }
 				}
 			}
 		}
@@ -304,6 +329,15 @@ namespace Xamvvm
             	return pageType;
 
 			return null;
+        }
+
+        internal Type GetViewType(Type viewModelType)
+        {
+            Type viewType = null;
+            if (_viewModelTypes.TryGetValue(viewModelType, out viewType))
+                return viewType;
+
+            return null;
         }
 
 		internal Type GetPageModelType(IBasePage<IBasePageModel> page)

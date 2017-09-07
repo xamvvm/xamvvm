@@ -60,6 +60,9 @@
     <Compile Include="Exceptions\NoPageForPageModelRegisteredException.cs" />
     <Compile Include="Interfaces\IPageVisibilityChange.cs" />
     <Compile Include="Exceptions\XamvvmException.cs" />
+    <Compile Include="Interfaces\IBaseView.cs" />
+    <Compile Include="Interfaces\IBaseViewModel.cs" />
+    <Compile Include="Implementations\BaseViewModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup />

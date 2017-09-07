@@ -39,6 +39,15 @@
     <EmbeddedResource Include="Pages\SampleMasterDetailMenuPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="Pages\SampleNavigationViewPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SampleFirstView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SampleSecondView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -64,6 +73,19 @@
     </Compile>
     <Compile Include="Pages\SampleMasterDetailMenuPageModel.cs" />
     <Compile Include="Pages\SampleMasterDetailPageModel.cs" />
+    <Compile Include="Pages\SampleNavigationViewPage.xaml.cs">
+      <DependentUpon>SampleNavigationViewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SampleNavigationViewPageModel.cs" />
+    <Compile Include="Pages\SampleNavigationViewNavigation.cs" />
+    <Compile Include="Views\SampleFirstView.xaml.cs">
+      <DependentUpon>SampleFirstView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SampleFirstViewModel.cs" />
+    <Compile Include="Views\SampleSecondView.xaml.cs">
+      <DependentUpon>SampleSecondView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SampleSecondViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Pages\DemoListViewPage.xaml">
@@ -94,6 +116,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\..\source\packages\Xamarin.Forms.2.3.5.256-pre6\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\..\..\source\packages\Xamarin.Forms.2.3.5.256-pre6\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />

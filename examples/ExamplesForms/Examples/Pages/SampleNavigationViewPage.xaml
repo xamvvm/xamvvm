@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:Examples;assembly=Examples" xmlns:xamvvm="clr-namespace:Xamvvm;assembly=Xamvvm.Forms" x:Class="Examples.SampleNavigationViewPage">
+	<ContentPage.Content>
+		<Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="60"/>
+            </Grid.RowDefinitions>
+            <local:SampleNavigationViewNavigation Grid.ColumnSpan="2"/>
+
+            <Button Grid.Row="1" Grid.Column="0" Text="First" Command="{Binding NavigateFirstCommand}"/>
+            <Button Grid.Row="1" Grid.Column="1" Text="Second" Command="{Binding NavigateSecondCommand}"/>
+        </Grid>
+	</ContentPage.Content>
+</ContentPage>

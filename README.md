@@ -14,6 +14,7 @@
 - **Pages / PageModels caching** - more responsive UI experience!
 - **You're not limited to any concrete implementation of Pages, PageModels**
 - **Fluent style extensions methods to write less code**
+- **Navigation inside `ContentView`**
 - Helper classes with ready to use `INotifyPropertyChanged` implementation eg. `BasePageModel`
 - Pages have override methods to respond / intercept navigation (eg. NavgationPushing, NavigationCanPush, etc.) 
 - Strongly typed classes / methods / messaging

@@ -12,6 +12,9 @@
 			
 			<Label Text="DemoListViewPage:"/>
 			<Button Text="Demo List" Command="{Binding DemoListButtonCommand}"/>
+
+            <Label Text="MasterDetail:"/>
+            <Button Text="MasterDetail" Command="{Binding MasterDetailButtonCommand}"/>
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

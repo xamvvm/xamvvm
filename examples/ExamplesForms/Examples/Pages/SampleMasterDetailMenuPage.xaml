@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Examples.SampleMasterDetailMenuPage"
+    Title="MENU" BackgroundColor="Gray">
+	<ContentPage.Content>
+		<StackLayout>
+            <Button Text="Page1" Command="{Binding Page1Command}"/>
+            <Button Text="Page2" Command="{Binding Page2Command}"/>
+        </StackLayout>
+	</ContentPage.Content>
+</ContentPage>

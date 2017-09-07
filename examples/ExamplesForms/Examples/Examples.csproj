@@ -36,6 +36,9 @@
     <EmbeddedResource Include="Pages\DetailPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="Pages\SampleMasterDetailMenuPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -55,6 +58,12 @@
     <Compile Include="Pages\DemoListViewPageModel.cs" />
     <Compile Include="Pages\DetailPageModel.cs" />
     <Compile Include="Pages\MainPageModel.cs" />
+    <Compile Include="Pages\SampleMasterDetailPage.cs" />
+    <Compile Include="Pages\SampleMasterDetailMenuPage.xaml.cs">
+      <DependentUpon>SampleMasterDetailMenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SampleMasterDetailMenuPageModel.cs" />
+    <Compile Include="Pages\SampleMasterDetailPageModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Pages\DemoListViewPage.xaml">

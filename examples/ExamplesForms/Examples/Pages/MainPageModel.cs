@@ -14,6 +14,11 @@ namespace Examples
 
 			DetailButtonCommand = BaseCommand.FromTask<string>((param) => DetailButtonCommandExecute(param));
 			DemoListButtonCommand = BaseCommand.FromTask((param) => this.PushPageFromCacheAsync<DemoListViewPageModel>());
+
+            MasterDetailButtonCommand = new BaseCommand(async (arg) =>
+            {
+                await this.PushPageFromCacheAsync<SampleMasterDetailPageModel>();
+            });
 		}
 
 		async Task DetailButtonCommandExecute(string param)
@@ -51,5 +56,11 @@ namespace Examples
 			get { return GetField<ICommand>(); }
 			set { SetField(value); }
 		}
+
+        public ICommand MasterDetailButtonCommand
+        {
+            get { return GetField<ICommand>(); }
+            set { SetField(value); }
+        }
 	}
 }

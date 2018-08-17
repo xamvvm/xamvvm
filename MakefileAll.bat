@@ -9,6 +9,8 @@ if "%CI%"=="True" (
 )
 set buildargs=/p:Configuration="%config%" /p:Platform="%platform%" /p:NoWarn="%warnings%" /v:minimal %logger%
 
+cd source
+
 echo Restoring NuGets...
 
 nuget restore -MsbuildPath "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin"
@@ -16,20 +18,16 @@ dotnet restore
 
 echo Building Xamvvm...
 
-%msbuild% source/Xamvvm.Core/Xamvvm.Core.csproj %buildargs%
-%msbuild% source/Xamvvm.Forms/Xamvvm.Forms.csproj %buildargs%
-%msbuild% source/Xamvvm.Forms.RxUI/Xamvvm.Forms.RxUI.csproj %buildargs%
-%msbuild% source/Xamvvm.Mock/Xamvvm.Mock.csproj %buildargs%
-
-echo Generating symbols with Gitlink...
-
-GitLink.exe %~dp0 -u https://github.com/xamvvm/xamvvm
+%msbuild% Xamvvm.Core/Xamvvm.Core.csproj %buildargs%
+%msbuild% Xamvvm.Forms/Xamvvm.Forms.csproj %buildargs%
+%msbuild% Xamvvm.Forms.RxUI/Xamvvm.Forms.RxUI.csproj %buildargs%
+%msbuild% Xamvvm.Mock/Xamvvm.Mock.csproj %buildargs%
 
 echo Packaging NuGets...
 
-nuget pack source/Xamvvm.Core.nuspec
-nuget pack source/Xamvvm.Forms.nuspec
-nuget pack source/Xamvvm.Forms.RxUI.nuspec
-nuget pack source/Xamvvm.Mock.nuspec
+nuget pack Xamvvm.Core.nuspec
+nuget pack Xamvvm.Forms.nuspec
+nuget pack Xamvvm.Forms.RxUI.nuspec
+nuget pack Xamvvm.Mock.nuspec
 
 echo All done.

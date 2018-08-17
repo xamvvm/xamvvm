@@ -16,7 +16,7 @@
 	<summary>Simple MVVM (Model, ViewModel, View) Framework for Xamarin.Forms</summary>
     <tags>xamarin, forms, xamarin.forms, android, ios, mvvm, pagefactory, inotifypropertychanged, notifypropertychanged, caching, viewmodel, xamvvm</tags>
     <dependencies>
-		<dependency id="Xamarin.Forms" version="2.0.0.6482" />
+        <dependency id="Xamarin.Forms" version="3.0.0.446417" />
     </dependencies>
   </metadata>
   <files>

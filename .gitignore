@@ -62,3 +62,7 @@ examples/ExamplesFormsRxUI/ExamplesRxUI.Droid/Resources/Resource.Designer.cs
 source/Tools/RealmWeaver.Fody.dll
 /source/.vs/Xamvvm/v15/sqlite3
 *.ide
+source/.vs/Xamvvm/xs/sqlite3/db.lock
+source/.vs/Xamvvm/xs/sqlite3/storage.ide-shm
+source/.vs/Xamvvm/xs/sqlite3/storage.ide-wal
+source/.vs/Xamvvm/xs/UserPrefs.xml

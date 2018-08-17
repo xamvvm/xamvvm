@@ -70,4 +70,4 @@ before_build:
       (Get-Content $nuspec4template).replace('@version', $version) | Set-Content $nuspec4  
 
 artifacts:
-  - path: \projects\xamvvm\source\Xamvvm.*.nupkg
+  - path: c:\projects\xamvvm\source\*.nupkg

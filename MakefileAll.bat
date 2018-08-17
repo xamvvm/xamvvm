@@ -11,8 +11,8 @@ set buildargs=/p:Configuration="%config%" /p:Platform="%platform%" /p:NoWarn="%w
 
 echo Restoring NuGets...
 
-nuget restore source/Xamvvm.Forms/packages.config -solutiondirectory source/
-nuget restore source/Xamvvm.Forms.RxUI/packages.config -solutiondirectory source/
+nuget restore -MsbuildPath "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin"
+dotnet restore
 
 echo Building Xamvvm...
 

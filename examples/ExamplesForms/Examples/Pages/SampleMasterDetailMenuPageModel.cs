@@ -1,5 +1,4 @@
-﻿using System;
-using Xamvvm;
+﻿using Xamvvm;
 using System.Windows.Input;
 using Xamarin.Forms;
 

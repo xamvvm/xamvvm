@@ -1,34 +1,27 @@
-using System;
-using System.Linq;
 using Examples;
 using Xamvvm;
-using Xunit;
 
 namespace ExampleUnitTests.Droid
 {
-    public class ViewModelUnitTest
-    {
+	public class ViewModelUnitTest
+	{
+		public ViewModelUnitTest()
+		{
+			var factory = new XamvvmMockFactory();
+			XamvvmCore.SetCurrentFactory(factory);
+		}
 
-        public ViewModelUnitTest()
-        {
-            var factory = new XamvvmMockFactory();
-            XamvvmCore.SetCurrentFactory(factory);
-        }
+		[Fact]
+		public void DetailButtonCommand()
+		{
+			var mainPageModel = new MainPageModel();
 
-        [Fact]
-        public void DetailButtonCommand()
-        {
+			mainPageModel.DetailButtonCommand.Execute("red");
 
-            var mainPageModel = new MainPageModel();
-
-            mainPageModel.DetailButtonCommand.Execute("red");
-
-            Assert.True(XamvvmMockFactory.LastActionSuccess);
-            Assert.Equal(XamvvmMockFactory.XammvvmAction.PagePushed, XamvvmMockFactory.LastAction);
-            Assert.IsType<DetailPageModel>(XamvvmMockFactory.TargetPageModel);
-            Assert.Equal("red", ((DetailPageModel) XamvvmMockFactory.TargetPageModel).Text);
-
-
-        }
-    }
+			Assert.True(XamvvmMockFactory.LastActionSuccess);
+			Assert.Equal(XamvvmMockFactory.XammvvmAction.PagePushed, XamvvmMockFactory.LastAction);
+			Assert.IsType<DetailPageModel>(XamvvmMockFactory.TargetPageModel);
+			Assert.Equal("red", ((DetailPageModel)XamvvmMockFactory.TargetPageModel).Text);
+		}
+	}
 }

@@ -1,6 +1,5 @@
 using System.ComponentModel;
 using ReactiveUI;
-using Xamvvm;
 
 namespace Xamvvm
 {

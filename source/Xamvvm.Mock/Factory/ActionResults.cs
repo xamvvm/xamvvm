@@ -1,4 +1,3 @@
-using System;
 namespace Xamvvm
 {
 	public partial class XamvvmMockFactory : IBaseFactory

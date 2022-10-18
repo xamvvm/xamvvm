@@ -1,9 +1,5 @@
-using System;
 using System.ComponentModel;
-using ReactiveUI;
 using ReactiveUI.XamForms;
-using Xamarin.Forms;
-using Xamvvm;
 
 namespace Xamvvm
 {

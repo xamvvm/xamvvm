@@ -1,5 +1,4 @@
-﻿using System;
-namespace Xamvvm
+﻿namespace Xamvvm
 {
     /// <summary>
     /// Base view model.

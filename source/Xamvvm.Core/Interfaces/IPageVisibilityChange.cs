@@ -1,5 +1,4 @@
-﻿using System;
-namespace Xamvvm
+﻿namespace Xamvvm
 {
     public interface IPageVisibilityChange
     {

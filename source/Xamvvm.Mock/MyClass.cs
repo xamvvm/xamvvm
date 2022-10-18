@@ -1,5 +1,4 @@
-﻿using System;
-namespace Xamvvm.Mock
+﻿namespace Xamvvm.Mock
 {
 	public class MyClass
 	{

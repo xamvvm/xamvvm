@@ -1,8 +1,5 @@
-using System;
-using System.ComponentModel;
 using Xamarin.Forms;
 using System.Threading.Tasks;
-using System.Linq;
 
 namespace Xamvvm
 {

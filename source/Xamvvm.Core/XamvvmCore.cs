@@ -6,24 +6,23 @@ namespace Xamvvm
 	/// Page factory.
 	/// </summary>
 	public static class XamvvmCore
-	{ 
+	{
 		static IBaseFactory current;
 
-        /// <summary>
-        /// Gets or sets the logger.
-        /// </summary>
-        /// <value>The logger.</value>
-        public static IBaseLogger Logger { get; set; }
+		/// <summary>
+		/// Gets or sets the logger.
+		/// </summary>
+		/// <value>The logger.</value>
+		public static IBaseLogger Logger { get; set; }
 
 
-
-        /// <summary>
-        /// Gets the Factory instance.
-        /// </summary>
-        /// <value>The factory.</value>
-        public static IBaseFactory CurrentFactory
+		/// <summary>
+		/// Gets the Factory instance.
+		/// </summary>
+		/// <value>The factory.</value>
+		public static IBaseFactory CurrentFactory
 		{
-			get 
+			get
 			{
 				if (current == null)
 				{
@@ -42,10 +41,5 @@ namespace Xamvvm
 		{
 			current = factory;
 		}
-
-
-
-
-    }
+	}
 }
-

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Xamvvm
+﻿namespace Xamvvm
 {
 	public class MockPage<TPageModel> : IBasePage<TPageModel> where TPageModel : class, IBasePageModel
 	{

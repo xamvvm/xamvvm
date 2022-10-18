@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-
-namespace Xamvvm
+﻿namespace Xamvvm
 {
 	/// <summary>
 	/// Base page.

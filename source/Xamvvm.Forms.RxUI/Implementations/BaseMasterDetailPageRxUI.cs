@@ -1,6 +1,3 @@
-using System;
-using ReactiveUI;
-using Xamarin.Forms;
 using ReactiveUI.XamForms;
 using System.ComponentModel;
 

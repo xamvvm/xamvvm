@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Xamvvm
+﻿namespace Xamvvm
 {
 	/// <summary>
 	/// IBasePage / IBasePageModel navigation events.

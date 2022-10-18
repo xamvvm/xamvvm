@@ -1,5 +1,4 @@
-﻿using System;
-using Xamvvm;
+﻿using Xamvvm;
 namespace Examples
 {
     public class SampleNavigationViewNavigation : ViewNavigation<SampleNavigationViewNavigationModel>

@@ -1,8 +1,5 @@
-﻿using System;
-using Xamvvm;
-using System.Threading.Tasks;
+﻿using Xamvvm;
 using Xamarin.Forms;
-using System.ComponentModel;
 
 namespace Examples
 {
